@@ -2768,7 +2768,7 @@ gmic& gmic::add_commands(const char *const data_commands,
     // Check if last character is a '\'...
     _is_last_slash = false;
     for (_line = linee; *_line=='\\' && _line>=lines; --_line) _is_last_slash = !_is_last_slash;
-    if (_is_last_slash) *(linee--) = 0; // .. and remove it if necessary.
+    if (_is_last_slash) *(linee--) = 0; // ... and remove it if necessary.
     if (!*lines) continue; // Empty line found.
     *mac = *com = 0;
 
@@ -4673,9 +4673,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                 "Item '%s %s': Unknow name '%s'.",
                 initial_item,initial_argument,new_name.data());
 
-        //----------------------------
-        // Commands starting by '-a..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-a...'
+        //-----------------------------
         else if (command1=='a') {
 
           // Append.
@@ -4893,9 +4893,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='a'.
 
-        //----------------------------
-        // Commands starting by '-b..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-b...'
+        //-----------------------------
         else if (command1=='b') {
 
           // Blur.
@@ -5065,9 +5065,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='b'.
 
-        //----------------------------
-        // Commands starting by '-c..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-c...'
+        //-----------------------------
         else if (command1=='c') {
 
           // Check expression or filename.
@@ -5865,9 +5865,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='c'.
 
-        //----------------------------
-        // Commands starting by '-d..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-d...'
+        //-----------------------------
         else if (command1=='d') {
 
           // Done.
@@ -5890,7 +5890,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
               }
               next_debug_line = debug_line; next_debug_filename = debug_filename;
             } else {
-              if (is_very_verbose) print(images,0,"End 'repeat..done' block.");
+              if (is_very_verbose) print(images,0,"End 'repeat...done' block.");
               if (hashcode!=~0U) {
                 variables[hashcode]->remove(pos);
                 variables_names[hashcode]->remove(pos);
@@ -5901,13 +5901,13 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
             continue;
           }
 
-          // Do..while.
+          // Do...while.
           if (!std::strcmp("-do",item)) {
             if (is_debug_info && debug_line!=~0U) {
               cimg_snprintf(argx,_argx.width(),"*do#%u",debug_line);
               CImg<char>::string(argx).move_to(callstack);
             } else CImg<char>::string("*do").move_to(callstack);
-            if (is_very_verbose) print(images,0,"Start '-do..-while' block.");
+            if (is_very_verbose) print(images,0,"Start '-do...-while' block.");
             CImg<unsigned int>::vector(position).move_to(dowhiles);
             continue;
           }
@@ -6324,9 +6324,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='d'.
 
-        //----------------------------
-        // Commands starting by '-e..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-e...'
+        //-----------------------------
         else if (command1=='e') {
 
           // Endif.
@@ -6335,7 +6335,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
             if (s[0]!='*' || s[1]!='i')
               error(images,0,0,
                     "Command '-endif': Not associated to a '-if' command within the same scope.");
-            if (is_very_verbose) print(images,0,"End 'if..endif' block.");
+            if (is_very_verbose) print(images,0,"End 'if...endif' block.");
             check_elif = false;
             callstack.remove();
             continue;
@@ -6368,7 +6368,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
               error(images,0,0,
                     "Command '-endlocal': Not associated to a '-local' command within "
                     "the same scope.");
-            if (is_very_verbose) print(images,0,"End 'local..endlocal' block.");
+            if (is_very_verbose) print(images,0,"End 'local...endlocal' block.");
             is_endlocal = true;
             break;
           }
@@ -6720,9 +6720,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='e'.
 
-        //----------------------------
-        // Commands starting by '-f..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-f...'
+        //-----------------------------
         else if (command1=='f') {
 
           // Fill.
@@ -6855,9 +6855,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='f'.
 
-        //----------------------------
-        // Commands starting by '-g..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-g...'
+        //-----------------------------
         else if (command1=='g') {
 
           // Greater or equal.
@@ -7087,9 +7087,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='g'.
 
-        //----------------------------
-        // Commands starting by '-h..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-h...'
+        //-----------------------------
         else if (command1=='h') {
 
           // Histogram.
@@ -7196,9 +7196,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='h'.
 
-        //----------------------------
-        // Commands starting by '-i..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-i...'
+        //-----------------------------
         else if (command1=='i' && !(command[2]=='f' && !command[3])) {   // (Skip for '-if').
 
           // Draw image.
@@ -7620,9 +7620,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='i'.
 
-        //----------------------------
-        // Commands starting by '-k..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-k...'
+        //-----------------------------
         else if (command1=='k') {
 
           // Keep images.
@@ -7661,9 +7661,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='k'.
 
-        //----------------------------
-        // Commands starting by '-l..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-l...'
+        //-----------------------------
         else if (command1=='l') {
 
           // Start local environnement.
@@ -7673,7 +7673,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
               CImg<char>::string(argx).move_to(callstack);
             } else CImg<char>::string("*local").move_to(callstack);
             if (is_very_verbose)
-              print(images,0,"Start '-local..-endlocal' block, with selected image%s.",
+              print(images,0,"Start '-local...-endlocal' block, with selected image%s.",
                     gmic_selection.data());
             g_list.assign(selection.height());
             g_list_c.assign(selection.height());
@@ -7911,9 +7911,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='l'.
 
-        //----------------------------
-        // Commands starting by '-m..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-m...'
+        //-----------------------------
         else if (command1=='m') {
 
           // Move images.
@@ -8225,9 +8225,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='m'.
 
-        //----------------------------
-        // Commands starting by '-n..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-n...'
+        //-----------------------------
         else if (command1=='n') {
 
           // Set image name.
@@ -8339,9 +8339,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='n'.
 
-        //----------------------------
-        // Commands starting by '-o..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-o...'
+        //-----------------------------
         else if (command1=='o') {
 
           // Exception handling in local environments.
@@ -8540,7 +8540,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
             if (cimg_sscanf(argument,"%11[a-zA-Z]:%4095[^,],%255s",  // Detect forced file format.
                             cext,_filename.data(),options.data())<2 ||
-                !cext[1]) {  // length of preprend 'ext' must be >=2 (avoid case 'C:\\..' on Windows).
+                !cext[1]) {  // length of preprend 'ext' must be >=2 (avoid case 'C:\\...' on Windows).
               *cext = *_filename = *options = 0;
               if (cimg_sscanf(argument,"%4095[^,],%255s",_filename.data(),options.data())!=2) {
                 std::strncpy(_filename,argument,_filename.width() - 1);
@@ -9112,9 +9112,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='o'.
 
-        //----------------------------
-        // Commands starting by '-p..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-p...'
+        //-----------------------------
         else if (command1=='p') {
 
           // Pass image from parent context.
@@ -9646,9 +9646,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='p'.
 
-        //----------------------------
-        // Commands starting by '-q..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-q...'
+        //-----------------------------
         else if (command1=='q') {
 
           // Draw quiver.
@@ -9705,9 +9705,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='q'.
 
-        //----------------------------
-        // Commands starting by '-r..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-r...'
+        //-----------------------------
         else if (command1=='r') {
 
           // Remove images.
@@ -9747,9 +9747,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                   CImg<char>::string(argx).move_to(callstack);
                 } else CImg<char>::string("*repeat").move_to(callstack);
                 if (is_very_verbose) {
-                  if (*title) print(images,0,"Start '-repeat..-done' block with variable '%s' (%u iteration%s).",
+                  if (*title) print(images,0,"Start '-repeat...-done' block with variable '%s' (%u iteration%s).",
                                     title,nb,nb>1?"s":"");
-                  else print(images,0,"Start '-repeat..-done' block (%u iteration%s).",
+                  else print(images,0,"Start '-repeat...-done' block (%u iteration%s).",
                              nb,nb>1?"s":"");
                 }
                 const unsigned int l = (unsigned int)std::strlen(title);
@@ -9765,9 +9765,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                 rd.move_to(repeatdones);
               } else {
                 if (is_very_verbose) {
-                  if (*title) print(images,0,"Skip 'repeat..done' block with variable '%s' (0 iteration).",
+                  if (*title) print(images,0,"Skip 'repeat...done' block with variable '%s' (0 iteration).",
                                     title);
-                  else print(images,0,"Skip 'repeat..done' block (0 iteration).");
+                  else print(images,0,"Skip 'repeat...done' block (0 iteration).");
                 }
                 int nb_repeats = 0;
                 for (nb_repeats = 1; nb_repeats && position<commands_line.size(); ++position) {
@@ -10274,9 +10274,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='r'.
 
-        //----------------------------
-        // Commands starting by '-s..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-s...'
+        //-----------------------------
         else if (command1=='s') {
 
           // Set status.
@@ -11408,9 +11408,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='s'.
 
-        //----------------------------
-        // Commands starting by '-t..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-t...'
+        //-----------------------------
         else if (command1=='t') {
 
           // Threshold.
@@ -11653,9 +11653,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='t'.
 
-        //----------------------------
-        // Commands starting by '-u..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-u...'
+        //-----------------------------
         else if (command1=='u') {
 
           // Unroll.
@@ -11765,9 +11765,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='u'.
 
-        //----------------------------
-        // Commands starting by '-v..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-v...'
+        //-----------------------------
         else if (command1=='v') {
 
           // Set verbosity
@@ -11814,9 +11814,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='v'.
 
-        //----------------------------
-        // Commands starting by '-w..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-w...'
+        //-----------------------------
         else if (command1=='w') {
 
           // While.
@@ -11846,7 +11846,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
               next_debug_line = debug_line; next_debug_filename = debug_filename;
               continue;
             } else {
-              if (is_very_verbose) print(images,0,"End 'do..while' block.");
+              if (is_very_verbose) print(images,0,"End 'do...while' block.");
               dowhiles.remove();
               callstack.remove();
             }
@@ -12192,9 +12192,9 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
         } // command1=='w'.
 
-        //----------------------------
-        // Commands starting by '-x..'
-        //----------------------------
+        //-----------------------------
+        // Commands starting by '-x...'
+        //-----------------------------
         else if (command1=='x') {
 
           // Bitwise xor.
@@ -12215,7 +12215,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
         // Other (special) commands.
         //----------------------------
 
-        // If..[elif]..[else]..endif.
+        // If...[elif]...[else]...endif.
         if (!std::strcmp("-if",item) || (!std::strcmp("-elif",item) && check_elif)) {
           gmic_substitute_args(false);
           check_elif = false;
@@ -12233,7 +12233,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
               cimg_snprintf(argx,_argx.width(),"*if#%u",debug_line);
               CImg<char>::string(argx).move_to(callstack);
             } else CImg<char>::string("*if").move_to(callstack);
-            if (is_very_verbose) print(images,0,"Start '-if..-endif' block -> %s '%s' %s.",
+            if (is_very_verbose) print(images,0,"Start '-if...-endif' block -> %s '%s' %s.",
                                        is_filename?"file":"boolean",
                                        gmic_argument_text_printed(),
                                        is_filename?(is_cond?"exists":"does not exist"):
@@ -12281,7 +12281,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
           unsigned int callstack_ind = 0;
           int level = 0;
           if (callstack_repeat) {
-            print(images,0,"%s %scurrent 'repeat..done' block.",
+            print(images,0,"%s %scurrent 'repeat...done' block.",
                   Com,is_continue?"to next iteration of ":"");
             for (level = 1; level && position<commands_line.size(); ++position) {
               const char *it = commands_line[position].data();
@@ -12291,7 +12291,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
             callstack_ind = callstack_repeat;
             stb = "repeat"; ste = "done";
           } else if (callstack_do) {
-            print(images,0,"%s %scurrent 'do..while' block.",
+            print(images,0,"%s %scurrent 'do...while' block.",
                   Com,is_continue?"to next iteration of ":"");
             for (level = 1; level && position<commands_line.size(); ++position) {
               const char *it = commands_line[position].data();
@@ -13087,7 +13087,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
         bool is_network_file = false;
         if (cimg_sscanf(argument,"%11[a-zA-Z]:%4095[^,],%255s",
                         cext,_filename.data(),options.data())<2 ||
-            !cext[1] || // length of 'ext' must be >=2 (avoid case 'C:\\..' on Windows).
+            !cext[1] || // length of 'ext' must be >=2 (avoid case 'C:\\...' on Windows).
             !cimg::strcasecmp(cext,"http") || !cimg::strcasecmp(cext,"https")) {
           *cext = *_filename = *options = 0;
           if (cimg_sscanf(argument,"%4095[^,],%255s",_filename.data(),options.data())!=2) {
