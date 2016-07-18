@@ -4010,16 +4010,11 @@ update_server :
     -o[1] cimgz:/tmp/cli_update$_version.gmic,uchar
     -o[2] cimgz:/tmp/gimp_update$_version.gmic,uchar
 
-    (172,173,174,175)
+    (175)
     -repeat {w}
       v={i[$>]}
-      -if {$v>=174}
-        -_update_server_upload[] ${_path_rc}update$_version.gmic,plain_update$v.gmic
-        -_update_server_upload[] /tmp/update$_version.gmic,update$v.gmic
-      -else
-        -_update_server_upload[] /tmp/cli_update$_version.gmic,cli_update$v.gmic
-        -_update_server_upload[] /tmp/gimp_update$_version.gmic,gimp_update$v.gmic
-      -endif
+      -_update_server_upload[] ${_path_rc}update$_version.gmic,plain_update$v.gmic
+      -_update_server_upload[] /tmp/update$_version.gmic,update$v.gmic
     -done -rm.
 
     -rm -endl

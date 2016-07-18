@@ -319,8 +319,6 @@ cp -Lrf gmic.1.gz $DIR/man
 cd ..
 mkdir $DIR/resources
 cd resources
-\gmic cimgz:http://gmic.eu/gimp_update$SVERSION.gmic -o raw:$DIR/resources/gimp_update$SVERSION.gmic,uchar
-\gmic cimgz:http://gmic.eu/cli_update$SVERSION.gmic -o raw:$DIR/resources/cli_update$SVERSION.gmic,uchar
 cp -Lrf gmic_bashcompletion.sh $DIR/resources
 cp -Lrf gmic_film_cluts.gmz $DIR/resources
 cp -Lrf debian $DIR
