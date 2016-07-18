@@ -5931,7 +5931,7 @@ direction2rgb :
 
 #@gmic ditheredbw
 #@gmic : Create dithered B&W version of selected images.
-#@gmic : $ image.jpg --equalize -ditheredbw.
+#@gmic : $ image.jpg --equalize -ditheredbw[-1]
 ditheredbw :
   -e[^-1] "Create dithered B&W version of image$?."
   -v - -repeat $! -l[$>] -split_opacity
@@ -5960,7 +5960,7 @@ _fill_color :
 #@gmic gradient2rgb : _is_orientation={ 0 | 1 }
 #@gmic : Compute RGB representation of 2d gradient of selected images.
 #@gmic : Default value: 'is_orientation=0'.
-#@gmic : $ image.jpg --gradient2rgb 0 -equalize.
+#@gmic : $ image.jpg --gradient2rgb 0 -equalize[-1]
 gradient2rgb : -check "isbool(${1=0})"
   -arg 1+!$1,"orientation ",""
   -e[^-1] "Compute RGB representation of 2d gradient "${}"of image$?."
@@ -6815,7 +6815,7 @@ apply_scales : -skip "${1=}" -check "isint($2) && $2>0 && ${3=25%}>=0 && ${4=100
 #@gmic : Autocrop and extract connected components in selected images, according to a mask given as the last channel of
 #@gmic : each of the selected image (e.g. alpha-channel).
 #@gmic : Default values: 'threshold=0%', 'min_area=0.1%', 'is_high_connectivity=0' and 'output_type=1'.
-#@gmic : $ 256,256 -noise 0.1,2 -dilate_circ 20 -label_fg 0,1 -normalize 0,255 --neq 0 -*. 255 -append c --autocrop_components ,
+#@gmic : $ 256,256 -noise 0.1,2 -dilate_circ 20 -label_fg 0,1 -normalize 0,255 --neq 0 -*[-1] 255 -append c --autocrop_components ,
 autocrop_components : -skip ${1=0%} -check "${2=0.1%}>=0 && isbool(${3=0}) && isint(${4=1}) && $4>=0 && $4<=2"
   -e[^-1] "Autocrop connected components from image$?, with threshold $1, minimal area $2, "${-arg\ 1+$3,low,high}" connectivity "\
           "and output type set to '"${-arg\ 1+$4,crop,segmentation,coordinates}"'.\n"
@@ -6844,7 +6844,7 @@ autocrop_components : -skip ${1=0%} -check "${2=0.1%}>=0 && isbool(${3=0}) && is
 #@gmic : Autocrop selected images using the crop geometry of the last one by specified vector-valued intensity,
 #@gmic : or by automatic guessing the cropping value.
 #@gmic : Default value: auto mode.
-#@gmic : $ image.jpg --fill. 0 -ellipse. 50%,50%,30%,20%,0,1,1 -autocrop_seq 0
+#@gmic : $ image.jpg --fill[-1] 0 -ellipse[-1] 50%,50%,30%,20%,0,1,1 -autocrop_seq 0
 autocrop_seq : -skip ${1=auto}
   -e[^-1] "Auto-crop image$? using crop geometry of last image by vector '$*'."
   -if {!$!} -return -endif
@@ -7104,7 +7104,7 @@ _montage :
 #@gmic : 'ax,ay,az,ac' set the centering along each axis when 'interpolation=0'
 #@gmic : (set to '0' by default, must be defined in range [0,1]).
 #@gmic : Default values: 'interpolation=0', 'boundary=0' and 'ax=ay=az=ac=0'.
-#@gmic : $ image.jpg --resize_pow2. 0
+#@gmic : $ image.jpg --resize_pow2[-1] 0
 resize_pow2 : -check "isint(${1=0}) && $1>=-1 && $1<=6" -skip ${2=0},${3=0},${4=0},${5=0},${6=0}
   -e[^-1] "Resize image$? so that each dimension is a power of 2."
   -v - -repeat $!
@@ -7629,7 +7629,7 @@ bandpass : -skip ${1=0},${2=20%}
 #@gmic : If a guide image is provided, it is used for drive the smoothing filter.
 #@gmic : A guide image must be of the same xyz-size as the selected images.
 #@gmic : Set 'sampling' arguments to '0' for automatic adjustment.
-#@gmic : $ image.jpg [0] -repeat 5 -bilateral. 10,10 -done
+#@gmic : $ image.jpg [0] -repeat 5 -bilateral[-1] 10,10 -done
 
 #@gmic b : eq. to '-blur'. : (+)
 
@@ -7683,7 +7683,7 @@ blur_radial : -skip ${2=50%},${3=50%}
 #@gmic blur_selective : sigma>=0,_edges>0,_nb_scales>0
 #@gmic : Blur selected images using selective gaussian scales.
 #@gmic : Default values: 'sigma=5', 'edges=0.5' and 'nb_scales=5'.
-#@gmic : $ image.jpg -noise 20 -cut 0,255 --local. -repeat 4 -blur_selective , -done -endlocal
+#@gmic : $ image.jpg -noise 20 -cut 0,255 --local[-1] -repeat 4 -blur_selective , -done -endlocal
 #@gmic : $$
 blur_selective : -check "${1=5}>=0 && ${2=0.5}>=0 && isint(${3=5}) && $3>0"
   -e[^-1] "Blur image$? using $3 selective gaussian scales, with sigma $1 and edges $2."
@@ -7747,7 +7747,7 @@ blur_z : -skip ${2=1}
 
 #@gmic compose_freq
 #@gmic : Compose selected low and high frequency parts into new images.
-#@gmic : $ image.jpg -split_freq 2% -mirror. x -compose_freq
+#@gmic : $ image.jpg -split_freq 2% -mirror[-1] x -compose_freq
 compose_freq :
   -e[^-1] "Compose low and high frequency part$? into new images."
   -v - -repeat {int($!/2)} -+[$>,{$>+1}] -done -v +
@@ -7762,7 +7762,7 @@ compose_freq :
 
 #@gmic convolve_fft : [mask]
 #@gmic : Convolve selected images with specified mask, in the fourier domain.
-#@gmic : $ image.jpg 100%,100% -gaussian. 20,1,45 --convolve_fft[0] [1]
+#@gmic : $ image.jpg 100%,100% -gaussian[-1] 20,1,45 --convolve_fft[0] [1]
 convolve_fft : -check ${-is_image_arg\ $1}
   -e[^-1] "Convolve image$? with mask $1, in the fourier domain."
   -v - -repeat $! -pass$1 0 -l[$>,-1]
@@ -7779,7 +7779,7 @@ convolve_fft : -check ${-is_image_arg\ $1}
 #@gmic : 'boundary' can be { 0=dirichlet | 1=neumann }.
 #@gmic : Default values: 'boundary=1' and 'is_normalized=0'.
 #@gmic : $ image.jpg (0,1,0;1,-4,1;0,1,0) -correlate[-2] [-1] -keep[-2]
-#@gmic : $ image.jpg --crop 40%,40%,60%,60% --correlate[0] .,0,1
+#@gmic : $ image.jpg --crop 40%,40%,60%,60% --correlate[0] [-1],0,1
 
 #@gmic cross_correlation : [mask]
 #@gmic : Compute cross-correlation of selected images with specified mask.
@@ -7877,7 +7877,7 @@ deblur : -check "${2=10}>=0 && ${3=20}>=0 && ${4=0.7}>=0" -skip ${5=1}
 #@gmic deblur_goldmeinel : sigma>=0, _nb_iter>=0, _acceleration>=0, _kernel_type={ 0=quasi-gaussian (faster) | 1=gaussian }.
 #@gmic : Deblur selected images using Gold-Meinel algorithm
 #@gmic : Default values: 'nb_iter=8', 'acceleration=1' and 'kernel_type=1'.
-#@gmic : $ image.jpg --blur 1 --deblur_goldmeinel. 1
+#@gmic : $ image.jpg --blur 1 --deblur_goldmeinel[-1] 1
 ###### : (contribution from Jérôme Boulanger).
 deblur_goldmeinel : -check "$1>=0 && ${2=8}>=0 && ${3=1}>=0" -skip ${4=1}
   -e[^-1] "Deblur image$? using Gold-Meinel algorithm, with sigma $1, $2 iterations, acceleration $3 and "${-arg\ 1+!$4,"",quasi-}"gaussian kernel."
@@ -7890,7 +7890,7 @@ deblur_goldmeinel : -check "$1>=0 && ${2=8}>=0 && ${3=1}>=0" -skip ${4=1}
 #@gmic deblur_richardsonlucy : sigma>=0, nb_iter>=0, _kernel_type={ 0=quasi-gaussian (faster) | 1=gaussian }.
 #@gmic : Deblur selected images using Richardson-Lucy algorithm.
 #@gmic : Default values: 'nb_iter=50' and 'kernel_type=1'.
-#@gmic : $ image.jpg --blur 1 --deblur_richardsonlucy. 1
+#@gmic : $ image.jpg --blur 1 --deblur_richardsonlucy[-1] 1
 ###### : (contribution from Jérôme Boulanger).
 deblur_richardsonlucy : -check "$1>=0 && ${2=50}>=0" -skip ${3=1}
   -e[^-1] "Deblur image$? using Richardson-Lucy algorithm, with sigma $1, $2 iterations and "${-arg\ 1+!$3,"",quasi-}"gaussian kernel."
@@ -7903,7 +7903,7 @@ deblur_richardsonlucy : -check "$1>=0 && ${2=50}>=0" -skip ${3=1}
 #@gmic deconvolve_fft :  [kernel],_regularization>=0
 #@gmic : Deconvolve selected images by specified mask in the fourier space.
 #@gmic : Default value: 'regularization>=0'.
-#@gmic : $ image.jpg --gaussian 5 --convolve_fft[0] [1] --deconvolve_fft. [1]
+#@gmic : $ image.jpg --gaussian 5 --convolve_fft[0] [1] --deconvolve_fft[-1] [1]
 deconvolve_fft : -check ${-is_image_arg\ $1}" && ${2=.001}>=0"
   -e[^-1] "Deconvolve image$? with mask $1 and regularization $2, in the fourier domain."
   -v - -repeat $! -pass$1 0 -l[$>,-1]
@@ -7924,7 +7924,7 @@ deconvolve_fft : -check ${-is_image_arg\ $1}" && ${2=.001}>=0"
 #@gmic deinterlace : _method={ 0 | 1 }
 #@gmic : Deinterlace selected images ('method' can be { 0=standard or 1=motion-compensated }).
 #@gmic : Default value: 'method=0'.
-#@gmic : $ image.jpg --rotate 3,1,1,50%,50% -resize 100%,50% -resize 100%,200%,1,3,4 -shift. 0,1 -add --deinterlace 1
+#@gmic : $ image.jpg --rotate 3,1,1,50%,50% -resize 100%,50% -resize 100%,200%,1,3,4 -shift[-1] 0,1 -add --deinterlace 1
 deinterlace : -skip ${1=0}
   -e[^-1] "Deinterlace image$? with "${-arg\ 1+!$1,motion-compensated,standard}" method."
   -v - -repeat $! -l[$>]
@@ -7943,7 +7943,7 @@ deinterlace : -skip ${1=0}
 #@gmic : Denoise selected image using haar-wavelet thresholding with cycle spinning.
 #@gmic : Set 'nb_scales==0' to automatically determine the optimal number of scales.
 #@gmic : Default values: 'threshold=1.4', 'nb_scale=0' and 'cycle_spinning=10'.
-#@gmic : $ image.jpg -noise 20 -c 0,255 --denoise_haar. 0.8
+#@gmic : $ image.jpg -noise 20 -c 0,255 --denoise_haar[-1] 0.8
 denoise_haar : -check "${1=1.4}>=0 && isint(${2=0}) && $2>=0 && isint(${3=10}) && $3>0"
   -e[^-1] "Denoise image$? using haar-wavelet thresholding, with threshold $1, "\
           ${-arg\ 1+($2>0),auto,$2}" scales and $3 spinning cycles."
@@ -7969,7 +7969,7 @@ denoise_haar : -check "${1=1.4}>=0 && isint(${2=0}) && $2>=0 && isint(${3=10}) &
 #@gmic denoise_patchpca : _strength>=0,_patch_size>0,_lookup_size>0,_spatial_sampling>0
 #@gmic : Denoise selected images using the patch-pca algorithm.
 #@gmic : Default values: 'patch_size=7', 'lookup_size=11', 'details=1.8' and 'spatial_sampling=5'.
-#@gmic : $ image.jpg --noise 20 -c. 0,255 --denoise_patchpca. ,
+#@gmic : $ image.jpg --noise 20 -c[-1] 0,255 --denoise_patchpca[-1] ,
 denoise_patchpca : -check "${1=1.8} && $1>=0 && isint(${2=7}) && $2>0 && isint(${3=11}) && $3>0 && isint(${4=5}) && $4>0"
   -e[^-1] "Denoise image$? using patch-pca, with strength $1, patch size $2, lookup size $3 and spatial sampling $4."
   -v - -repeat $! -l[$>]
@@ -8101,7 +8101,7 @@ dilate_threshold : -check "isint($1) && $1>=1 && isint(${2=$1}) && $2>=1 && isin
 
 #@gmic divergence
 #@gmic : Compute divergence of selected vector fields.
-#@gmic : $ image.jpg -luminance --gradient -append[-2,-1] c -divergence.
+#@gmic : $ image.jpg -luminance --gradient -append[-2,-1] c -divergence[-1]
 divergence :
   -e[^-1] "Compute divergence of vector field$?."
   -v - -repeat $! -l[$>]
@@ -8202,8 +8202,8 @@ erode_threshold : -check "isint($1) && $1>=1 && isint(${2=$1}) && $2>=1 && isint
 #@gmic fft : _{ x | y | z }...{ x | y | z } : (+)
 #@gmic : Compute the direct fourier transform (real and imaginary parts) of selected images,
 #@gmic : optionally along the specified axes only.
-#@gmic : $ image.jpg -luminance --fft -append[-2,-1] c -norm. -log. -shift. 50%,50%,0,0,2
-#@gmic : $ image.jpg w2={int(w/2)} h2={int(h/2)} -fft -shift $w2,$h2,0,0,2 -ellipse $w2,$h2,30,30,0,1,0 -shift -$w2,-$h2,0,0,2 -ifft -remove.
+#@gmic : $ image.jpg -luminance --fft -append[-2,-1] c -norm[-1] -log[-1] -shift[-1] 50%,50%,0,0,2
+#@gmic : $ image.jpg w2={int(w/2)} h2={int(h/2)} -fft -shift $w2,$h2,0,0,2 -ellipse $w2,$h2,30,30,0,1,0 -shift -$w2,-$h2,0,0,2 -ifft -remove[-1]
 #@gmic : $$
 
 #@gmic g : eq. to '-gradient'. : (+)
@@ -8219,7 +8219,7 @@ erode_threshold : -check "isint($1) && $1>=1 && isint(${2=$1}) && $2>=1 && isint
 
 #@gmic gradient_norm
 #@gmic : Compute gradient norm of selected images.
-#@gmic : $ image.jpg --gradient_norm -equalize.
+#@gmic : $ image.jpg --gradient_norm -equalize[-1]
 #@gmic : $$
 gradient_norm :
   -e[^-1] "Compute gradient norm of image$?."
@@ -8433,7 +8433,7 @@ inn :
 #@gmic inpaint_flow : [mask],_nb_global_iter>=0,_nb_local_iter>=0,_dt>0,_alpha>=0,_sigma>=0
 #@gmic : Apply iteration of the inpainting flow on selected images.
 #@gmic : Default values: 'nb_global_iter=4', 'nb_global_iter=15', 'dt=10', 'alpha=1' and 'sigma=3'.
-#@gmic : $ image.jpg 100%,100% -ellipse. 30%,30%,40,30,0,1,255 -inpaint_flow[0] [1]
+#@gmic : $ image.jpg 100%,100% -ellipse[-1] 30%,30%,40,30,0,1,255 -inpaint_flow[0] [1]
 inpaint_flow : -check ${-is_image_arg\ $1}" && ${2=10}>=0 && ${3=100}>=0 && ${4=5}>0 && ${5=1}>=0 && ${6=3}>=0"
   -e[^-1] "Apply $2x$3 iterations of the inpainting flow on image$?, with mask $1, time step $4, alpha $5 and sigma $6."
   -v - -repeat $! -pass$1 0 -l[$>,-1]
@@ -8461,7 +8461,7 @@ inpaint_holes : -check "${1=4}>=0 && ${2=0}>=0" -skip ${3=0}
 
 #@gmic inpaint_morpho : [mask]
 #@gmic : Inpaint selected images by specified mask using morphological operators.
-#@gmic : $ image.jpg 100%,100% -ellipse. 30%,30%,40,30,0,1,255 --inpaint_morpho[0] [1]
+#@gmic : $ image.jpg 100%,100% -ellipse[-1] 30%,30%,40,30,0,1,255 --inpaint_morpho[0] [1]
 inpaint_morpho : -check ${-is_image_arg\ $1}
   -e[^-1] "Inpaint image$? by mask $1, using morphological operators."
   -v - -repeat $! -pass$1 0 -l[$>,-1]
@@ -8482,7 +8482,7 @@ inpaint_morpho : -check ${-is_image_arg\ $1}
 #@gmic inpaint_patchmatch : [mask],_nb_scales={ 0=auto | >0 },_patch_size>0,_nb_iterations_per_scale>0,_blend_size>=0,_allow_outer_blending={ 0 | 1 },_is_already_initialized={ 0 | 1 }
 #@gmic : Inpaint selected images by specified binary mask, using a multi-scale patchmatch algorithm.
 #@gmic : Default values: 'nb_scales=0', 'patch_size=9', 'nb_iterations_per_scale=10', 'blend_size=5', 'allow_outer_blending=1' and 'is_already_initialized=0'.
-#@gmic : $ image.jpg 100%,100% -ellipse. 30%,30%,40,30,0,1,255 --inpaint_patchmatch[0] [1]
+#@gmic : $ image.jpg 100%,100% -ellipse[-1] 30%,30%,40,30,0,1,255 --inpaint_patchmatch[0] [1]
 inpaint_patchmatch : -check ${-is_image_arg\ $1}"&& ${2=0}>=0 && isint(${3=9}) && $3>0 && isint(${4=10}) && $4>0 && isint(${5=5}) && $5>=0" -skip ${6=1},${7=0}
   -e[^-1] "Inpaint image$? with mask $1, using a multiscale patchmatch algorithm with "${"-v - -if $2 -u \"$2 \" -else -u auto- -endif -v +"}\
           "scales, $3x$3 patches, $4 iterations per scale and blending size $5."
@@ -8599,7 +8599,7 @@ _inpaint_patchmatch :
 #@gmic inpaint_diffusion : [mask],_nb_scales[%]>=0,_diffusion_type={ 0=isotropic | 1=delaunay-oriented | 2=edge-oriented },_diffusion_iter>=0
 #@gmic : Inpaint selected images by specified mask using a multiscale transport-diffusion algorithm.
 #@gmic : Default values: 'smoothness=75%', 'diffusion_type=1' and 'diffusion_iter=20'.
-#@gmic : $ image.jpg 100%,100% -ellipse. 30%,30%,40,30,0,1,255 --inpaint_diffusion[0] [1]
+#@gmic : $ image.jpg 100%,100% -ellipse[-1] 30%,30%,40,30,0,1,255 --inpaint_diffusion[0] [1]
 inpaint_diffusion : -check ${-is_image_arg\ $1}" && ${2=75%}>=0 && isint(${3=1}) && $3>=0 && $3<=2 && ${4=20}>=0"
   -v - s0="isotropic" s1="delaunay-oriented" s2="edge-oriented"
   -v + -e[^-1] "Inpaint image$? by mask $1, using a multiscale diffusion algorithm with $2 scales and $4 iterations of "${s$3}" diffusion." -v -
@@ -8766,7 +8766,7 @@ meancurvature_flow : -skip ${1=10},${2=30},${3=0}
 #@gmic : The tonal kernel is exponential (exp(-d^2/_tonal_bandwidth^2))
 #@gmic : with d the euclidiean distance between image patches.
 #@gmic : Default values: 'patch_radius=4', 'spatial_bandwidth=4', 'tonal_bandwidth=10' and 'patch_measure_command=-norm'.
-#@gmic : $ image.jpg --noise 10 -nlmeans. 4,4,{0.6*${-std_noise}}
+#@gmic : $ image.jpg --noise 10 -nlmeans[-1] 4,4,{0.6*${-std_noise}}
 nlmeans: -check "${1=4}>0 && ${2=4}>0 && ${3=10}>0" -skip "${4=-norm}"
   -e[^-1] "Apply non-local means denoising with patch size $1, spatial bandwidth $2, tonal bandwidth $3 and patch measure command '$4'."
   -v - -repeat $! -l[$>]
@@ -8865,7 +8865,7 @@ peronamalik_flow : -check "${1=20}>0 && ${2=5}>=0" -skip ${3=5},${4=0}
 
 #@gmic phase_correlation : [destination]
 #@gmic : Estimate translation vector between selected source images and specified destination.
-#@gmic : $ image.jpg --shift -30,-20 --phase_correlation[0] [1] -unroll. y
+#@gmic : $ image.jpg --shift -30,-20 --phase_correlation[0] [1] -unroll[-1] y
 phase_correlation : -check ${-is_image_arg\ $1}
   -e[^-1] "Estimate shift between source image$? and destination $1."
   -v - -repeat $! -pass$1
@@ -8984,7 +8984,7 @@ remove_pixels : -check "$1>=0"
 #@gmic : 'edge' must be specified to enable shock-filter method.
 #@gmic : Default values: 'alpha=0' and 'sigma=0'.
 #@gmic : $ image.jpg --sharpen 300
-#@gmic : $ image.jpg -blur 5 --sharpen. 300,1
+#@gmic : $ image.jpg -blur 5 --sharpen[-1] 300,1
 
 #@gmic smooth : amplitude>=0,_sharpness>=0,_anisotropy,_alpha,_sigma,_dl>0,_da>0,_precision>0,interpolation,_fast_approx={ 0 | 1 } : nb_iterations>=0,_sharpness>=0,_anisotropy,_alpha,_sigma,_dt>0,0 : [tensor_field],_amplitude>=0,_dl>0,_da>0,_precision>0,_interpolation,_fast_approx={ 0 | 1 } : [tensor_field],_nb_iters>=0,_dt>0,0 : (+)
 #@gmic : Smooth selected images anisotropically using diffusion PDE's, with specified field of
@@ -8992,8 +8992,8 @@ remove_pixels : -check "$1>=0"
 #@gmic : 'anisotropy' must be in [0,1].
 #@gmic : 'interpolation' can be { 0=nearest | 1=linear | 2=runge-kutta }.
 #@gmic : Default values: 'sharpness=0.7', 'anisotropy=0.3', 'alpha=0.6', 'sigma=1.1', 'dl=0.8', 'da=30', 'precision=2', 'interpolation=0' and 'fast_approx=1'.
-#@gmic : $ image.jpg [0] -repeat 3 -smooth. 20 -done
-#@gmic : $ image.jpg 100%,100%,1,2 -rand. -100,100 -repeat 2 -smooth. 100,0.2,1,4,4 -done --warp[0] .,1,1
+#@gmic : $ image.jpg [0] -repeat 3 -smooth 20 -done
+#@gmic : $ image.jpg 100%,100%,1,2 -rand[-1] -100,100 -repeat 2 -smooth[-1] 100,0.2,1,4,4 -done --warp[0] [-1],1,1
 #@gmic : $$
 
 #@gmic split_freq : smoothness>0[%]
@@ -9069,7 +9069,7 @@ split_details : -check "isint(${1=4}) && $1>0 && ${2=0}>=0 && ${3=0}>=0"
 #@gmic solidify : _smoothness[%]>=0,_diffusion_type={ 0=isotropic | 1=delaunay-oriented | 2=edge-oriented },_diffusion_iter>=0
 #@gmic : Solidify selected transparent images.
 #@gmic : Default values: 'smoothness=75%', 'diffusion_type=1' and 'diffusion_iter=20'.
-#@gmic : $ image.jpg 100%,100% -circle. 50%,50%,25%,1,255 -append c --solidify , -display_rgba
+#@gmic : $ image.jpg 100%,100% -circle[-1] 50%,50%,25%,1,255 -append c --solidify , -display_rgba
 solidify : -check "${1=75%}>=0 && isint(${2=1}) && $2>=0 && $2<=2 && ${3=20}>=0"
   -v - s0="isotropic" s1="delaunay-oriented" s2="edge-oriented"
   -v + -e[^-1] "Solidify transparent image$? with smoothness $1 and $3 iterations of "${s$2}" diffusion." -v -
@@ -9293,7 +9293,7 @@ watermark_fourier : -check ${2=33}>0
 #@gmic area : tolerance>=0,is_high_connectivity={ 0 | 1 }
 #@gmic : Compute area of connected components in selected images.
 #@gmic : Default values: 'is_high_connectivity=0'.
-#@gmic : $ image.jpg -luminance -stencil. 1 --area 0
+#@gmic : $ image.jpg -luminance -stencil[-1] 1 --area 0
 #@gmic : $$
 area : -check "$1>=0" -skip ${2=0}
   -e[^-1] "Compute area of connected components in image$?, with tolerance $1 and "${-arg\ 1+!$2,high,low}" connectivity."
@@ -9305,7 +9305,7 @@ area : -check "$1>=0" -skip ${2=0}
 #@gmic : Compute area of connected components for non-zero values in selected images.
 #@gmic : Similar to '-area' except that 0-valued pixels are not considered.
 #@gmic : Default values: 'is_high_connectivity=0'.
-#@gmic : $ image.jpg -luminance -stencil. 1 --area_fg 0
+#@gmic : $ image.jpg -luminance -stencil[-1] 1 --area_fg 0
 area_fg : -check "$1>=0" -skip ${2=0}
   -e[^-1] "Compute area of foreground connected components in image$?, with tolerance $1 and "${-arg\ 1+!$2,high,low}" connectivity."
   -v - -repeat $! -l[$>] -s c
@@ -9433,7 +9433,7 @@ fftpolar :
 #@gmic : If value range is set, the histogram is estimated only for pixels in the specified
 #@gmic : value range. Argument 'value1' must be specified if 'value0' is set.
 #@gmic : Default values: 'nb_levels=256', 'value0=0%' and 'value1=100%'.
-#@gmic : $ image.jpg --histogram 64 -display_graph. 400,300,3
+#@gmic : $ image.jpg --histogram 64 -display_graph[-1] 400,300,3
 
 #@gmic histogram_nd : nb_levels>0[%],_value0[%],_value1[%]
 #@gmic : Compute the 1d,2d or 3d histogram of selected multi-channels images (having 1,2 or 3 channels).
@@ -9495,7 +9495,7 @@ histogram_pointwise : -skip ${2=0%},${3=100%}
 #@gmic hough : _width>0,_height>0,gradient_norm_voting={ 0 | 1 }
 #@gmic : Compute hough transform (theta,rho) of selected images.
 #@gmic : Default values: 'width=512', 'height=width' and 'gradient_norm_voting=1'.
-#@gmic : $ image.jpg --blur. 1.5 -hough. 400,400 -blur. 0.5 -+. 1 -log.
+#@gmic : $ image.jpg --blur 1.5 -hough[-1] 400,400 -blur[-1] 0.5 -add[-1] 1 -log[-1]
 hough : -check "${1=512}>0 && ${2=$1}>0" -skip ${3=1}
   -e[^-1] "Compute $1x$2 hough transform of image$?, "${-arg\ 1+!$3,with,without}" gradient norm voting."
   -v - -slices 50% -luminance -repeat $! -l[$>] nm={0,n}
@@ -9624,7 +9624,7 @@ patches : -check "isint($1) && $1>0 && isint($2) && $2>0 && isint($3) && $3>0"
 
 #@gmic plot2value
 #@gmic : Retrieve values from selected 2d graph plots.
-#@gmic : $ 400,300,1,1,'if(y>300*abs(cos(x/10+2*u)),1,0)' --plot2value --display_graph. 400,300
+#@gmic : $ 400,300,1,1,'if(y>300*abs(cos(x/10+2*u)),1,0)' --plot2value --display_graph[-1] 400,300
 plot2value :
   -e[^-1] "Retrieve values from 2d graph plot$?."
   -v - -repeat $! -l[$>]
@@ -9643,8 +9643,8 @@ plot2value :
 #@gmic : Points with coordinates that are negative or higher than specified ('width','height','depth')
 #@gmic : are not plotted.
 #@gmic : Default values: 'type=0' and 'max_width=max_height=max_depth=0'.
-#@gmic : $ 3000,2 -rand 0,400 --pointcloud 0 -dilate. 3
-#@gmic : $ 3000,2 -rand 0,400 {w} {w},3 -rand. 0,255 -append y --pointcloud 0 -dilate. 3
+#@gmic : $ 3000,2 -rand 0,400 --pointcloud 0 -dilate[-1] 3
+#@gmic : $ 3000,2 -rand 0,400 {w} {w},3 -rand[-1] 0,255 -append y --pointcloud 0 -dilate[-1] 3
 pointcloud : -check "${1=0}<=2" -skip ${2=0},${3=0},${4=0}
   -e[^-1] "Convert image$? to point clouds, in "${-arg\ 2+($1>=0)*$1-($1<0),{-$1}-opacity,binary,cumulative,labeling}" mode,"\
           "with ($2,$3,$4) as maximal dimensions."
@@ -9677,7 +9677,7 @@ pointcloud : -check "${1=0}<=2" -skip ${2=0},${3=0},${4=0}
 #@gmic psnr : _max_value
 #@gmic : Compute PSNR (Peak Signal-to-Noise Ratio) matrix between selected images.
 #@gmic : Default value: 'max_value=255'.
-#@gmic : $ image.jpg --noise 30 --noise[0] 35 --noise[0] 38 -cut. 0,255 -psnr 255 -replace_inf 0
+#@gmic : $ image.jpg --noise 30 --noise[0] 35 --noise[0] 38 -cut[-1] 0,255 -psnr 255 -replace_inf 0
 psnr : -skip ${1=255}
   -e[^-1] "Compute the "$!x$!" matrix of PSNR values, from image$? with maximum value $1."
   -v - -mse -log10 -- {log10($1*$1)} -* -10 -nm. [PSNR] -v +
@@ -10053,7 +10053,7 @@ gaussian : -skip ${1=3},${2=$1},${3=0}
 #@gmic : even if a color is specified.
 #@gmic : Default values: 'plot_type=1', 'vertex_type=1', 'ymin=ymax=0 (auto)', 'opacity=1', 'pattern=(undefined)'
 #@gmic : and 'color1=0'.
-#@gmic : $ image.jpg --rows 50% -blur. 3 -split. c -div[0] 1.5 -graph[0] [1],2,0,0,0,1,255,0,0 -graph[0] [2],2,0,0,0,1,0,255,0 -graph[0] [3],2,0,0,0,1,0,0,255 -keep[0]
+#@gmic : $ image.jpg --rows 50% -blur[-1] 3 -split[-1] c -div[0] 1.5 -graph[0] [1],2,0,0,0,1,255,0,0 -graph[0] [2],2,0,0,0,1,0,255,0 -graph[0] [3],2,0,0,0,1,0,0,255 -keep[0]
 
 #@gmic grid : size_x[%]>=0,size_y[%]>=0,_offset_x[%],_offset_y[%],_opacity,_pattern,_color1,...
 #@gmic : Draw xy-grid on selected images.
@@ -10114,7 +10114,7 @@ grid : -check "$1>=0 && $2>=0" -skip ${3=0},${4=0},${5=1},${6=0},${7=0}
 #@gmic : Draw specified sprite image on selected images.
 #@gmic : (eq. to '-j').
 #@gmic : Default values: 'x=y=z=c=0', 'opacity=1', 'sprite_mask=(undefined)' and 'max_opacity_mask=1'.
-#@gmic : $ image.jpg --crop 40%,40%,60%,60% -resize. 200%,200%,1,3,5 -frame. 2,2,0 -image[0] .,30%,30% -keep[0]
+#@gmic : $ image.jpg --crop 40%,40%,60%,60% -resize[-1] 200%,200%,1,3,5 -frame[-1] 2,2,0 -image[0] [-1],30%,30% -keep[0]
 
 #@gmic line : x0[%],y0[%],x1[%],y1[%],_opacity,_pattern,_color1,... : (+)
 #@gmic : Draw specified colored line on selected images.
@@ -10126,7 +10126,7 @@ grid : -check "$1>=0 && $2>=0" -skip ${3=0},${4=0},${5=1},${6=0},${7=0}
 #@gmic mandelbrot : z0r,z0i,z1r,z1i,_iteration_max>=0,_is_julia={ 0 | 1 },_c0r,_c0i,_opacity : (+)
 #@gmic : Draw mandelbrot/julia fractal on selected images.
 #@gmic : Default values: 'iteration_max=100', 'is_julia=0', 'c0r=c0i=0' and 'opacity=1'.
-#@gmic : $ 400,400 -mandelbrot -2.5,-2,2,2,1024 -map 0 --blur 2 -elevation3d. -0.2
+#@gmic : $ 400,400 -mandelbrot -2.5,-2,2,2,1024 -map 0 --blur 2 -elevation3d[-1] -0.2
 
 #@gmic marble : _image_weight,_pattern_weight,_angle,_amplitude,_sharpness>=0,_anisotropy>=0,_alpha,_sigma,_cut_low>=0,_cut_high>=0
 #@gmic : Render marble like pattern on selected images.
@@ -10200,7 +10200,7 @@ _render_maze :
 #@gmic maze_mask : _cellsize>0
 #@gmic : Input maze according to size and shape of selected mask images.
 #@gmic : Mask may contain disconnected shapes.
-#@gmic : $ 0 -text "G'MIC",0,0,53,1,1 -dilate 3 -autocrop 0 -frame 1,1,0 -maze_mask 8 -dilate 3 -negative -* 255
+#@gmic : $ 0 -text "G'MIC",0,0,53,1,1 -dilate 3 -autocrop 0 -frame 1,1,0 -maze_mask 8 -dilate 3 -negative -mul 255
 maze_mask : -check "isint(${1=24}) && $1>0"
   -e[^-1] "Input masked maze from image$? with cell size $1."
   -v - -norm ->= 50% -repeat $! -l[$>]
@@ -10220,7 +10220,7 @@ maze_mask : -check "isint(${1=24}) && $1>0"
 #@gmic : (eq. to '-j3d').
 #@gmic : 'rendering_mode' can be { 0=dots | 1=wireframe | 2=flat | 3=flat-shaded | 4=gouraud-shaded | 5=phong-shaded }.
 #@gmic : Default values: 'x=y=z=0', 'opacity=1' and 'is_zbuffer=1'. All other arguments take their default values from the 3d environment variables.
-#@gmic : $ image.jpg -torus3d 100,10 -cone3d 30,-120 -add3d[-2,-1] -rotate3d. 1,1,0,60 -object3d[0] .,50%,50% -keep[0]
+#@gmic : $ image.jpg -torus3d 100,10 -cone3d 30,-120 -add3d[-2,-1] -rotate3d. 1,1,0,60 -object3d[0] [-1],50%,50% -keep[0]
 
 #@gmic pack_sprites : _nb_scales>=0,0<=_min_scale<=100,_allow_rotation={ 0=0 deg. | 1=180 deg. | 2=90 deg. | 3=any },_spacing,_precision>=0,max_iterations>=0
 #@gmic : Try to randomly pack as many sprites as possible onto the 'empty' areas of an image.
@@ -10236,7 +10236,7 @@ maze_mask : -check "isint(${1=24}) && $1>0"
 #@gmic : 'spacing' can be positive or negative.
 #@gmic : 'precision' tells about the desired number of failed trials before ending the filling process.
 #@gmic : Default values: 'nb_scales=5', 'min_scale=25', 'allow_rotation=3', 'spacing=1', 'precision=7' and 'max_iterations=256'.
-#@gmic : $ 512,512,1,3,"min(255,y*c/2)" 100%,100% -circle 50%,50%,100,1,255 -append c image.jpg -resize2dy. 24 -to_rgba -pack_sprites 3,25
+#@gmic : $ 512,512,1,3,"min(255,y*c/2)" 100%,100% -circle 50%,50%,100,1,255 -append c image.jpg -resize2dy[-1] 24 -to_rgba -pack_sprites 3,25
 pack_sprites : -check "isint(${1=5}) && $1>=0 && ${2=25}>=0 && $2<=100 && isint(${3=3}) && $3>=0 && $3<=3 && isint(${4=1}) && isint(${5=7}) && $5>=0 && isint(${6=256}) && $6>=0"
   -e[^-1] "Randomly pack image$? with $1 scales, minimum scale $2%, "${-arg\ 1+$3,no,180\"\ \"deg.,90\"\ \"deg.,any}" rotation, spacing $4, precision $5 and $6 maximum iterations."
   -v - N={$!-1} is_first_time=1
@@ -10735,8 +10735,8 @@ transpose :
 #@gmic : 3d object, or merge all selected 3d objects together.
 #@gmic : (eq. to '-+3d').
 #@gmic : Default values: 'ty=tz=0'.
-#@gmic : $ -sphere3d 10 -repeat 5 --add3d. 10,{u(-10,10)},0 -color3d. ${-RGB} -done -add3d
-#@gmic : $ -repeat 20 -torus3d 15,2 -color3d. ${-RGB} -mul3d. 0.5,1 -if {$>%2} -rotate3d. 0,1,0,90 -endif -add3d. 70 -add3d -rotate3d. 0,0,1,18 -done -double3d 0
+#@gmic : $ -sphere3d 10 -repeat 5 --add3d[-1] 10,{u(-10,10)},0 -color3d[-1] ${-RGB} -done -add3d
+#@gmic : $ -repeat 20 -torus3d 15,2 -color3d[-1] ${-RGB} -mul3d[-1] 0.5,1 -if {$>%2} -rotate3d[-1] 0,1,0,90 -endif -add3d[-1] 70 -add3d -rotate3d[-1] 0,0,1,18 -done -double3d 0
 
 #@gmic animate3d : _width>0,_height>0,_angle_dx,_angle_dy,_angle_dz,_zoom_factor>=0,_filename
 #@gmic : Animate selected 3d objects in a window.
@@ -10899,7 +10899,7 @@ c3d :
 #@gmic center3d
 #@gmic : Center selected 3d objects at (0,0,0).
 #@gmic : (eq. to '-c3d').
-#@gmic : $ -repeat 100 -circle3d {u(100)},{u(100)},{u(100)},2 -done -add3d -color3d. 255,0,0 --center3d -color3d. 0,255,0 -add3d
+#@gmic : $ -repeat 100 -circle3d {u(100)},{u(100)},{u(100)},2 -done -add3d -color3d[-1] 255,0,0 --center3d -color3d[-1] 0,255,0 -add3d
 center3d :
   -_$0
 
@@ -10916,7 +10916,7 @@ _center3d :
 #@gmic circle3d : _x0,_y0,_z0,_radius>=0
 #@gmic : Input 3d circle at specified coordinates.
 #@gmic : Default values: 'x0=y0=z0=0' and 'radius=1'.
-#@gmic : $ -repeat 500 a={$>*pi/250} -circle3d {cos(3*$a)},{sin(2*$a)},0,{$a/50} -color3d. ${-RGB},0.4 -done -add3d
+#@gmic : $ -repeat 500 a={$>*pi/250} -circle3d {cos(3*$a)},{sin(2*$a)},0,{$a/50} -color3d[-1] ${-RGB},0.4 -done -add3d
 circle3d : -skip ${1=0},${2=0},${3=0},${4=1}
   -e[^-1] "Input 3d circle at position ($1,$2,$3) with radius $4."
   -v -
@@ -10932,7 +10932,7 @@ circle3d : -skip ${1=0},${2=0},${3=0},${4=1}
 #@gmic circles3d : _radius>=0,_is_filled={ 0 | 1 }
 #@gmic : Convert specified 3d objects to sets of 3d circles with specified radius.
 #@gmic : Default values: 'radius=1' and 'is_filled=1'.
-#@gmic : $ image.jpg -luminance -resize2dy 40 -threshold 50% -* 255 -pointcloud3d -color3d. 255,255,255 -circles3d 0.7
+#@gmic : $ image.jpg -luminance -resize2dy 40 -threshold 50% -* 255 -pointcloud3d -color3d[-1] 255,255,255 -circles3d 0.7
 circles3d : -check ${1=1}>=0 -skip ${2=1}
   -e[^-1] "Convert 3d object$? to sets of 3d "${-arg\ 1+$2,wireframe,filled}" circles with radius $1."
   -v - -p3d 0 -repeat $! -l[$>]
@@ -10953,7 +10953,7 @@ circles3d : -check ${1=1}>=0 -skip ${2=1}
 #@gmic : Set color and opacity of selected 3d objects.
 #@gmic : (eq. to '-col3d').
 #@gmic : Default value: 'B=G=R' and 'opacity=(undefined)'.
-#@gmic : $ -torus3d 100,10 -double3d 0 -repeat 7 --rotate3d. 1,0,0,20 -color3d. ${-RGB} -done -add3d
+#@gmic : $ -torus3d 100,10 -double3d 0 -repeat 7 --rotate3d[-1] 1,0,0,20 -color3d[-1] ${-RGB} -done -add3d
 
 #@gmic colorcube3d
 #@gmic : Input 3d color cube.
@@ -11017,7 +11017,7 @@ cone3d : -check ${3=24}>0 -skip ${1=1},${2=1}
 #@gmic cubes3d : _size>=0
 #@gmic : Convert specified 3d objects to sets of 3d cubes with specified size.
 #@gmic : Default value: 'size=1'.
-#@gmic : $ image.jpg -luminance -resize2dy 40 -threshold 50% -* 255 -pointcloud3d -color3d. 255,255,255 -cubes3d 1
+#@gmic : $ image.jpg -luminance -resize2dy 40 -threshold 50% -* 255 -pointcloud3d -color3d[-1] 255,255,255 -cubes3d 1
 cubes3d : -check ${1=1}>=0
   -e[^-1] "Convert 3d object$? to sets of 3d cubes with size $1."
   -v - -p3d 0 -repeat $! -l[$>]
@@ -11087,7 +11087,7 @@ cylinder3d : -check ${3=24}>0 -skip ${1=1},${2=1}
 #@gmic : Generate 3d delaunay triangulations from selected images.
 #@gmic : One assumes that the selected input images are binary images containing the set of points to mesh.
 #@gmic : The output 3d object is a mesh composed of non-oriented triangles.
-#@gmic : $ 500,500 -noise 0.05,2 -* 255 --delaunay3d -color3d[1] 255,128,0 -dilate_circ[0] 5 -to_rgb[0] --object3d[0] [1],0,0,0,1,1 -max. [0]
+#@gmic : $ 500,500 -noise 0.05,2 -* 255 --delaunay3d -color3d[1] 255,128,0 -dilate_circ[0] 5 -to_rgb[0] --object3d[0] [1],0,0,0,1,1 -max[-1] [0]
 delaunay3d :
   -e[^-1] "Generate 3d delaunay triangulation from image$?."
   -v - -repeat $! -l[$>]
@@ -11121,7 +11121,7 @@ _delaunay3d :
 
 #@gmic distribution3d
 #@gmic : Get 3d color distribution of selected images.
-#@gmic : $ image.jpg -distribution3d -colorcube3d -primitives3d. 1 -add3d
+#@gmic : $ image.jpg -distribution3d -colorcube3d -primitives3d[-1] 1 -add3d
 distribution3d :
   -e[^-1] "Get 3d color distribution of image$?."
   -v - -to_rgb -permute "cxyz" -y
@@ -11142,7 +11142,7 @@ distribution3d :
 #@gmic : factors.
 #@gmic : (eq. to '-/3d').
 #@gmic : Default value: 'factor_z=0'.
-#@gmic : $ -torus3d 5,2 -repeat 5 --add3d. 12,0,0 -div3d. 1.2 -color3d. ${-RGB} -done -add3d
+#@gmic : $ -torus3d 5,2 -repeat 5 --add3d[-1] 12,0,0 -div3d[-1] 1.2 -color3d[-1] ${-RGB} -done -add3d
 
 #@gmic db3d : eq. to '-double3d'. : (+)
 
@@ -11150,14 +11150,14 @@ distribution3d :
 #@gmic : Enable/disable double-sided mode for 3d rendering.
 #@gmic : (eq. to '-db3d').
 #@gmic : Default value: 'is_double_sided=1'.
-#@gmic : $ -mode3d 1 -repeat 2 -torus3d 100,30 -rotate3d. 1,1,0,60 -double3d $> -snapshot3d. 400 -done
+#@gmic : $ -mode3d 1 -repeat 2 -torus3d 100,30 -rotate3d[-1] 1,1,0,60 -double3d $> -snapshot3d[-1] 400 -done
 
 #@gmic elevation3d : z-factor : [elevation_map] : 'formula' : (no arg) : (+)
 #@gmic : Build 3d elevation of selected images, with a specified elevation map.
 #@gmic : When invoked with (no arg) or 'z-factor', the elevation map is computed as the pointwise L2 norm of the
 #@gmic : pixel values. Otherwise, the elevation map is taken from the specified image or formula.
 #@gmic : $ image.jpg -blur 5 -elevation3d 0.5
-#@gmic : $ 128,128,1,3,u(255) -plasma 10,3 -blur 4 -sharpen 10000 -elevation3d. 'X=(x-64)/6;Y=(y-64)/6;-100*exp(-(X^2+Y^2)/30)*abs(cos(X)*sin(Y))'
+#@gmic : $ 128,128,1,3,u(255) -plasma 10,3 -blur 4 -sharpen 10000 -elevation3d[-1] 'X=(x-64)/6;Y=(y-64)/6;-100*exp(-(X^2+Y^2)/30)*abs(cos(X)*sin(Y))'
 
 #@gmic empty3d
 #@gmic : Input empty 3d object.
@@ -11188,11 +11188,11 @@ extrude3d : -check "${1=16}>0 && ${2=1024}>0 && ${3=0.5%}>=0"
 #@gmic : Set 'focale' to 0 to enable parallel projection (instead of perspective).
 #@gmic : Set negative 'focale' will disable 3d sprite zooming.
 #@gmic : Default value: 'focale=700'.
-#@gmic : $ -repeat 5 -torus3d 100,30 -rotate3d. 1,1,0,60 -focale3d {$<*90} -snapshot3d. 400 -done -remove[0]
+#@gmic : $ -repeat 5 -torus3d 100,30 -rotate3d[-1] 1,1,0,60 -focale3d {$<*90} -snapshot3d[-1] 400 -done -remove[0]
 
 #@gmic gaussians3d : _size>0,_opacity
 #@gmic : Convert selected 3d objects into set of 3d gaussian-shaped sprites.
-#@gmic : $ image.jpg -r2dy 32 -distribution3d -gaussians3d 20 -colorcube3d -primitives3d. 1 -+3d
+#@gmic : $ image.jpg -r2dy 32 -distribution3d -gaussians3d 20 -colorcube3d -primitives3d[-1] 1 -+3d
 gaussians3d : -check "${1=32}>0" -skip ${2=0.3}
   -e[^-1] "Convert 3d object$? into sets of gaussian-shaped 3d sprites, with size $1 and opacity $2."
   -v - -p3d 2 -p3d 0 -repeat $! -l[$>] nm={0,n} -s3d
@@ -11256,7 +11256,7 @@ gyroid3d : -check ${1=32}>0 -skip ${2=5}
 
 #@gmic histogram3d
 #@gmic : Get 3d color histogram of selected images.
-#@gmic : $ image.jpg -histogram3d -colorcube3d -primitives3d. 1 -add3d
+#@gmic : $ image.jpg -histogram3d -colorcube3d -primitives3d[-1] 1 -add3d
 histogram3d :
   -e[^-1] "Get 3d color histogram of image$?."
   -v - -to_rgb -repeat $! -l[$>]
@@ -11283,7 +11283,7 @@ image6cube3d :
 #@gmic : Generate 3d blocks from selected images.
 #@gmic : Transparency of selected images is taken into account.
 #@gmic : Default values: 'maximum_elevation=10' and 'smoothness=0'.
-#@gmic : $ image.jpg -resize2dy 32 -imageblocks3d -20 -m3d 3
+#@gmic : $ image.jpg -resize2dy 32 -imageblocks3d -20 -mode3d 3
 imageblocks3d : -check ${2=0}>=0 -skip ${1=10},${3=0}
   -e[^-1] "Generate 3d blocks from image$?, with maximum elevation $1 and smoothness $2."
   -v - -repeat $! -l[$>]
@@ -11562,7 +11562,7 @@ lissajous3d : -check ${1=1024}>1 -skip ${2=2},${3=0},${4=1},${5=0},${6=0},${7=0}
 #@gmic : 'mode' can be { -1=bounding-box | 0=dots | 1=wireframe | 2=flat | 3=flat-shaded | 4=gouraud-shaded | 5=phong-shaded }.");
 #@gmic : Bounding-box mode ('mode==-1') is active only for the interactive 3d viewer.
 #@gmic : Default value: 'mode=4'.
-#@gmic : $ (0,1,2,3,4,5) -double3d 0 -repeat {w} -torus3d 100,30 -rotate3d. 1,1,0,60 -mode3d {0,@$>} -snapshot3d. 300 -done -remove[0]
+#@gmic : $ (0,1,2,3,4,5) -double3d 0 -repeat {w} -torus3d 100,30 -rotate3d[-1] 1,1,0,60 -mode3d {0,@$>} -snapshot3d[-1] 300 -done -remove[0]
 
 #@gmic md3d : eq. to '-moded3d'. : (+)
 
@@ -11578,7 +11578,7 @@ lissajous3d : -check ${1=1024}>1 -skip ${2=2},${3=0},${4=1},${5=0},${6=0},${7=0}
 #@gmic : Scale selected 3d objects isotropically or anisotropically, with specified factors.
 #@gmic : (eq. to '-*3d').
 #@gmic : Default value: 'factor_z=0'.
-#@gmic : $ -torus3d 5,2 -repeat 5 --add3d. 10,0,0 -mul3d. 1.2 -color3d. ${-RGB} -done -add3d
+#@gmic : $ -torus3d 5,2 -repeat 5 --add3d[-1] 10,0,0 -mul3d[-1] 1.2 -color3d[-1] ${-RGB} -done -add3d
 
 #@gmic n3d : eq. to '-normalize3d'.
 n3d :
@@ -11587,7 +11587,7 @@ n3d :
 #@gmic normalize3d
 #@gmic : Normalize selected 3d objects to unit size.
 #@gmic : (eq. to '-n3d').
-#@gmic : $ -repeat 100 -circle3d {u(3)},{u(3)},{u(3)},0.1 -done -add3d -color3d. 255,0,0 --normalize3d. -color3d. 0,255,0 -add3d
+#@gmic : $ -repeat 100 -circle3d {u(3)},{u(3)},{u(3)},0.1 -done -add3d -color3d[-1] 255,0,0 --normalize3d[-1] -color3d[-1] 0,255,0 -add3d
 normalize3d :
   -_$0
 
@@ -11607,7 +11607,7 @@ _normalize3d :
 #@gmic : Set opacity of selected 3d objects.
 #@gmic : (eq. to '-o3d').
 #@gmic : Default value: 'opacity=1'.
-#@gmic : $ -torus3d 100,10 -double3d 0 -repeat 7 --rotate3d. 1,0,0,20 -opacity3d. {u} -done -add3d
+#@gmic : $ -torus3d 100,10 -double3d 0 -repeat 7 --rotate3d[-1] 1,0,0,20 -opacity3d[-1] {u} -done -add3d
 
 #@gmic parametric3d : _x(a,b),_y(a,b),_z(a,b),_amin,_amax,_bmin,_bmax,_res_a>0,_res_b>0,_res_x>0,_res_y>0,_res_z>0,_smoothness>=0,_isovalue>=0
 #@gmic : Input 3d object from specified parametric surface (x(a,b),y(a,b),z(a,b)).
@@ -11703,14 +11703,14 @@ plane3d : -check "${3=24}>0 && ${4=24}>0" -skip ${1=1},${2=$1}
 
 #@gmic point3d : x0,y0,z0
 #@gmic : Input 3d point at specified coordinates.
-#@gmic : $ -repeat 1000 a={$>*pi/500} -point3d {cos(3*$a)},{sin(2*$a)},0 -color3d. ${-RGB} -done -add3d
+#@gmic : $ -repeat 1000 a={$>*pi/500} -point3d {cos(3*$a)},{sin(2*$a)},0 -color3d[-1] ${-RGB} -done -add3d
 point3d :
   -e[^-1] "Input 3d point ($1,$2,$3)."
   -v - 1,17,1,1,67.5,73.5,109.5,103.5,51.5,100.5,1,1,${1-3},1,0,200,200,200,1 -nm. [3d\ point] -v +
 
 #@gmic pointcloud3d
 #@gmic : Convert selected planar or volumetric images to 3d point clouds.
-#@gmic : $ image.jpg -luminance -resize2dy 100 -threshold 50% -* 255 -pointcloud3d -color3d. 255,255,255
+#@gmic : $ image.jpg -luminance -resize2dy 100 -threshold 50% -mul 255 -pointcloud3d -color3d[-1] 255,255,255
 pointcloud3d :
   -e[^-1] "Convert image$? to 3d point clouds."
   -v - -repeat $! -l[$>] nm={0,n}
@@ -11754,7 +11754,7 @@ pose3d :
 #@gmic : Convert primitives of selected 3d objects.
 #@gmic : (eq. to '-p3d').
 #@gmic : 'mode' can be { 0=points | 1=segments | 2=non-textured }.
-#@gmic : $ -sphere3d 30 -primitives3d 1 -torus3d 50,10 -color3d. ${-RGB} -add3d
+#@gmic : $ -sphere3d 30 -primitives3d 1 -torus3d 50,10 -color3d[-1] ${-RGB} -add3d
 
 #@gmic projections3d : _x[%],_y[%],_z[%],_is_bounding_box={ 0 | 1 }
 #@gmic : Generate 3d xy,xz,yz projection planes from specified volumetric images.
@@ -11798,7 +11798,7 @@ pyramid3d :
 
 #@gmic quadrangle3d : x0,y0,z0,x1,y1,z1,x2,y2,z2,x3,y3,z3
 #@gmic : Input 3d quadrangle at specified coordinates.
-#@gmic : $ -quadrangle3d -10,-10,10,10,-10,10,10,10,10,-10,10,10 -repeat 10 --rotate3d. 0,1,0,30 -color3d. ${-RGB},0.6 -done -add3d -mode3d 2
+#@gmic : $ -quadrangle3d -10,-10,10,10,-10,10,10,10,10,-10,10,10 -repeat 10 --rotate3d[-1] 0,1,0,30 -color3d[-1] ${-RGB},0.6 -done -add3d -mode3d 2
 quadrangle3d :
   -e[^-1] "Input 3d quadrangle ($1,$2,$3)-($4,$5,$6)-($7,$8,$9)-($10,$11,$12)."
   -v - 1,29,1,1,67.5,73.5,109.5,103.5,51.5,100.5,4,1,${1-12},4,0,1,2,3,200,200,200,1 -nm. [3d\ quadrangle] -v +
@@ -11833,7 +11833,7 @@ random3d : -check "$1>=0"
 #@gmic rotate3d : u,v,w,angle : (+)
 #@gmic : Rotate selected 3d objects around specified axis with specified angle (in deg.).
 #@gmic : (eq. to '-r3d').
-#@gmic : $ -torus3d 100,10 -double3d 0 -repeat 7 --rotate3d. 1,0,0,20 -done -add3d
+#@gmic : $ -torus3d 100,10 -double3d 0 -repeat 7 --rotate3d[-1] 1,0,0,20 -done -add3d
 
 #@gmic rotation3d : u,v,w,angle
 #@gmic : Input 3x3 rotation matrix with specified axis and angle (in deg).
@@ -11983,7 +11983,7 @@ snapshot3d : -check "${2=1}>=0" -skip ${1=512},${3=""}
 #@gmic : Set lightness of 3d specular light.
 #@gmic : (eq. to '-sl3d').
 #@gmic : Default value: 'value=0.15'.
-#@gmic : $ (0,0.3,0.6,0.9,1.2) -repeat {w} -torus3d 100,30 -rotate3d. 1,1,0,60 -color3d. 255,0,0 -specl3d {0,@$>} -snapshot3d. 400 -done -remove[0]
+#@gmic : $ (0,0.3,0.6,0.9,1.2) -repeat {w} -torus3d 100,30 -rotate3d[-1] 1,1,0,60 -color3d[-1] 255,0,0 -specl3d {0,@$>} -snapshot3d[-1] 400 -done -remove[0]
 
 #@gmic ss3d : eq. to '-specs3d'. : (+)
 
@@ -11991,12 +11991,12 @@ snapshot3d : -check "${2=1}>=0" -skip ${1=512},${3=""}
 #@gmic : Set shininess of 3d specular light.
 #@gmic : (eq. to '-ss3d').
 #@gmic : Default value: 'value=0.8'.
-#@gmic : $ (0,0.3,0.6,0.9,1.2) -repeat {w} -torus3d 100,30 -rotate3d. 1,1,0,60 -color3d. 255,0,0 -specs3d {0,@$>} -snapshot3d. 400 -done -remove[0]
+#@gmic : $ (0,0.3,0.6,0.9,1.2) -repeat {w} -torus3d 100,30 -rotate3d[-1] 1,1,0,60 -color3d[-1] 255,0,0 -specs3d {0,@$>} -snapshot3d[-1] 400 -done -remove[0]
 
 #@gmic sphere3d : radius,_nb_recursions>=0 : (+)
 #@gmic : Input 3d sphere at (0,0,0), with specified geometry.
 #@gmic : Default value: 'nb_recursions=3'.
-#@gmic : $ -sphere3d 100 --primitives3d 1  -color3d[-2] ${-RGB}
+#@gmic : $ -sphere3d 100 --primitives3d 1 -color3d[-2] ${-RGB}
 
 #@gmic spherical3d : _nb_azimuth>=3,_nb_zenith>=3,_radius_function(phi,theta)
 #@gmic : Input 3d spherical object at (0,0,0), with specified geometry.
@@ -12038,7 +12038,7 @@ spherical3d : -check "${1=64}>=3 && ${2=$1}>=3" -skip "${3=abs(1+0.5*cos(3*phi)*
 #@gmic spline3d : x0[%],y0[%],z0[%],u0[%],v0[%],w0[%],x1[%],y1[%],z1[%],u1[%],v1[%],w1[%],_nb_vertices>=2
 #@gmic : Input 3d spline with specified geometry.
 #@gmic : Default values: 'nb_vertices=128'.
-#@gmic : $ -repeat 100 -spline3d {u},{u},{u},{u},{u},{u},{u},{u},{u},{u},{u},{u},128 -color3d. ${-RGB} -done -box3d 1 -primitives3d. 1 -+3d
+#@gmic : $ -repeat 100 -spline3d {u},{u},{u},{u},{u},{u},{u},{u},{u},{u},{u},{u},128 -color3d[-1] ${-RGB} -done -box3d 1 -primitives3d[-1] 1 -add3d
 spline3d : -check ${13=128}>=2
   -e[^-1] "Input new 3d spline from (${1-3}) [${4-6}] to (${7-9}) [${10-12}] with $13 vertices."
   -v -
@@ -12132,7 +12132,7 @@ star3d : -check "${1=5}>0 && ${2=0.38}>=0 && $2<=1"
 #@gmic : Extract 3d streamlines from selected vector fields or from specified formula.
 #@gmic : 'interpolation' can be { 0=nearest integer | 1=1st-order | 2=2nd-order | 3=4th-order }.
 #@gmic : Default values: 'dl=0.1', 'interpolation=2', 'is_backward=0' and 'is_oriented=0'.
-#@gmic : $ 100,100,100,3 -rand -10,10 -blur 3 -repeat 300 --streamline3d[0] {u(100)},{u(100)},{u(100)},1000,1,1 -color3d. ${-RGB} -done -remove[0] -box3d 100 -primitives3d. 1 -add3d
+#@gmic : $ 100,100,100,3 -rand -10,10 -blur 3 -repeat 300 --streamline3d[0] {u(100)},{u(100)},{u(100)},1000,1,1 -color3d[-1] ${-RGB} -done -remove[0] -box3d 100 -primitives3d[-1] 1 -add3d
 
 #@gmic -3d : eq. to '-sub3d'. : (+)
 
@@ -12140,7 +12140,7 @@ star3d : -check "${1=5}>0 && ${2=0.38}>=0 && $2<=1"
 #@gmic : Shift selected 3d objects with the opposite of specified displacement vector.
 #@gmic : (eq. to '--3d').
 #@gmic : Default values: 'ty=tz=0'.
-#@gmic : $ -sphere3d 10 -repeat 5 --sub3d. 10,{u(-10,10)},0 -color3d. ${-RGB} -done -add3d
+#@gmic : $ -sphere3d 10 -repeat 5 --sub3d[-1] 10,{u(-10,10)},0 -color3d[-1] ${-RGB} -done -add3d
 
 #@gmic superformula3d : resolution>1,m>=1,n1,n2,n3
 #@gmic : Input 2d superformula curve as a 3d object.
@@ -12239,7 +12239,7 @@ torus3d : -check "${3=24}>2 && ${4=12}>2" -skip ${1=1},${2=0.3}
 
 #@gmic triangle3d : x0,y0,z0,x1,y1,z1,x2,y2,z2
 #@gmic : Input 3d triangle at specified coordinates.
-#@gmic : $ -repeat 100 a={$>*pi/50} -triangle3d 0,0,0,0,0,3,{cos(3*$a)},{sin(2*$a)},0 -color3d. ${-RGB} -done -add3d
+#@gmic : $ -repeat 100 a={$>*pi/50} -triangle3d 0,0,0,0,0,3,{cos(3*$a)},{sin(2*$a)},0 -color3d[-1] ${-RGB} -done -add3d
 triangle3d :
   -e[^-1] "Input 3d triangle ($1,$2,$3)-($4,$5,$6)-($7,$8,$9)."
   -v - 1,25,1,1,67.5,73.5,109.5,103.5,51.5,100.5,3,1,${1-9},3,0,1,2,200,200,200,1 -nm. [3d\ triangle] -v +
@@ -12850,7 +12850,7 @@ _frame :
 #@gmic : Render selected images as binary ascii art.
 #@gmic : This command returns the corresponding the list of widths and heights (expressed as a number of characters) for each selected image.
 #@gmic : Default values: 'charset=[ascii charset]', 'analysis_scale=16', 'analysis_smoothness=20%', 'synthesis_scale=16' and '_output_ascii_filename=[undefined]'.
-#@gmic : $ image.jpg --img2ascii , -r[0] [1],[1],1,3 --mul
+#@gmic : $ image.jpg --img2ascii , -resize[0] [1],[1],1,3 --mul
 img2ascii : -skip "${1= !\042#$%&\047()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\133\\\135^_\140abcdefghijklmnopqrstuvwxyz\173|\174~}","${5=}" -check "${2=16}>0 && ${3=20%}>=0 && ${4=16}>0"
   -e[^-1] "Render image$? as binary ascii art, with charset '$1', analysis scale $2, analysis smoothness $3, synthesis scale $4 and output ascii filename '$5'."
   -v -
@@ -13018,7 +13018,7 @@ linearize_tiles : -check "$1>0 && ${2=$1}>0"
 #@gmic map_sprites : _nb_sprites>=1,_allow_rotation={ 0=none | 1=90 deg. | 2=180 deg. }
 #@gmic : Map set of sprites (defined as the 'nb_sprites' latest images of the selection) to other selected images,
 #@gmic : according to the luminosity of their pixel values.
-#@gmic : $ image.jpg -r2dy 48 -repeat 16 -ball {8+2*$>},${-RGB} -*. {(1+$>)/16} -done -map_sprites 16
+#@gmic : $ image.jpg -resize2dy 48 -repeat 16 -ball {8+2*$>},${-RGB} -mul[-1] {(1+$>)/16} -done -map_sprites 16
 map_sprites : -check "isint($1) && $1>0 && isint(${2=0}) && $2>=0 && $2<=2"
   -e[^-1] "Map set of $1 sprites to image selection$?."
   -v - -norm[0--{$1+1}] -quantize[0--{$1+1}] $1,0,1
@@ -13042,7 +13042,7 @@ map_sprites : -check "isint($1) && $1>0 && isint(${2=0}) && $2>=0 && $2<=2"
 #@gmic : The returned status contains the list of new (x,y) offsets for each input image.
 #@gmic : Parameter 'is_ratio_constraint' tells if the resulting image must tend to a square image.
 #@gmic : Default values: 'is_ratio_constraint=0' and 'sort_criterion=max(w,h)'.
-#@gmic : $ image.jpg -repeat 10 --resize2dx. 75% -balance_gamma. ${-RGB} -done -pack 0
+#@gmic : $ image.jpg -repeat 10 --resize2dx[-1] 75% -balance_gamma[-1] ${-RGB} -done -pack 0
 pack : -skip ${1=0},${2=max(w,h)}
   -e[^-1] "Pack image$? into a single image."
   -if {$!<2} -return -endif
@@ -13279,7 +13279,7 @@ boxfitting : -check "isint(${1=3}) && $1>=1 && isint(${2=0}) && $2>=0 && ${3=0.1
 #@gmic : Apply specified brush to create painterly versions of specified images.
 #@gmic : 'brush_light_type' can be { 0=none | 1=flat | 2=darken | 3=lighten | 4=full }.
 #@gmic : Default values: 'brush_nb_sizes=3', 'brush_min_size_factor=0.66', 'brush_nb_orientations=12', 'brush_light_type=0', 'brush_light_strength=0.25', 'brush_opacity=0.8', 'painting_density=20%', 'painting_contours_coherence=0.9', 'painting_orientation_coherence=0.9', 'painting_coherence_alpha=1', 'painting_coherence_sigma=1', 'painting_primary_angle=0', 'painting_angle_dispersion=0.2'
-#@gmic : $ image.jpg 40,40 -gaussian. 8,2 -spread. 4,0 --brushify[0] [1]
+#@gmic : $ image.jpg 40,40 -gaussian[-1] 8,2 -spread[-1] 4,0 --brushify[0] [1]
 brushify : -check ${"-is_image_arg $1"}" &&"\         # $1: [brush]
                     "isint(${2=4}) && $2>=1 &&"\      # $2: brush_nb_sizes
                     "${3=0.25}>=0 && $3<=1 &&"\       # $3: brush_min_size_factor
@@ -13579,7 +13579,7 @@ halftone : -check "${1=5}>=2 && ${2=8}>=2 && ${3=8}>=2 && ${5=0}>=0" -skip ${4=5
 #@gmic hardsketchbw : _amplitude>=0,_density>=0,_opacity,0<=_edge_threshold<=100,_is_fast={ 0 | 1 }
 #@gmic : Apply hard B&W sketch effect on selected images.
 #@gmic : Default values: 'amplitude=1000', 'sampling=3', 'opacity=0.1', 'edge_threshold=20' and 'is_fast=0'.
-#@gmic : $ image.jpg --hardsketchbw 200,70,0.1,10 -median. 2 --local -reverse -blur. 3 -blend[-2,-1] overlay -endlocal
+#@gmic : $ image.jpg --hardsketchbw 200,70,0.1,10 -median[-1] 2 --local -reverse -blur[-1] 3 -blend[-2,-1] overlay -endlocal
 hardsketchbw : -skip ${1=300},${2=50},${3=0.1},${4=20},${5=0}
   -e[^-1] "Apply hard B&W sketch effect on image$?, with amplitude $1, density $2, opacity $3 and edge threshold $4."
   -if {!$2} -channels 0 -f 255 -return -endif
@@ -13686,7 +13686,7 @@ lightrays : -check "${1=50}>=0 && $1<=100 && ${4=1}>=0 && ${5=1}>=0" -skip ${2=5
 #@gmic : Apply relief light to selected images.
 #@gmic : Default values(s) : 'ambient_light=0.3', 'specular_lightness=0.5', 'specular_size=0.2', 'darkness=0', 'xl=0.2', 'yl=zl=0.5',
 #@gmic : 'zscale=1', 'opacity=1' and 'opacity_is_heightmap=0'.
-#@gmic : $ image.jpg --blur 2 -light_relief. 0.3,4,0.1,0
+#@gmic : $ image.jpg --blur 2 -light_relief[-1] 0.3,4,0.1,0
 light_relief : -skip ${1=0.3},${2=0.5},${3=0.2},${4=0},${5=0.2},${6=0.5},${7=0.5},${8=1},${9=1},${10=0}
   -e[^-1] "Apply relief light to image$?."
   -v - -repeat $! -l[$>]
@@ -13729,7 +13729,7 @@ pencilbw : -skip ${1=0.3},${2=60}
 #@gmic pixelsort : _ordering={ + | - },_axis={ x | y | z | xy | yx },_[sorting_criterion],_[mask]
 #@gmic : Apply a 'pixel sorting' algorithm on selected images, as described in the page :
 #@gmic : http://satyarth.me/articles/pixel-sorting/
-#@gmic : $ image.jpg --norm --ge. 30% --pixelsort[0] +,y,[1],[2]
+#@gmic : $ image.jpg --norm --ge[-1] 30% --pixelsort[0] +,y,[1],[2]
 pixelsort : -check "(str1='${1=+}'; str1=='+' || str1=='-') && "\
                    "(str2='${2=x}'; str2=='x' || str2=='y' || str2=='z' || str2=='xy' || str2=='yx') && "\
                    "('${3=}'==0 || "${"-is_image_arg $3"}") && "\
@@ -13860,7 +13860,7 @@ poster_hope : -check "${1=3}>=0"
 #@gmic rodilius : 0<=_amplitude<=100,_0<=thickness<=100,_sharpness>=0,_nb_orientations>0,_offset,_color_mode={ 0=darker | 1=brighter }
 #@gmic : Apply rodilius (fractalius-like) filter on selected images.
 #@gmic : Default values: 'amplitude=10', 'thickness=10', 'sharpness=400', 'nb_orientations=7', 'offset=0' and 'color_mode=1'.
-#@gmic : $ image.jpg --rodilius 12,10,300,10 -normalize_local. 10,6
+#@gmic : $ image.jpg --rodilius 12,10,300,10 -normalize_local[-1] 10,6
 rodilius : -check "${1=10}>=0 && $1<=200 && ${2=10}>=0 && $2<=100 && ${3=400}>=0 && ${4=7}>0" -skip ${5=0},${6=1}
   -e[^-1] "Apply rodilius filter on image$? with amplitude $1, thickness $2, sharpness $3, $4 orientations, offset $5 and "\
     ${-arg\ 1+!$6,brighter,darker}" color mode."
@@ -13921,7 +13921,7 @@ stars : -check "${1=10%}>=0 && ${2=1}>=0 && ${3=32}>0 && ${4=5}>=1 && ${5=0.38}>
 #@gmic : Apply sketch effect to selected images.
 #@gmic : Default values: 'nb_orients=2', 'start_angle=45', 'angle_range=180', 'length=30', 'threshold=1', 'opacity=0.03',
 #@gmic : 'bgfactor=0', 'density=0.6', 'sharpness=0.1', 'anisotropy=0.6', 'smoothness=0.25', 'coherence=1', 'is_boost=0' and 'is_curved=1'.
-#@gmic : $ image.jpg --sketchbw 1 --local -reverse -blur. 3 -blend[-2,-1] overlay -endlocal
+#@gmic : $ image.jpg --sketchbw 1 --local -reverse -blur[-1] 3 -blend[-2,-1] overlay -endlocal
 sketchbw :
   -check "${1=2}>0 && ${3=180}>=0 && ${4=30}>=0 && ${5=1}>=0 && ${7=0}>=0 && ${8=0.6}>0 && ${9=0.1}>=0 && ${10=0.6}>=0 && ${11=0.25}>=0 && ${12=1}>=0"
   -skip ${2=45},${6=0.03},${13=0},${14=1}
@@ -14275,7 +14275,7 @@ rotoidoscope : -skip ${1=50%},${2=50%},${5=1} -check "${3=10}>0 && ${4=1}>=0"
 #@gmic symmetrize : _x[%],_y[%],_angle,_boundary={ 0=dirichlet | 1=neumann | 2=periodic },_is_antisymmetry={ 0 | 1 },_swap_sides={ 0 | 1 }
 #@gmic : Symmetrize selected image regarding specified axis.
 #@gmic : Default values: 'x=y=50%', 'angle=90', 'boundary=1', 'is_antisymmetry=0' and 'swap_sides=0'.
-#@gmic : $ image.jpg --symmetrize 50%,50%,45 --symmetrize. 50%,50%,-45
+#@gmic : $ image.jpg --symmetrize 50%,50%,45 --symmetrize[-1] 50%,50%,-45
 symmetrize : -skip ${1=50%},${2=50%},${3=90},${4=1},${5=0},${6=0}
   -e[^-1] "Symmetrize image$?, regarding axis ($1,$2,$3 deg.)."
   -v -
@@ -14558,9 +14558,9 @@ watermark_visible : -skip "${1=\251\ G\47MIC}" -check "${2=0.3}>0 && $2<1 && ${3
   -e[^-1] ${-arg\ 1+!$5,Add,Remove}" visible watermark '$1' on image$?, with opacity $2, size $3, angle $4 deg."
   -v - -repeat $! -l[$>]
     0 -t. "$1",0,0,$3,1,255 -rotate. $4,0,0 -b. $6 -n. 0,255
-    -r. ..,0,2 -+. .. -c. 0,255  # Generate opaque watermark image
-    -if $5 -*. $2 -*.. {1-$2} -+     # Add watermark
-    -else -*. $2 -- -/ {1-$2}        # Remove watermark
+    -r. ..,0,2 -+. .. -c. 0,255   # Generate opaque watermark image
+    -if $5 -*. $2 -*.. {1-$2} -+  # Add watermark
+    -else -*. $2 -- -/ {1-$2}     # Remove watermark
     -endif
     -c 0,255
   -endl -done -v +
@@ -14582,12 +14582,12 @@ watermark_visible : -skip "${1=\251\ G\47MIC}" -check "${2=0.3}>0 && $2<1 && ${3
 #@gmic : Default values: 'blending_mode=alpha', 'opacity=1' and 'selection_is=0'.
 #@gmic : $ image.jpg --drop_shadow , -resize2dy[-1] 200 -rotate[-1] 20 --blend alpha -display_rgba[-2]
 #@gmic : $ image.jpg -testimage2d {w},{h} -blend overlay
-#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline. Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex add,alpha,and,average,blue,burn,darken
-#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline. Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex difference,divide,dodge,exclusion,freeze,grainextract,grainmerge
-#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline. Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex green,hardlight,hardmix,hue,interpolation,lighten,lightness
-#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline. Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex linearburn,linearlight,luminance,multiply,negation,or,overlay
-#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline. Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex pinlight,red,reflect,saturation,screen,shapeaverage,softburn
-#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline. Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex softdodge,softlight,stamp,subtract,value,vividlight,xor
+#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline[-1] Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex add,alpha,and,average,blue,burn,darken
+#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline[-1] Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex difference,divide,dodge,exclusion,freeze,grainextract,grainmerge
+#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline[-1] Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex green,hardlight,hardmix,hue,interpolation,lighten,lightness
+#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline[-1] Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex linearburn,linearlight,luminance,multiply,negation,or,overlay
+#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline[-1] Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex pinlight,red,reflect,saturation,screen,shapeaverage,softburn
+#@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline[-1] Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex softdodge,softlight,stamp,subtract,value,vividlight,xor
 blend : -skip ${1=alpha},${2=1},${3=1},${4=0}
   -v -
   -if {arg(1,{'$1'})==_'['}
@@ -14734,7 +14734,7 @@ blend_edges : -check {$1>=0}
 
 #@gmic blend_fade : [fading_shape]
 #@gmic : Blend selected images together using specified fading shape.
-#@gmic : $ image.jpg -testimage2d {w},{h} 100%,100%,1,1,'cos(y/10)' -normalize. 0,1 --blend_fade[0,1] [2]
+#@gmic : $ image.jpg -testimage2d {w},{h} 100%,100%,1,1,'cos(y/10)' -normalize[-1] 0,1 --blend_fade[0,1] [2]
 blend_fade :
   -e[^-1] "Blend image$? together using fading pattern $1."
   -v - -r ${-max_whds},0
@@ -15384,7 +15384,7 @@ register_rigid : -check ${-is_image_arg\ $1}" && ${2=1}>=0 && isint(${3=0}) && $
 #@gmic transition : [transition_shape],nb_added_frames>=0,100>=shading>=0,_single_frame_only={ -1=disabled | >=0 }
 #@gmic : Generate a transition sequence between selected images.
 #@gmic : Default values: 'shading=0' and 'single_frame_only=-1'.
-#@gmic : $ image.jpg --mirror c 100%,100% -plasma. 1,1,6 -transition[0,1] [2],5
+#@gmic : $ image.jpg --mirror c 100%,100% -plasma[-1] 1,1,6 -transition[0,1] [2],5
 transition : -check ${-is_image_arg\ $1}" && $2>=0 && ${3=0}>=0 && $3<=100" -skip ${4=-1}
   -v - frame={round($4)} s0=" and shading $3" s1=", shading $3 and single-frame-only "$frame -v +
   -e[^-1] "Create transition sequence between image$? with $2 added frames, transition shape $1"${s{$4>0}}"."
@@ -15622,7 +15622,7 @@ pink_reg_minima : -check "${1=4}==4 || $1==8 || $1==6 || $1==26"
 #@gmic : (http://pinkhq.com/doxygen/skelcurv_8c.html)
 #@gmic : Curvilinear binary skeleton guided by a priority function or image (requires the PINK library to be installed).
 #@gmic : Default values: 'prio=0', 'connectivity=4' and 'inhibit=""'.
-#@gmic : $ image.jpg -threshold 50% {w},{h} -fill. 'if(x>w/2,255,0)' tp=${-path_tmp} -output. ${tp}/inhibit.pgm -remove. --pink_skelcurv[0] , --pink_skelcurv[0] ,,${tp}/inhibit.pgm -exec "rm "${tp}"/inhibit.pgm"
+#@gmic : $ image.jpg -threshold 50% {w},{h} -fill[-1] 'if(x>w/2,255,0)' tp=${-path_tmp} -output[-1] ${tp}/inhibit.pgm -remove[-1] --pink_skelcurv[0] , --pink_skelcurv[0] ,,${tp}/inhibit.pgm -exec "rm "${tp}"/inhibit.pgm"
 #@gmic : $ image.jpg -threshold 50% --pink_skelcurv , --pink_skelcurv[-2] ,8
 pink_skelcurv : -skip ${1=0},${2=4},${3=""}
   -e[^-1] "Curvilinear binary skeleton guided by a priority function or image from image$?, prio=$1, connectivity=$2, inhibit=$3."
@@ -15640,7 +15640,7 @@ pink_skelend : -skip ${1=4},${2=0}
 #@gmic : (http://pinkhq.com/doxygen/skeleton_8c.html)
 #@gmic : Ultimate binary skeleton guided by a priority image (requires the PINK library to be installed).
 #@gmic : Default values: 'prio=0', 'connectivity=4' and 'inhibit=""'.
-#@gmic : $ image.jpg -threshold 50% --pink_skeleton. ,
+#@gmic : $ image.jpg -threshold 50% --pink_skeleton[-1] ,
  pink_skeleton : -skip ${1=0},${2=4},${3=""}
   -repeat $! -l[$>] -_xpinks "skeleton","$1 $2 $3" -endl -done
 
@@ -15648,7 +15648,7 @@ pink_skelend : -skip ${1=4},${2=0}
 #@gmic : (http://pinkhq.com/doxygen/skelpar_8c.html)
 #@gmic : Parallel binary skeleton (requires the PINK library to be installed).
 #@gmic : Default values: 'algorithm=4', 'nsteps=-1' and 'inhibit=""'.
-#@gmic : $ image.jpg -threshold 50% --pink_skelpar. 0 --pink_skelpar. 2
+#@gmic : $ image.jpg -threshold 50% --pink_skelpar[-1] 0 --pink_skelpar[-1] 2
 pink_skelpar : -skip ${1=4},${2=-1},${3=""}
   -repeat $! -l[$>] -_xframe -_xpinks "skelpar","$1 $2 $3" -endl -done
 
@@ -16430,7 +16430,7 @@ path_tmp :
 #@gmic : Argument 'feature' is a string that corresponds to the way the feature would
 #@gmic : be asked for the entire image.
 #@gmic : Default value: 'default_value=0'.
-#@gmic : $ image.jpg --luminance -quantize. 2 -label. 0,1 mean=${"-region_feature[0,1] 10,\"{ia}\""} sum=${"-region_feature[0,1] 10,\"{is}\""}
+#@gmic : $ image.jpg --luminance -quantize[-1] 2 -label[-1] 0,1 mean=${"-region_feature[0,1] 10,\"{ia}\""} sum=${"-region_feature[0,1] 10,\"{is}\""}
 region_feature : -skip "${3=0}"
   -v -
   s={-2,s} --channels. 0 -==. $1 -^. -1 --. 1 -r. ... -+. ...
