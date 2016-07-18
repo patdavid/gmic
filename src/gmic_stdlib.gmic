@@ -3690,9 +3690,7 @@ __update_gallery_html :
 # It sorts and merges filters from all available sources, and save
 # a single update file on the G'MIC server. It also print on the standart
 # output (stdout), the list of available filters.
-# $1 = update version number.
-# $2 = enable/disable filters list output on stdout.
-update_server : -skip ${1=$_version},${2=1}
+update_server :
   -v -
 
   # Create substitution list to force filters having a particular location.
@@ -3778,16 +3776,14 @@ update_server : -skip ${1=$_version},${2=1}
      "-f 'if(y==0&&i>=97&&i<=122,i-32,i)' "
 
   # Copy latest command definitions on G'MIC server if necessary.
-  -if {$1==$_version}
-    -v + -e[] "> Upload latest version ("${-strver}") of commands on G'MIC server.\n" -v -
-    -_update_server_upload $HOME/work/src/gmic/src/gmic_stdlib.gmic,gmic_stdlib.$1
-    -_update_server_upload $HOME/work/src/gmic/src/gmic_stdlib.gmic
-  -endif
+  -v + -e[] "> Upload latest version ("${-strver}") of commands on G'MIC server.\n" -v -
+  -_update_server_upload $HOME/work/src/gmic/src/gmic_stdlib.gmic,gmic_stdlib.$_version
+  -_update_server_upload $HOME/work/src/gmic/src/gmic_stdlib.gmic
 
   # Get command source files and archive them.
   -v + -e[] "> Load and archive .gmic source files.\n" -v -
   _nb_sources=0
-  -load_gmic http://gmic.eu/gmic_stdlib.$1
+  -load_gmic ${HOME}/work/src/gmic/src/gmic_stdlib.gmic
   -x "cd $HOME/work/src/gmic-community && git pull 2>&1 >/dev/null"
   -load_gmic ${HOME}/work/src/gmic-community/include/andreas_pahlsson.gmic
   -load_gmic ${HOME}/work/src/gmic-community/include/andy_kelday.gmic
@@ -4009,73 +4005,64 @@ update_server : -skip ${1=$_version},${2=1}
     -y -a[6-8] y -a[3-5] y -a[0-2] y
 
     # Upload filter files on G'MIC server.
-    -o[0] raw:${_path_rc}update$1.gmic,uchar
-    -o[0] cimgz:/tmp/update$1.gmic,uchar
-    -_update_server_upload[] ${_path_rc}update$1.gmic,plain_update$1.gmic
-    -_update_server_upload[] /tmp/update$1.gmic
+    -o[0] raw:${_path_rc}update$_version.gmic,uchar
+    -o[0] cimgz:/tmp/update$_version.gmic,uchar
+    -o[1] cimgz:/tmp/cli_update$_version.gmic,uchar
+    -o[2] cimgz:/tmp/gimp_update$_version.gmic,uchar
 
-    -if {$1<=174}
-      -o[1] raw:${_path_rc}cli_update$1.gmic,uchar
-      -o[2] raw:${_path_rc}gimp_update$1.gmic,uchar
-      -o[1] cimgz:/tmp/cli_update$1.gmic,uchar
-      -o[2] cimgz:/tmp/gimp_update$1.gmic,uchar
-      -_update_server_upload[] /tmp/cli_update$1.gmic
-      -_update_server_upload[] /tmp/gimp_update$1.gmic
-    -endif
-
-    -if {$1>=172} (172,173,174)
-    -else 0
-    -endif
+    (172,173,174,175)
     -repeat {w}
-      -_update_server_upload[] /tmp/update$1.gmic,update{i[$>]}.gmic
-      -if {$1<=174}
-        -_update_server_upload[] /tmp/cli_update$1.gmic,cli_update{i[$>]}.gmic
-        -_update_server_upload[] /tmp/gimp_update$1.gmic,gimp_update{i[$>]}.gmic
+      v={i[$>]}
+      -if {$v>=174}
+        -_update_server_upload[] ${_path_rc}update$_version.gmic,plain_update$v.gmic
+        -_update_server_upload[] /tmp/update$_version.gmic,update$v.gmic
+      -else
+        -_update_server_upload[] /tmp/cli_update$_version.gmic,cli_update$v.gmic
+        -_update_server_upload[] /tmp/gimp_update$_version.gmic,gimp_update$v.gmic
       -endif
     -done -rm.
+
     -rm -endl
   -endif
 
   # Display list of filters (sorted alphabetically) on stdout.
-  -if {$2" && "$1==$_version}
-    -v + -e[] "> Output list of filters in stdout.\n" -v -
-    -x "date +%Y,%m,%d,%H >"${-path_tmp}date.dlm
-    ${-path_tmp}date.dlm
-    -echo_stdout "*** List of filters in the G\47MIC plug-in for GIMP ("$nb_filters" filters, on "{i}/{i(1)}/{i(2)}" "{i[3]}:00") ***\n"
-    -rm.
-    -echo_stdout "* List of filters, sorted by path:\n"
-    -repeat $! -l[$>]
-      ({'{0,n}'}) -if {i!=_'!'}
-        -r. {w-1},1,1,1,0,0,1
-        -replace_str. "&amp;","&"
-        -replace_str. "&#233;","e"
-        -replace_str. "/","~/~"
-        -replace. {'~'},32
-        -if {narg(${command_name$>})} -echo_stdout[] "  "{t}" (command '-"${command_name$>}"')"
-        -else -echo_stdout[] "  "{t}
-        -endif
-      -endif -rm.
-    -endl -done
+  -v + -e[] "> Output list of filters in stdout.\n" -v -
+  -x "date +%Y,%m,%d,%H >"${-path_tmp}date.dlm
+  ${-path_tmp}date.dlm
+  -echo_stdout "*** List of filters in the G\47MIC plug-in for GIMP ("$nb_filters" filters, on "{i}/{i(1)}/{i(2)}" "{i[3]}:00") ***\n"
+  -rm.
+  -echo_stdout "* List of filters, sorted by path:\n"
+  -repeat $! -l[$>]
+    ({'{0,n}'}) -if {i!=_'!'}
+      -r. {w-1},1,1,1,0,0,1
+      -replace_str. "&amp;","&"
+      -replace_str. "&#233;","e"
+      -replace_str. "/","~/~"
+      -replace. {'~'},32
+      -if {narg(${command_name$>})} -echo_stdout[] "  "{t}" (command '-"${command_name$>}"')"
+      -else -echo_stdout[] "  "{t}
+      -endif
+    -endif -rm.
+  -endl -done
 
-    -echo_stdout "\n* List of filters, sorted alphabetically:\n"
+  -echo_stdout "\n* List of filters, sorted alphabetically:\n"
 
-    -repeat $!
-      name={$>,b}
-      path={$>,f}
-      -nm[$>] $name"~(in~'"$path"')"
-    -done
+  -repeat $!
+    name={$>,b}
+    path={$>,f}
+    -nm[$>] $name"~(in~'"$path"')"
+  -done
 
-    -_update_server_sort 0,{$!-1}
-    -repeat $! -l[$>]
-      ({'{0,n}'}) -if {i!=_'!'}
-        -replace_str. "&amp;","&"
-        -replace_str. "&#233;","e"
-        -replace. {'~'},32
-        -echo_stdout[] "  "{t}
-      -endif -rm.
-    -endl -done
-    -echo_stdout "\n*** End of list ***\n"
-  -endif
+  -_update_server_sort 0,{$!-1}
+  -repeat $! -l[$>]
+    ({'{0,n}'}) -if {i!=_'!'}
+      -replace_str. "&amp;","&"
+      -replace_str. "&#233;","e"
+      -replace. {'~'},32
+      -echo_stdout[] "  "{t}
+    -endif -rm.
+  -endl -done
+  -echo_stdout "\n*** End of list ***\n"
 
   # All done, exiting.
   -rm -v + -e[] "> All done !\n"
@@ -4147,12 +4134,13 @@ _update_server_binaries :
 
         -v + -e[] "- Upload file '"$file"' to 'http://gmic.eu/files/prerelease/"$file_short -v -
         -_update_server_upload $file,"files/prerelease/"$file_short
+
         -if {!$is_pre}
           -v + -e[] "- Upload file '"$file"' to 'http://gmic.eu/files/"$folder/$file"'." -v -
           -_update_server_upload $file,"files/"$folder/$file
+          -v + -e[] "- Upload file '"$file"' to 'http://gmic.eu/files/"$folder/$file_short"'." -v -
+          -_update_server_upload $file,"files/"$folder/$file_short
         -endif
-        -v + -e[] "- Upload file '"$file"' to 'http://gmic.eu/files/"$folder/$file_short"'." -v -   # Pre-releases set as default downloads
-        -_update_server_upload $file,"files/"$folder/$file_short
 
         file$>= N-=1
       -endif
