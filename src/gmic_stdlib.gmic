@@ -1779,7 +1779,7 @@ drgba :
 #@gmic display_rgba
 #@gmic : Render selected RGBA images over a checkerboard background.
 #@gmic : (eq. to '-drgba').
-#@gmic : $ image.jpg --norm -threshold. 40% -blur. 3 -normalize. 0,255 -append c -display_rgba
+#@gmic : $ image.jpg --norm -threshold[-1] 40% -blur[-1] 3 -normalize[-1] 0,255 -append c -display_rgba
 display_rgba :
   -_$0
 
@@ -2873,7 +2873,7 @@ _outputx :
 #@gmic : By default (adaptive shared state), selected images are inserted in a shared state if they do not belong to the context (selection) of the current custom command or local environment as well.
 #@gmic : Typical use of command '-pass' concerns the design of custom commands that take images as arguments.
 #@gmic : Default value: 'shared_state=2'.
-#@gmic : $ -command "average : -pass$""1 -add[^-1] . -remove. -div 2" -testimage2d 512 --mirror y --average[0] [1]
+#@gmic : $ -command "average : -pass$""1 -add[^-1] [-1] -remove[-1] -div 2" -testimage2d 512 --mirror y --average[0] [1]
 
 #@gmic plot : _plot_type,_vertex_type,_xmin,_xmax,_ymin,_ymax,_exit_on_anykey={ 0 | 1 } : 'formula',_resolution>=0,_plot_type,_vertex_type,_xmin,xmax,_ymin,_ymax,_exit_on_anykey={ 0 | 1 } : (+)
 #@gmic : Display selected image or formula in an interactive viewer (use the instant display window [0] if opened).
@@ -2950,7 +2950,7 @@ roddy :
 #@gmic : unsigned chars (doing so will output a valid .cimg[z] or .gmz file).
 #@gmic : If 'store_names' is set to '1', serialization uses the .gmz format to store data in memory (otherwise the .cimg[z] format).
 #@gmic : Default values: 'datatype=float', 'is_compressed=1' and 'store_names=1'.
-#@gmic : $ image.jpg --serialize uchar --unserialize.
+#@gmic : $ image.jpg --serialize uchar --unserialize[-1]
 
 #@gmic shape_heart : _size>=0
 #@gmic : Input a 2d heart binary shape with specified size.
@@ -3136,8 +3136,8 @@ shape_star : -check "${1=512}>=0 && ${2=5}>0 && ${3=0.5}>=0 && $3<=1"
 #@gmic : Insert shared buffers from (opt. points/rows/planes/channels of) selected images.
 #@gmic : Shared buffers cannot be returned by a command, nor a local environment.
 #@gmic : (eq. to '-sh').
-#@gmic : $ image.jpg -shared 1 -blur. 3 -remove.
-#@gmic : $ image.jpg -repeat {s} -shared 25%,75%,0,$> -mirror. x -remove. -done
+#@gmic : $ image.jpg -shared 1 -blur[-1] 3 -remove[-1]
+#@gmic : $ image.jpg -repeat {s} -shared 25%,75%,0,$> -mirror[-1] x -remove[-1] -done
 #@gmic : $$
 
 #@gmic srand : value : (no arg) : (+)
@@ -3165,7 +3165,7 @@ testimage2d : -check "${1=512}>0 && ${2=$1}>0 && ${3=3}>0"
 
 #@gmic uniform_distribution : nb_levels>=1,spectrum>=1
 #@gmic : Input set of uniformly distributed N-d points in [0,1]^N.
-#@gmic : $ -uniform_distribution 64,3 -* 255 --distribution3d -circles3d. 10
+#@gmic : $ -uniform_distribution 64,3 -* 255 --distribution3d -circles3d[-1] 10
 uniform_distribution : -check "isint($1) && $1>0 && isint($2) && $2>0"
   -e[^1] "Input set of $1 uniformly distributed $2-d points in [0,1]^$2."
   -v - n={round($1^(1/$2),1,1)}
@@ -4680,12 +4680,12 @@ sort_str :
 
 #@gmic abs : (+)
 #@gmic : Compute the pointwise absolute values of selected images.
-#@gmic : $ image.jpg --sub {ia} -abs.
+#@gmic : $ image.jpg --sub {ia} -abs[-1]
 #@gmic : $ 300,1,1,1,'cos(20*x/w)' --abs -display_graph 400,300
 
 #@gmic acos : (+)
 #@gmic : Compute the pointwise arc-cosine of selected images.
-#@gmic : $ image.jpg --normalize -1,1 -acos.
+#@gmic : $ image.jpg --normalize -1,1 -acos[-1]
 #@gmic : $ 300,1,1,1,'x/w+0.1*u' --acos -display_graph 400,300
 #@gmic : $$ trigometric-and-inverse-trigometric-commands
 
@@ -4711,13 +4711,13 @@ sort_str :
 
 #@gmic asin : (+)
 #@gmic : Compute the pointwise arc-sine of selected images.
-#@gmic : $ image.jpg --normalize -1,1 -asin.
+#@gmic : $ image.jpg --normalize -1,1 -asin[-1]
 #@gmic : $ 300,1,1,1,'x/w+0.1*u' --asin -display_graph 400,300
 #@gmic : $$ trigometric-and-inverse-trigometric-commands
 
 #@gmic atan : (+)
 #@gmic : Compute the pointwise arc-tangent of selected images.
-#@gmic : $ image.jpg --normalize 0,8 -atan.
+#@gmic : $ image.jpg --normalize 0,8 -atan[-1]
 #@gmic : $ 300,1,1,1,'4*x/w+u' --atan -display_graph 400,300
 #@gmic : $$ trigometric-and-inverse-trigometric-commands
 
@@ -4748,13 +4748,13 @@ sort_str :
 
 #@gmic cos : (+)
 #@gmic : Compute the pointwise cosine of selected images.
-#@gmic : $ image.jpg --normalize 0,{2*pi} -cos.
+#@gmic : $ image.jpg --normalize 0,{2*pi} -cos[-1]
 #@gmic : $ 300,1,1,1,'20*x/w+u' --cos -display_graph 400,300
 #@gmic : $$ trigometric-and-inverse-trigometric-commands
 
 #@gmic cosh : (+)
 #@gmic : Compute the pointwise hyperbolic cosine of selected images.
-#@gmic : $ image.jpg --normalize -3,3 -cosh.
+#@gmic : $ image.jpg --normalize -3,3 -cosh[-1]
 #@gmic : $ 300,1,1,1,'4*x/w+u' --cosh -display_graph 400,300
 
 #@gmic / : eq. to '-div'. : (+)
@@ -4764,7 +4764,7 @@ sort_str :
 #@gmic : or compute the pointwise quotient of selected images.
 #@gmic : (eq. to '-/').
 #@gmic : $ image.jpg -div '1+abs(cos(x/10)*sin(y/10))'
-#@gmic : $ image.jpg --norm -add. 1 --div
+#@gmic : $ image.jpg --norm -add[-1] 1 --div
 
 #@gmic div_complex : [divider_real,divider_imag],_epsilon>=0
 #@gmic : Perform division of the selected complex pairs (real1,imag1,...,realN,imagN) of images by specified complex pair of images (divider_real,divider_imag).
@@ -4790,7 +4790,7 @@ div_complex : -check ${3=1e-8}>=0
 
 #@gmic exp : (+)
 #@gmic : Compute the pointwise exponential of selected images.
-#@gmic : $ image.jpg --normalize 0,2 -exp.
+#@gmic : $ image.jpg --normalize 0,2 -exp[-1]
 #@gmic : $ 300,1,1,1,'7*x/w+u' --exp -display_graph 400,300
 
 #@gmic >= : eq. to '-ge'. : (+)
@@ -4831,17 +4831,17 @@ div_complex : -check ${3=1e-8}>=0
 
 #@gmic log : (+)
 #@gmic : Compute the pointwise base-e logarithm of selected images.
-#@gmic : $ image.jpg --add 1 -log.
+#@gmic : $ image.jpg --add 1 -log[-1]
 #@gmic : $ 300,1,1,1,'7*x/w+u' --log -display_graph 400,300
 
 #@gmic log10 : (+)
 #@gmic : Compute the pointwise base-10 logarithm of selected images.
-#@gmic : $ image.jpg --add 1 -log10.
+#@gmic : $ image.jpg --add 1 -log10[-1]
 #@gmic : $ 300,1,1,1,'7*x/w+u' --log10 -display_graph 400,300
 
 #@gmic log2 : (+)
 #@gmic : Compute the pointwise base-2 logarithm of selected images
-#@gmic : $ image.jpg --add 1 -log2.
+#@gmic : $ image.jpg --add 1 -log2[-1]
 #@gmic : $ 300,1,1,1,'7*x/w+u' --log2 -display_graph 400,300
 
 #@gmic max : value[%] : [image] : 'formula' : (no arg) : (+)
@@ -4887,9 +4887,9 @@ div_complex : -check ${3=1e-8}>=0
 #@gmic : or compute the pointwise product of selected images.
 #@gmic : (eq. to '-*').
 #@gmic : $ image.jpg --mul 2 -cut 0,255
-#@gmic : $ image.jpg (1,2,3,4,5,6,7,8) -resize. [0] -mul[0] .
+#@gmic : $ image.jpg (1,2,3,4,5,6,7,8) -resize[-1] [0] -mul[0] [-1]
 #@gmic : $ image.jpg -mul '1-3*abs(x/w-0.5)' -cut 0,255
-#@gmic : $ image.jpg --luminance -negative. --mul
+#@gmic : $ image.jpg --luminance -negative[-1] --mul
 
 #@gmic mul_channels : value1,_value2,...,_valueN
 #@gmic : Multiply channels of selected images by specified sequence of values.
@@ -4951,23 +4951,23 @@ mul_complex :
 
 #@gmic sign : (+)
 #@gmic : Compute the pointwise sign of selected images.
-#@gmic : $ image.jpg --sub {ia} -sign.
+#@gmic : $ image.jpg --sub {ia} -sign[-1]
 #@gmic : $ 300,1,1,1,'cos(20*x/w+u)' --sign -display_graph 400,300
 
 #@gmic sin : (+)
 #@gmic : Compute the pointwise sine of selected images.
-#@gmic : $ image.jpg --normalize 0,{2*pi} -sin.
+#@gmic : $ image.jpg --normalize 0,{2*pi} -sin[-1]
 #@gmic : $ 300,1,1,1,'20*x/w+u' --sin -display_graph 400,300
 #@gmic : $$ trigometric-and-inverse-trigometric-commands
 
 #@gmic sinc : (+)
 #@gmic : Compute the pointwise sinc function of selected images.
-#@gmic : $ image.jpg --normalize {-2*pi},{2*pi} -sinc.
+#@gmic : $ image.jpg --normalize {-2*pi},{2*pi} -sinc[-1]
 #@gmic : $ 300,1,1,1,'20*x/w+u' --sinc -display_graph 400,300
 
 #@gmic sinh : (+)
 #@gmic : Compute the pointwise hyperbolic sine of selected images.
-#@gmic : $ image.jpg --normalize -3,3 -sinh.
+#@gmic : $ image.jpg --normalize -3,3 -sinh[-1]
 #@gmic : $ 300,1,1,1,'4*x/w+u' --sinh -display_graph 400,300
 
 #@gmic sqr : (+)
@@ -4987,19 +4987,19 @@ mul_complex :
 #@gmic : or compute the pointwise difference of selected images.
 #@gmic : (eq. to '--').
 #@gmic : $ image.jpg --sub 30% -cut 0,255
-#@gmic : $ image.jpg --mirror x -sub. [0]
+#@gmic : $ image.jpg --mirror x -sub[-1] [0]
 #@gmic : $ image.jpg -sub 'i(w/2+0.9*(x-w/2),y)'
 #@gmic : $ image.jpg --mirror x -sub
 
 #@gmic tan : (+)
 #@gmic : Compute the pointwise tangent of selected images.
-#@gmic : $ image.jpg --normalize {-0.47*pi},{0.47*pi} -tan.
+#@gmic : $ image.jpg --normalize {-0.47*pi},{0.47*pi} -tan[-1]
 #@gmic : $ 300,1,1,1,'20*x/w+u' --tan -display_graph 400,300
 #@gmic : $$ trigometric-and-inverse-trigometric-commands
 
 #@gmic tanh : (+)
 #@gmic : Compute the pointwise hyperbolic tangent of selected images.
-#@gmic : $ image.jpg --normalize -3,3 -tanh.
+#@gmic : $ image.jpg --normalize -3,3 -tanh[-1]
 #@gmic : $ 300,1,1,1,'4*x/w+u' --tanh -display_graph 400,300
 
 #@gmic xor : value[%] : [image] : 'formula' : (no arg) : (+)
@@ -5045,7 +5045,7 @@ balance_gamma : -skip ${1=128}
 
 #@gmic complex2polar
 #@gmic : Compute complex to polar transforms of selected images.
-#@gmic : $ image.jpg --fft -complex2polar[-2,-1] -log[-2] -shift[-2] 50%,50%,0,0,2 -remove.
+#@gmic : $ image.jpg --fft -complex2polar[-2,-1] -log[-2] -shift[-2] 50%,50%,0,0,2 -remove[-1]
 complex2polar :
   -e[^-1] "Compute complex to polar transforms of image$?."
   -v - -repeat {int($!/2)} -l[{2*$>},{2*$>+1}]
@@ -5140,7 +5140,7 @@ _compress_clut_draw_error :
 #@gmic : Compress selected images as 2xN data matrices, using RLE algorithm.
 #@gmic : Set 'maximum_sequence_length=0' to disable maximum length constraint.
 #@gmic : Default values: 'is_binary_data=0' and 'maximum_sequence_length=0'.
-#@gmic : $ image.jpg -resize2dy 100 -quantize 4 -round --compress_rle , --decompress_rle.
+#@gmic : $ image.jpg -resize2dy 100 -quantize 4 -round --compress_rle , --decompress_rle[-1]
 compress_rle : -skip ${1=0} -check "isint(${2=0}) && $2>=0"
   -v - s0=" for binary data" s1=""
   -if $2 s=", with maximal sequence length "$2 -else s="" -endif
@@ -5164,7 +5164,7 @@ compress_rle : -skip ${1=0} -check "isint(${2=0}) && $2>=0"
 
 #@gmic cumulate : { x | y | z | c }...{ x | y | z | c } : (no arg) : (+)
 #@gmic : Compute the cumulative function of specified image data, optionally along the specified axes.
-#@gmic : $ image.jpg --histogram --cumulate. -display_graph[-2,-1] 400,300,3
+#@gmic : $ image.jpg --histogram --cumulate[-1] -display_graph[-2,-1] 400,300,3
 
 #@gmic c : eq. to '-cut'. : (+)
 
@@ -5173,7 +5173,7 @@ compress_rle : -skip ${1=0} -check "isint(${2=0}) && $2>=0"
 #@gmic : (eq. to '-c').
 #@gmic : (no arg) runs interactive mode (uses the instant display window [0] if opened).
 #@gmic : In this case, the chosen cut values are returned in the status.
-#@gmic : $ image.jpg --add 30% -cut. 0,255
+#@gmic : $ image.jpg --add 30% -cut[-1] 0,255
 #@gmic : $ image.jpg --cut 25%,75%
 
 #@gmic decompress_clut : _width>0,_height>0,_depth>0
@@ -5334,13 +5334,13 @@ _inrange :
 #@gmic : 'predefined_palette' can be { 0=default | 1=HSV | 2=lines | 3=hot | 4=cool | 5=jet | 6=flag | 7=cube }.
 #@gmic : 'boundary' can be { 0=dirichlet | 1=neumann | 2=periodic }.
 #@gmic : Default value: 'boundary=0'.
-#@gmic : $ image.jpg --luminance -map. 3
-#@gmic : $ image.jpg --rgb2ycbcr -split. c (0,255,0) -resize. 256,1,1,1,3 -map[-4] . -remove. -append[-3--1] c -ycbcr2rgb.
+#@gmic : $ image.jpg --luminance -map[-1] 3
+#@gmic : $ image.jpg --rgb2ycbcr -split[-1] c (0,255,0) -resize[-1] 256,1,1,1,3 -map[-4] [-1] -remove[-1] -append[-3--1] c -ycbcr2rgb[-1]
 #@gmic : $$
 
 #@gmic map_clut : [clut]
 #@gmic : Map specified RGB color LUT to selected images.
-#@gmic : $ image.jpg -uniform_distribution {2^6},3 -mirror. x --map_clut[0] [1]
+#@gmic : $ image.jpg -uniform_distribution {2^6},3 -mirror[-1] x --map_clut[0] [1]
 map_clut : -check ${-is_image_arg\ $1}
   -e[^-1] "Map color LUT $1 on image$?."
   -v -
@@ -5406,12 +5406,12 @@ norm :
 #@gmic normalize : { value0[%] | [image0] },{ value1[%] | [image1] } : [image] : (+)
 #@gmic : Linearly normalize values of selected images in specified range.
 #@gmic : (eq. to '-n').
-#@gmic : $ image.jpg -split x,2 -normalize. 64,196 -append x
+#@gmic : $ image.jpg -split x,2 -normalize[-1] 64,196 -append x
 #@gmic : $$
 
 #@gmic normalize_sum
 #@gmic : Normalize selected images with a unitary sum.
-#@gmic : $ image.jpg --histogram. -normalize_sum. -display_graph. 400,300
+#@gmic : $ image.jpg --histogram -normalize_sum[-1] -display_graph[-1] 400,300
 normalize_sum :
   -e[^-1] "Normalize image$? with a unitary sum."
   -v - -repeat $! -/[$>] {sum={$>,is};if(sum!=0,sum,1)} -done -v +
@@ -5433,7 +5433,7 @@ orientation :
 
 #@gmic oneminus
 #@gmic : For each selected image, compute one minus image.
-#@gmic : $ image.jpg -n 0,1 --oneminus
+#@gmic : $ image.jpg -normalize 0,1 --oneminus
 oneminus :
   -e[^-1] "Compute one minus selected images$?."
   -v + -* -1 -+ 1 -v -
@@ -5494,7 +5494,7 @@ quantize : -check "isint($1) && $1>=1" -skip ${2=1},${3=0}
 
 #@gmic rand : { value0[%] | [image0] },_{ value1[%] | [image1] } : [image] : (+)
 #@gmic : Fill selected images with random values uniformly distributed in the specified range.
-#@gmic : $ 400,400,1,3 -rand -10,10 --blur 10 -sign.
+#@gmic : $ 400,400,1,3 -rand -10,10 --blur 10 -sign[-1]
 
 #@gmic replace : value_src,value_dest
 #@gmic : Replace pixel values in selected images.
