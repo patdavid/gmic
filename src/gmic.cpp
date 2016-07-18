@@ -2863,13 +2863,13 @@ CImg<unsigned int> gmic::selection2cimg(const char *const string, const unsigned
                                         CImg<char> *const new_name) {
 
   // Try to detect common cases to be faster.
-  if (string && !*string) return CImg<unsigned int>(); // Empty selection.
-  if (!string || (*string=='^' && !string[1])) { // Whole selection.
+  if (string && !*string) return CImg<unsigned int>(); // Empty selection
+  if (!string || (*string=='^' && !string[1])) { // Whole selection
     CImg<unsigned int> res(1,indice_max); cimg_forY(res,y) res[y] = (unsigned int)y; return res;
-  } else if (*string>='0' && *string<='9' && !string[1]) { // Single digit.
+  } else if (*string>='0' && *string<='9' && !string[1]) { // Single positive digit
     const unsigned int ind = *string - '0';
     if (ind<indice_max) return CImg<unsigned int>::vector(ind);
-  } else if (*string=='-' && string[1]>='0' && string[2]<='9' && !string[2]) { // Single negative digit.
+  } else if (*string=='-' && string[1]>='0' && string[2]<='9' && !string[2]) { // Single negative digit
     const unsigned int ind = indice_max - string[1] + '0';
     if (ind<indice_max) return CImg<unsigned int>::vector(ind);
   }
@@ -2905,12 +2905,12 @@ CImg<unsigned int> gmic::selection2cimg(const char *const string, const unsigned
     if (!*item) { // Particular cases [:N] or [^:N].
       if (is_inverse) { iind0 = 0; iind1 = -1; is_inverse = false; }
       else continue;
-    } else if (cimg_sscanf(item,"%f%c",&ind0,&end)==1) { // Single indice.
+    } else if (cimg_sscanf(item,"%f%c",&ind0,&end)==1) { // Single indice
       iind1 = iind0 = (int)cimg::round(ind0);
-    } else if (cimg_sscanf(item,"%f-%f%c",&ind0,&ind1,&end)==2) { // Sequence between 2 indices.
+    } else if (cimg_sscanf(item,"%f-%f%c",&ind0,&ind1,&end)==2) { // Sequence between 2 indices
       iind0 = (int)cimg::round(ind0);
       iind1 = (int)cimg::round(ind1);
-    } else if (cimg_sscanf(item,"%255[a-zA-Z0-9_]%c",name.data(),&end)==1 && // Label.
+    } else if (cimg_sscanf(item,"%255[a-zA-Z0-9_]%c",name.data(),&end)==1 && // Label
                (*name<'0' || *name>'9')) {
       cimglist_for(names,l) if (names[l] && !std::strcmp(names[l],name)) {
         is_selected(l) = true; is_label = true;
@@ -2922,7 +2922,7 @@ CImg<unsigned int> gmic::selection2cimg(const char *const string, const unsigned
         } else error("Command '%s': Invalid %s %c%s%c (undefined label '%s').",
                      command,stype,ctypel,string,ctyper,name.data());
       }
-    } else if (cimg_sscanf(item,"%f%c%c",&ind0,&sep,&end)==2 && sep=='%') { // Single percent.
+    } else if (cimg_sscanf(item,"%f%c%c",&ind0,&sep,&end)==2 && sep=='%') { // Single percent
       iind1 = iind0 = (int)cimg::round(ind0*((int)indice_max - 1)/100) - (ind0<0?1:0);
     } else if (cimg_sscanf(item,"%f%%-%f%c%c",&ind0,&ind1,&sep,&end)==3 && sep=='%') {
       // Sequence between 2 percents.
