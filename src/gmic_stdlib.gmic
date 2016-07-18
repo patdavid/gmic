@@ -3981,34 +3981,30 @@ update_server :
   -if {$nb_filters>400}
     -v + -e[] "> Compress and save output .gmic files." -v -
     --a y -l.
-    --compress_gmic_cli[0]
-    --compress_gmic_gimp[0]
     -compress_gmic[0]
 
     # Add footer and header.
-    -i[0,1,2] ({'"#@gmic"\n\
-                 "#"\n\
-                 "#  File        : update"$_version".gmic"\n\
-                 "#                ( G\47MIC command file )"\n\
-                 "#"\n\
-                 "#  Description : Update file for G\47MIC commands and filters (for version "${-strver}")."\n\
-                 "#                ( http://gmic.eu )"\n\
-                 "#"\n\
-                 "#  License     : CeCILL v2.0"\n\
-                 "#                ( http://www.cecill.info/licences/Licence_CeCILL_V2-en.html )"\n\
-                 "#"\n\n'})
-    -i[2,4,6] ({'"\n\n# Local Variables:"\n\
-                 "# mode: sh"\n\
-                 "# End:"\n\
-                 "#"\n\
-                 "# (End of G\47MIC update file)"'})
-    -y -a[6-8] y -a[3-5] y -a[0-2] y
+    -i[0] ({'"#@gmic"\n\
+             "#"\n\
+             "#  File        : update"$_version".gmic"\n\
+             "#                ( G\47MIC command file )"\n\
+             "#"\n\
+             "#  Description : Update file for G\47MIC commands and filters (for version "${-strver}")."\n\
+             "#                ( http://gmic.eu )"\n\
+             "#"\n\
+             "#  License     : CeCILL v2.0"\n\
+             "#                ( http://www.cecill.info/licences/Licence_CeCILL_V2-en.html )"\n\
+             "#"\n\n'})
+    ({'"\n\n# Local Variables:"\n\
+       "# mode: sh"\n\
+       "# End:"\n\
+       "#"\n\
+       "# (End of G\47MIC update file)"'})
+    -y -a y
 
     # Upload filter files on G'MIC server.
-    -o[0] raw:${_path_rc}update$_version.gmic,uchar
-    -o[0] cimgz:/tmp/update$_version.gmic,uchar
-    -o[1] cimgz:/tmp/cli_update$_version.gmic,uchar
-    -o[2] cimgz:/tmp/gimp_update$_version.gmic,uchar
+    -o raw:${_path_rc}update$_version.gmic,uchar
+    -o cimgz:/tmp/update$_version.gmic,uchar
 
     (175)
     -repeat {w}
