@@ -463,9 +463,9 @@ _help_usage :
 
   -_help_paragraph "  - "${-GMIC}" is able to read/write most of the classical image file formats, including:
 \n
-\n    . 2d grayscale/color files: "$c".png, .jpeg, .gif, .pnm, .tif, .bmp, .."$n"
-\n    . 3d volumetric files: "$c".dcm, .hdr, .nii, .pan, .inr, .pnk, .."$n"
-\n    . video files: "$c".mpeg, .avi, .mov, .ogg, .flv, .."$n"
+\n    . 2d grayscale/color files: "$c".png, .jpeg, .gif, .pnm, .tif, .bmp, ..."$n"
+\n    . 3d volumetric files: "$c".dcm, .hdr, .nii, .pan, .inr, .pnk, ..."$n"
+\n    . video files: "$c".mpeg, .avi, .mov, .ogg, .flv, ..."$n"
 \n    . Generic ascii or binary data files: "$c".gmz, .cimg, .cimgz, .dlm, .asc, .pfm, .raw, .txt, .h."$n"
 \n    . 3d object files: "$c".off."$n"
 \n
@@ -561,7 +561,7 @@ _help_usage :
 \n
 \n       . '"$c"$!"$n"': The current number of images in the list.
 \n       . '"$c"$>"$n"' and '"$c"$<"$n"': The increasing/decreasing indice of the latest (currently running)
-\n          '"${c}"repeat..done"$n"' loop.
+\n          '"${c}"repeat...done"$n"' loop.
 \n       . '"$c"$/"$n"': The current call stack. Stack items are separated by slashes '"$g"/"$n"'.
 \n       . '"$c"$|"$n"': The current value (expressed in seconds) of a millisecond precision timer.
 \n       . '"$c"$^"$n"': The current verbosity level.
@@ -719,8 +719,8 @@ _help_usage :
 \n       . '"${c}"z"$n"': current processed slice of the associated image, if any ("${g}"0"$n" otherwise).
 \n       . '"${c}"c"$n"': current processed channel of the associated image, if any ("${g}"0"$n" otherwise).
 \n       . '"${c}"t"$n"': thread id when an expression is evaluated with multiple threads ("${g}"0"$n" means 'master thread').
-\n       . '"${c}"e"$n"': value of e, i.e. "${g}"2.71828.."$n"
-\n       . '"${c}"pi"$n"': value of pi, i.e. "${g}"3.1415926.."$n"
+\n       . '"${c}"e"$n"': value of e, i.e. "${g}"2.71828..."$n"
+\n       . '"${c}"pi"$n"': value of pi, i.e. "${g}"3.1415926..."$n"
 \n       . '"${c}"u"$n"': a random value between "${g}"[0,1]"$n", following a uniform distribution.
 \n       . '"${c}"g"$n"': a random value, following a gaussian distribution of variance 1
 \n          (roughly in "${g}"[-6,6]"$n").
@@ -733,11 +733,11 @@ _help_usage :
 \n
 \n    _ "${g}"Vector calculus:"$n" Most operators are also able to work with vector-valued elements.
 \n
-\n       . '"${c}"[ a0,a1,..,aN ]"$n"' defines a "${g}"(N+1)"$n"-dimensional vector with specified scalar coefficients "${g}"ak"$n".
-\n       . '"${c}"vectorN(a0,a1,,..,)"$n"' does the same, with the "${g}"ak"$n" being repeated periodically.
+\n       . '"${c}"[ a0,a1,...,aN ]"$n"' defines a "${g}"(N+1)"$n"-dimensional vector with specified scalar coefficients "${g}"ak"$n".
+\n       . '"${c}"vectorN(a0,a1,,...,)"$n"' does the same, with the "${g}"ak"$n" being repeated periodically.
 \n       . In both expressions, the "${g}"ak"$n" can be vectors themselves, to be concatenated into a single vector.
 \n       . The scalar element "${g}"ak"$n" of a vector "${g}"X"$n" is retrieved by "${c}"X[k]"$n".
-\n       . The sub-vector "${g}"[ ap..aq ]"$n" of a vector "${g}"X"$n" is retrieved by "${c}"X[p,q]"$n".
+\n       . The sub-vector "${g}"[ ap...aq ]"$n" of a vector "${g}"X"$n" is retrieved by "${c}"X[p,q]"$n".
 \n       . Equality/inequality comparisons between two vectors is possible with the operators '"${c}"=="$n"' and '"${c}"!="$n"'.
 \n       . Some vector-specific functions can be used on vector values:
 \n         '"${c}"cross(X,Y)"$n"' (cross product), '"${c}"dot(X,Y)"$n"' (dot product), '"${c}"size(X)"$n"' (vector dimension),
@@ -919,7 +919,7 @@ _help_usage :
 \n    . "$g"(mouse)+(left mouse button)"$n": Rotate 3d object.
 \n    . "$g"(mouse)+(right mouse button)"$n": Zoom 3d object.
 \n    . "$g"(mouse)+(middle mouse button)"$n": Shift 3d object.
-\n    . "${g}"CTRL+F1 .. CTRL+F6"$n": Toggle between different 3d rendering modes.
+\n    . "${g}"CTRL+F1 ... CTRL+F6"$n": Toggle between different 3d rendering modes.
 \n    . "${g}"CTRL+Z"$n": Enable/disable z-buffered rendering.
 \n    . "${g}"CTRL+A"$n": Show/hide 3d axes.
 \n    . "${g}"CTRL+G"$n": Save 3d object, as numbered file 'gmic_xxxx.off'.
@@ -960,7 +960,7 @@ _help_usage :
 \n       then substituted by all arguments of the invoked command (eq. to '"$c"$""*"$n"' if all specified
 \n       arguments have indeed a value).
 \n    . '"$c"$""=var"$n"' is substituted by the set of instructions that will assign each argument "$c"$i"$n"
-\n       to the named variable '"${c}"var$i"$n"' (for i in "$g"[0..$""#]"$n"). This is particularly useful when a
+\n       to the named variable '"${c}"var$i"$n"' (for i in "$g"[0...$""#]"$n"). This is particularly useful when a
 \n       custom command want to manage variable numbers of arguments. Variables names must
 \n       use character set "$g"[a-zA-Z0-9_]"$n" and cannot start with a number.
 \n
@@ -1038,7 +1038,7 @@ _help_examples :
 \n  - Create a vase from a 3d isosurface:
 \n     "${c}"gmic -md3d 4 -isosurface3d \"'x^2+2*abs(y/2)*sin(2*y)^2+z^2-3',0\" -sphere3d 1.5 \\\
 \n      --3d. 0,5 -plane3d 15,15 -r3d. 1,0,0,90 -center3d. -+3d. 0,3.2 \\\
-\n      -color3d. 180,150,255 -color3d.. 128,255,0 -color3d... 255,128,0 -+3d"$n"
+\n      -color3d. 180,150,255 -color3d[-2] 128,255,0 -color3d[-3] 255,128,0 -+3d"$n"
 \n
 \n  - Display filtered webcam stream:
 \n     "${c}"gmic -apply_camera \\\"--mirror x --mirror y -+ -/ 4\\\""$n"
@@ -1386,7 +1386,7 @@ _display0 :
   -repeat $! -l[$>] w+={w} h={max($h,h)} d={max($d,d)} s={max($s,s)} -endl -done
   -if {$!==1} -w -1,-1,0,0,-1,-1,{0,n}\ ($wx$hx$dx$s)
   -elif {$!==2} -w -1,-1,0,0,-1,-1,{0,n},{n}\ ($wx$hx$dx$s)
-  -else -w -1,-1,0,0,-1,-1,{0,n},..,{n}\ ($wx$hx$dx$s)
+  -else -w -1,-1,0,0,-1,-1,{0,n},...,{n}\ ($wx$hx$dx$s)
   -endif
   -v + -d
   -v - -w[] 0 -v +
@@ -2611,7 +2611,7 @@ gmicky_wilber :
 
 #@gmic i : eq. to '-input'. : (+)
 
-#@gmic input : [type:]filename : [type:]http://URL : [selection]x_nb_copies>0 : { width>0[%] | [image_w] },{ _height>0[%] | [image_h] },{ _depth>0[%] | [image_d] },{ _spectrum>0[%] | [image_s] },_{ value1,_value2,.. | 'formula' } : (value1{,|;|/|^}value2{,|;|/|^}..) : 0 : (+)
+#@gmic input : [type:]filename : [type:]http://URL : [selection]x_nb_copies>0 : { width>0[%] | [image_w] },{ _height>0[%] | [image_h] },{ _depth>0[%] | [image_d] },{ _spectrum>0[%] | [image_s] },_{ value1,_value2,... | 'formula' } : (value1{,|;|/|^}value2{,|;|/|^}...) : 0 : (+)
 #@gmic : Insert a new image taken from a filename or from a copy of an existing image ['indice'],"
 #@gmic : or insert new image with specified dimensions and values. Single quotes may be omitted in
 #@gmic : 'formula'. Specifying argument '0' inserts an 'empty' image.
@@ -2779,7 +2779,7 @@ on :
   -_outputn $*
 
 #@gmic outputn : filename
-#@gmic : Output selected images as automatically numbered filenames in repeat..done loops.
+#@gmic : Output selected images as automatically numbered filenames in repeat...done loops.
 #@gmic : (eq. to '-on').
 outputn :
   -v - _gmic_s="$?" -v +
@@ -2890,7 +2890,7 @@ _outputx :
 
 #@gmic rainbow_lut
 #@gmic : Input a 256-entries RGB colormap of rainbow colors.
-#@gmic : $ image.jpg -rainbow_lut --luminance.. -map. ..
+#@gmic : $ image.jpg -rainbow_lut --luminance[-2] -map[-1] [-2]
 rainbow_lut :
   -e[^-1] "Input RGB colormap of 256 rainbow colors."
   -v -
@@ -3518,7 +3518,7 @@ update_gallery_html :
 
   -_update_gallery_html "-polaroid 20 -drop_shadow 3,3 -rotate 10,1 -display_rgba"
   -_update_gallery_html "--plasma 10,10 -n. 0.5,2.5 -n 0,255 -and -equalize 256"
-  -_update_gallery_html "100%,100% -mandelbrot. -1.17229,-0.3038,-1.15209,-0.2836,1000 -map. 0 -*.. 1.5 -+ -n 0,255"
+  -_update_gallery_html "100%,100% -mandelbrot. -1.17229,-0.3038,-1.15209,-0.2836,1000 -map. 0 -*[-2] 1.5 -+ -n 0,255"
   -_update_gallery_html "--edges 15 -n 0,255 -fade_y 30,70"
   -_update_gallery_html "-split_tiles 5,5 -blur 8 -sharpen 1000 -equalize 255 -append_tiles 5,5"
 
@@ -3594,7 +3594,7 @@ update_gallery_html :
   -_update_gallery_html "--mirror x -a x -map_sphere ,"
   -_update_gallery_html "-gimp_painting 2,1.5,2"
 
-  -_update_gallery_html "-f3d 800 -rm 512,512,1,3 -chessboard 64,64,0,0,15,1,${-RGB},${-RGB} --imagecube3d -*3d. 230 -r3d. 1,1,0.5,50 -m3d 3 -object3d.. .,50%,50%,0 -rm. -gimp_painting 1,1.5,2 -equalize. 256"
+  -_update_gallery_html "-f3d 800 -rm 512,512,1,3 -chessboard 64,64,0,0,15,1,${-RGB},${-RGB} --imagecube3d -*3d. 230 -r3d. 1,1,0.5,50 -m3d 3 -object3d[-2] [-1],50%,50%,0 -rm. -gimp_painting 1,1.5,2 -equalize. 256"
   -_update_gallery_html "--histogram 256 -display_graph. {0,w},{0,h},3 -to_rgba. -*. 0.5 -blend alpha"
   -_update_gallery_html "100%,100%,1,1,'X=(x-w/2)/30;Y=(y-h/2)/30;5*cos(X*Y)*sqrt(X^2+Y^2)' -elevation3d[0] [1] -k[0] -r3d 1,1,0,60 -snapshot3d 500,2"
   -_update_gallery_html "-kuwahara 10 -noise 30 -smooth 100,0,1,3,3 -sharpen 400 -n 0,255 -equalize 256"
@@ -4556,7 +4556,7 @@ _update_tutorial_html :
 #@gmic : 'normalization' can be { -1=keep same | 0=none | 1=always | 2=1st-time | 3=auto }.
 #@gmic : 'fullscreen' can be { -1=keep same | 0=no | 1=yes }.
 #@gmic : You can manage up to 10 different instant display windows by using the numbered variants
-#@gmic : '-w0' (default, eq. to '-w'),'-w1',..,'-w9' of the command '-w'.
+#@gmic : '-w0' (default, eq. to '-w'),'-w1',...,'-w9' of the command '-w'.
 #@gmic : Invoke '-window' with no selection to make the window visible, if is has been closed by the user.
 #@gmic : Default values: 'width=height=normalization=fullscreen=-1' and 'title=(undefined)'.
 
@@ -5045,7 +5045,7 @@ balance_gamma : -skip ${1=128}
 
 #@gmic complex2polar
 #@gmic : Compute complex to polar transforms of selected images.
-#@gmic : $ image.jpg --fft -complex2polar[-2,-1] -log.. -shift.. 50%,50%,0,0,2 -remove.
+#@gmic : $ image.jpg --fft -complex2polar[-2,-1] -log[-2] -shift[-2] 50%,50%,0,0,2 -remove.
 complex2polar :
   -e[^-1] "Compute complex to polar transforms of image$?."
   -v - -repeat {int($!/2)} -l[{2*$>},{2*$>+1}]
@@ -5162,7 +5162,7 @@ compress_rle : -skip ${1=0} -check "isint(${2=0}) && $2>=0"
     -i[0] ($header) -a y -nm $nm
   -endl -done -v +
 
-#@gmic cumulate : { x | y | z | c }..{ x | y | z | c } : (no arg) : (+)
+#@gmic cumulate : { x | y | z | c }...{ x | y | z | c } : (no arg) : (+)
 #@gmic : Compute the cumulative function of specified image data, optionally along the specified axes.
 #@gmic : $ image.jpg --histogram --cumulate. -display_graph[-2,-1] 400,300,3
 
@@ -5219,7 +5219,7 @@ decompress_rle :
     -a x -r $whds,-1 -+ $im
   -endl -done -v +
 
-#@gmic discard : _value1,_value2,... : { x | y | z | c}..{ x | y | z | c},_value1,_value2,... : (no args) : (+)
+#@gmic discard : _value1,_value2,... : { x | y | z | c}...{ x | y | z | c},_value1,_value2,... : (no args) : (+)
 #@gmic : Discard specified values in selected images or discard neighboring duplicate values,
 #@gmic : optionally only for the values along the first of a specified axis.
 #@gmic : If no values are specified, neighboring duplicate values are discarded.
@@ -5267,12 +5267,12 @@ eigen2tensor :
 
 #@gmic f : eq. to '-fill'. : (+)
 
-#@gmic fill : value1,_value2,.. : [image] : 'formula' : (+)
+#@gmic fill : value1,_value2,... : [image] : 'formula' : (+)
 #@gmic : Fill selected images with values read from the specified value list, existing image
 #@gmic : or mathematical expression. Single quotes may be omitted in 'formula'.
 #@gmic : (eq. to '-f').
 #@gmic : $ 4,4 -fill 1,2,3,4,5,6,7
-#@gmic : $ 4,4 (1,2,3,4,5,6,7) -fill.. .
+#@gmic : $ 4,4 (1,2,3,4,5,6,7) -fill[-2] [-1]
 #@gmic : $ 400,400,1,3 -fill "X=x-w/2; Y=y-h/2; R=sqrt(X^2+Y^2); a=atan2(Y,X); if(R<=180,255*abs(cos(c+200*(x/w-0.5)*(y/h-0.5))),850*(a%(0.1*(c+1))))"
 
 #@gmic float2int8
@@ -5304,7 +5304,7 @@ int82float :
 #@gmic : 'predefined_palette' can be { 0=default | 1=HSV | 2=lines | 3=hot | 4=cool | 5=jet | 6=flag | 7=cube }.
 #@gmic : Default values: 'dithering=0' and 'map_palette=0'.
 #@gmic : $ image.jpg --index 1,1,1
-#@gmic : $ image.jpg (0;255;255^0;128;255^0;0;255) --index.. .,1,1
+#@gmic : $ image.jpg (0;255;255^0;128;255^0;0;255) --index[-2] [-1],1,1
 #@gmic : $$
 
 #@gmic ir : eq. to '-inrange'.
@@ -5418,14 +5418,14 @@ normalize_sum :
 
 #@gmic not
 #@gmic : Apply boolean not operation on selected images.
-#@gmic : $ image.jpg --ge 50% --not.
+#@gmic : $ image.jpg --ge 50% --not[-1]
 not :
   -e[^-1] "Apply boolean not operation on image$?."
   -v - -== 0 -v +
 
 #@gmic orientation
 #@gmic : Compute the pointwise orientation of vector-valued pixels in selected images.
-#@gmic : $ image.jpg --orientation --norm.. -negative. -mul.. . -reverse[-2,-1]
+#@gmic : $ image.jpg --orientation --norm[-2] -negative[-1] -mul[-2] [-1] -reverse[-2,-1]
 #@gmic : $$
 orientation :
   -e[^-1] "Compute pointwise orientation vectors, in image$?."
@@ -6177,7 +6177,7 @@ rgb2hsi8 :
 #@gmic rgb2hsl : (+)
 #@gmic : Convert selected images from RGB to HSL colorbases.
 #@gmic : $ image.jpg -rgb2hsl -split c
-#@gmic : $ image.jpg -rgb2hsl --split c -add... 100 -mod... 360 -append[-3--1] c -hsl2rgb
+#@gmic : $ image.jpg -rgb2hsl --split c -add[-3] 100 -mod[-3] 360 -append[-3--1] c -hsl2rgb
 
 #@gmic rgb2hsl8
 #@gmic : Convert selected images from RGB to HSL8 color bases.
@@ -6189,7 +6189,7 @@ rgb2hsl8 :
 #@gmic rgb2hsv : (+)
 #@gmic : Convert selected images from RGB to HSV colorbases.
 #@gmic : $ image.jpg -rgb2hsv -split c
-#@gmic : $ image.jpg -rgb2hsv --split c -add.. 0.3 -cut.. 0,1 -append[-3--1] c -hsv2rgb
+#@gmic : $ image.jpg -rgb2hsv --split c -add[-2] 0.3 -cut[-2] 0,1 -append[-3--1] c -hsv2rgb
 
 #@gmic rgb2hsv8
 #@gmic : Convert selected images from RGB to HSV8 color bases.
@@ -6339,7 +6339,7 @@ remove_opacity :
     -endif
   -nm {n} -endl -done -v +
 
-#@gmic select_color : tolerance[%]>=0,col1,..,colN
+#@gmic select_color : tolerance[%]>=0,col1,...,colN
 #@gmic : Select pixels with specified color in selected images.
 #@gmic : $ image.jpg --select_color 40,204,153,110
 #@gmic : $$
@@ -7066,7 +7066,7 @@ _montage :
     -u $l
   -endif
 
-#@gmic mirror : { x | y | z }..{ x | y | z } : (+)
+#@gmic mirror : { x | y | z }...{ x | y | z } : (+)
 #@gmic : Mirror selected images along specified axes.
 #@gmic : $ image.jpg --mirror y --mirror[0] c
 #@gmic : $ image.jpg --mirror x --mirror y -append_tiles 2,2
@@ -7074,7 +7074,7 @@ _montage :
 #@gmic permute : permutation_string : (+)
 #@gmic : Permute selected image axes by specified permutation.
 #@gmic : 'permutation' is a combination of the character set {x|y|z|c},
-#@gmic : e.g. 'xycz', 'cxyz', ..
+#@gmic : e.g. 'xycz', 'cxyz', ...
 #@gmic : $ image.jpg -permute yxzc
 
 #@gmic r : eq. to '-resize'. : (+)
@@ -7091,8 +7091,8 @@ _montage :
 #@gmic : (set to '0' by default, must be defined in range [0,1]).
 #@gmic : (no arg) runs interactive mode (uses the instant display window [0] if opened).
 #@gmic : Default values: 'interpolation=1', 'boundary=0' and 'ax=ay=az=ac=0'.
-#@gmic : $ image.jpg (0,1;0,1^0,0;1,1^1,1;1,1) -resize. ..,3 -mul.. .
-#@gmic : $ image.jpg --resize. 256,128,1,3,2 --resize. 120%,120%,1,3,0,1,0.5,0.5 --resize. 120%,120%,1,3,0,0,0.2,0.2 --resize. [0],[0],1,3,4
+#@gmic : $ image.jpg (0,1;0,1^0,0;1,1^1,1;1,1) -resize[-1] [-2],3 -mul[-2] [-1]
+#@gmic : $ image.jpg --resize[-1] 256,128,1,3,2 --resize[-1] 120%,120%,1,3,0,1,0.5,0.5 --resize[-1] 120%,120%,1,3,0,0,0.2,0.2 --resize[-1] [0],[0],1,3,4
 
 #@gmic resize_pow2 : _interpolation,_boundary,_ax,_ay,_az,_ac
 #@gmic : Resize selected images so that each dimension is a power of 2.
@@ -7547,7 +7547,7 @@ shrink_z : -check "$1>=0"
 
 #@gmic s : eq. to '-split'. : (+)
 
-#@gmic split : { x | y | z | c }..{ x | y | z | c },_split_mode : keep_splitting_values={ + | - },_{ x | y | z | c }..{ x | y | z | c },value1,_value2,... : (no args) : (+)
+#@gmic split : { x | y | z | c }...{ x | y | z | c },_split_mode : keep_splitting_values={ + | - },_{ x | y | z | c }...{ x | y | z | c },value1,_value2,... : (no args) : (+)
 #@gmic : Split selected images along specified axes, or regarding to a sequence of scalar values (optionally along specified axes too).
 #@gmic : (eq. to '-s').
 #@gmic : 'split_mode' can be { 0=split according to constant values | >0=split in N parts | <0=split in parts of size -N }.
@@ -7602,7 +7602,7 @@ upscale_smart : -skip ${2=100%},${3=100%} -check "${4=2}>=0 && ${5=0.4}>=0 && $5
 #@gmic : 'interpolation' can be { 0=nearest-neighbor | 1=linear | 2=cubic }.
 #@gmic : 'boundary' can be { 0=dirichlet | 1=neumann | 2=periodic }.
 #@gmic : Default values: 'mode=0', 'interpolation=1', 'boundary=1' and 'nb_frames=1'.
-#@gmic : $ image.jpg 100%,100%,1,2,'X=x/w-0.5;Y=y/h-0.5;R=(X*X+Y*Y)^0.5;A=atan2(Y,X);130*R*if(c==0,cos(4*A),sin(8*A))' -warp.. .,1,1,0 -quiver. .,10,0.2,1,1,100
+#@gmic : $ image.jpg 100%,100%,1,2,'X=x/w-0.5;Y=y/h-0.5;R=(X*X+Y*Y)^0.5;A=atan2(Y,X);130*R*if(c==0,cos(4*A),sin(8*A))' -warp[-2] [-1],1,1,0 -quiver[-1] [-1],10,0.2,1,1,100
 #@gmic : $$
 
 #---------------------------------
@@ -7756,7 +7756,7 @@ compose_freq :
 #@gmic : Convolve selected images by specified mask.
 #@gmic : 'boundary' can be { 0=dirichlet | 1=neumann }.
 #@gmic : Default values: 'boundary=1' and 'is_normalized=0'.
-#@gmic : $ image.jpg (0,1,0;1,-4,1;0,1,0) -convolve.. . -keep..
+#@gmic : $ image.jpg (0,1,0;1,-4,1;0,1,0) -convolve[-2] [-1] -keep[-2]
 #@gmic : $ image.jpg (0,1,0) -resize. 130,1,1,1,3 --convolve[0] [1]
 #@gmic : $$
 
@@ -7778,7 +7778,7 @@ convolve_fft : -check ${-is_image_arg\ $1}
 #@gmic : Correlate selected images by specified mask.
 #@gmic : 'boundary' can be { 0=dirichlet | 1=neumann }.
 #@gmic : Default values: 'boundary=1' and 'is_normalized=0'.
-#@gmic : $ image.jpg (0,1,0;1,-4,1;0,1,0) -correlate.. . -keep..
+#@gmic : $ image.jpg (0,1,0;1,-4,1;0,1,0) -correlate[-2] [-1] -keep[-2]
 #@gmic : $ image.jpg --crop 40%,40%,60%,60% --correlate[0] .,0,1
 
 #@gmic cross_correlation : [mask]
@@ -7810,11 +7810,11 @@ curvature :
     -endif
   -endl -done -v +
 
-#@gmic dct : _{ x | y | z }..{ x | y | z } : (no arg)
+#@gmic dct : _{ x | y | z }...{ x | y | z } : (no arg)
 #@gmic : Compute the discrete cosine transform of selected images,
 #@gmic : optionally along the specified axes only.
 #@gmic : Default values: (no arg)
-#@gmic : $ image.jpg --dct --idct. -abs.. -+.. 1 -log..
+#@gmic : $ image.jpg --dct --idct[-1] -abs[-2] -+[-2] 1 -log[-2]
 #@gmic : $$ _dct-and-idct
 dct : -skip ${1=0}
   -v - ({'"$1"'})
@@ -8028,7 +8028,7 @@ denoise_patchpca : -check "${1=1.8} && $1>=0 && isint(${2=7}) && $2>0 && isint($
 #@gmic : 'boundary' can be { 0=dirichlet | 1=neumann }.
 #@gmic : Default value: 'boundary=1'.
 #@gmic : $ image.jpg --deriche 3,1,x
-#@gmic : $ image.jpg --deriche 30,0,x -deriche.. 30,0,y -add
+#@gmic : $ image.jpg --deriche 30,0,x -deriche[-2] 30,0,y -add
 #@gmic : $$
 
 #@gmic dilate : size>=0 : size_x>=0,size_y>=0,size_z>=0 : [kernel],_boundary,_is_real={ 0=binary-mode | 1=real-mode } : (+)
@@ -8199,7 +8199,7 @@ erode_threshold : -check "isint($1) && $1>=1 && isint(${2=$1}) && $2>=1 && isint
   -f 'min($list)'
   -v +
 
-#@gmic fft : _{ x | y | z }..{ x | y | z } : (+)
+#@gmic fft : _{ x | y | z }...{ x | y | z } : (+)
 #@gmic : Compute the direct fourier transform (real and imaginary parts) of selected images,
 #@gmic : optionally along the specified axes only.
 #@gmic : $ image.jpg -luminance --fft -append[-2,-1] c -norm. -log. -shift. 50%,50%,0,0,2
@@ -8208,7 +8208,7 @@ erode_threshold : -check "isint($1) && $1>=1 && isint(${2=$1}) && $2>=1 && isint
 
 #@gmic g : eq. to '-gradient'. : (+)
 
-#@gmic gradient : { x | y | z }..{ x | y | z },_scheme : (no arg) : (+)
+#@gmic gradient : { x | y | z }...{ x | y | z },_scheme : (no arg) : (+)
 #@gmic : Compute the gradient components (first derivatives) of selected images.
 #@gmic : (eq. to '-g').
 #@gmic : 'scheme' can be { -1=backward | 0=centered | 1=forward | 2=sobel | 3=rotation-invariant (default) | 4=deriche | 5=vanvliet }.
@@ -8293,12 +8293,12 @@ heat_flow : -skip ${1=10},${2=30},${3=0}
   -e[^-1] "Apply $1 iterations of the heat flow on image$?, with time step $2."
   -v - -pde_flow $1,$2,laplacian,$3 -v +
 
-#@gmic hessian : { xx | xy | xz | yy | yz | zz }..{ xx | xy | xz | yy | yz | zz } : (no arg) : (+)
+#@gmic hessian : { xx | xy | xz | yy | yz | zz }...{ xx | xy | xz | yy | yz | zz } : (no arg) : (+)
 #@gmic : Compute the hessian components (second derivatives) of selected images.
 #@gmic : (no arg) compute all significant components.
 #@gmic : $ image.jpg -hessian
 
-#@gmic idct : _{ x | y | z }..{ x | y | z } : (no arg)
+#@gmic idct : _{ x | y | z }...{ x | y | z } : (no arg)
 #@gmic : Compute the inverse discrete cosine transform of selected images,
 #@gmic : optionally along the specified axes only.
 #@gmic : Default values: (no arg)
@@ -8351,17 +8351,17 @@ iee :
   -e[^-1] "Compute gradient-orthogonal-directed 2nd derivative of image$?."
   -v - -repeat $! -l[$>]
     -if {d==1}
-      --g xy,0 -hessian... xxxyyy         # ixx ixy iyy ix iy
+      --g xy,0 -hessian... xxxyyy       # ixx ixy iyy ix iy
       -*... .. -*[-4] . -*[-4] -2       # ixx -2iyixy ixiyy ix iy
       -+[-4,-3] -*... ..                # ixx -2ixiyixy+ix^2iyy ix iy
-      -sqr[-2,-1] -*[-4] . -+[-4,-3]      # iy^2ixx-2ixiyixy+ix^2iyy ix^2 iy^2
-      -+[-2,-1] -+. 1e-8 -/               # (iy^2ixx+2ixiyixy+ix^2iyy)/(ix^2+iy^2)
+      -sqr[-2,-1] -*[-4] . -+[-4,-3]    # iy^2ixx-2ixiyixy+ix^2iyy ix^2 iy^2
+      -+[-2,-1] -+. 1e-8 -/             # (iy^2ixx+2ixiyixy+ix^2iyy)/(ix^2+iy^2)
     -else
       --inn -laplacian.. --
     -endif
   -endl -done -v +
 
-#@gmic ifft : _{ x | y | z }..{ x | y | z } : (+)
+#@gmic ifft : _{ x | y | z }...{ x | y | z } : (+)
 #@gmic : Compute the inverse fourier transform (real and imaginary parts) of selected images.
 #@gmic : optionally along the specified axes only.
 #@gmic : $$ _fft
@@ -8405,19 +8405,19 @@ inn :
   -e[^-1] "Compute gradient-directed 2nd derivative of image$?."
   -v - -repeat $! -l[$>]
     -if {d==1}
-      --g xy,0 -hessian... xxxyyy         # ixx ixy iyy ix iy
+      --g xy,0 -hessian... xxxyyy       # ixx ixy iyy ix iy
       -*[-5] .. -*[-4] . -*[-4] 2       # ixixx 2iyixy iyy ix iy
       -+[-5,-4] -*[-4] ..               # ix^2ixx+2ixiyixy iyy ix iy
-      -sqr[-2,-1] -*... . -+[-4,-3]       # ix^2ixx+2ixiyixy+iy^2iyy ix^2 iy^2
-      -+[-2,-1] -+. 1e-8 -/               # (ix^2ixx+2ixiyixy+iy^2iyy)/(ix^2+iy^2)
+      -sqr[-2,-1] -*... . -+[-4,-3]     # ix^2ixx+2ixiyixy+iy^2iyy ix^2 iy^2
+      -+[-2,-1] -+. 1e-8 -/             # (ix^2ixx+2ixiyixy+iy^2iyy)/(ix^2+iy^2)
     -else
-      --g xyz,0 -hessian[-4] xxxyxzyyyzzz                     # ixx ixy ixz iyy iyz izz ix iy iz
+      --g xyz,0 -hessian[-4] xxxyxzyyyzzz                  # ixx ixy ixz iyy iyz izz ix iy iz
       -*[-9] ... -*[-8] .. -*[-8] 2 -*[-7] . -*[-7] 2      # ixixx 2iyixy 2izixz iyy iyz izz ix iy iz
-      -+[-9--7] -*[-7] ...                                   # ix^2ixx+2ixiyixy+2ixizixy iyy iyz izz ix iy iz
-      -*[-6] .. -*[-5] . -*[-5] 2                           # ix^2ixx+2ixiyixy+2ixizixy iyiyy 2iziyz izz ix iy iz
-      -+[-6,-5] -*[-5] .. -+[-6,-5]                         # ix^2ixx+2ixiyixy+2ixizixy+iy^2iyy+2iyiziyz izz ix iy iz
-      -sqr[-3--1] -*[-4] . -+[-5,-4]                          # ix^2ixx+2ixiyixy+2ixizixy+iy^2iyy+2iyiziyz+iz^2izz ix^2 iy^2 iz^2
-      -+[-3--1] -+. 1e-8 -/                                   # (ix^2ixx+2ixiyixy+2ixizixy+iy^2iyy+2iyiziyz+iz^2izz)/(ix^2+iy^2+iz^2)
+      -+[-9--7] -*[-7] ...                                 # ix^2ixx+2ixiyixy+2ixizixy iyy iyz izz ix iy iz
+      -*[-6] .. -*[-5] . -*[-5] 2                          # ix^2ixx+2ixiyixy+2ixizixy iyiyy 2iziyz izz ix iy iz
+      -+[-6,-5] -*[-5] .. -+[-6,-5]                        # ix^2ixx+2ixiyixy+2ixizixy+iy^2iyy+2iyiziyz izz ix iy iz
+      -sqr[-3--1] -*[-4] . -+[-5,-4]                       # ix^2ixx+2ixiyixy+2ixizixy+iy^2iyy+2iyiziyz+iz^2izz ix^2 iy^2 iz^2
+      -+[-3--1] -+. 1e-8 -/                                # (ix^2ixx+2ixiyixy+2ixizixy+iy^2iyy+2iyiziyz+iz^2izz)/(ix^2+iy^2+iz^2)
     -endif
   -endl -done -v +
 
@@ -8427,7 +8427,7 @@ inn :
 #@gmic : Otherwise, it used a patch-based reconstruction method, that can be very time consuming.
 #@gmic : 'fast_method' can be { 0=low-connectivity average | 1=high-connectivity average | 2=low-connectivity median | 3=high-connectivity median }.
 #@gmic : Default values: 'patch_size=0', 'fast_method=1', 'lookup_size=22', 'lookup_factor=0.5', 'lookup_increment=1', 'blend_size=0', 'blend_threshold=0', 'blend_decay=0.05', 'blend_scales=10' and 'is_blend_outer=1'.
-#@gmic : $ image.jpg 100%,100% -ellipse 50%,50%,30,30,0,1,255 -ellipse 20%,20%,30,10,0,1,255 --inpaint.. . -remove..
+#@gmic : $ image.jpg 100%,100% -ellipse 50%,50%,30,30,0,1,255 -ellipse 20%,20%,30,10,0,1,255 --inpaint[-2] [-1] -remove[-2]
 #@gmic : $ image.jpg 100%,100% -circle 30%,30%,30,1,255,0,255 -circle 70%,70%,50,1,255,0,255 --inpaint[0] [1],5,15,0.5,1,9,0 -remove[1]
 
 #@gmic inpaint_flow : [mask],_nb_global_iter>=0,_nb_local_iter>=0,_dt>0,_alpha>=0,_sigma>=0
@@ -8703,7 +8703,7 @@ laplacian :
 #@gmic lic : _amplitude>0,_channels>0
 #@gmic : Render LIC representation of selected vector fields.
 #@gmic : Default values: 'amplitude=30' and 'channels=1'.
-#@gmic : $ 400,400,1,2,'if(c==0,x-w/2,y-h/2)' --lic 200,3 -quiver.. ..,10,-13,1,1,255
+#@gmic : $ 400,400,1,2,'if(c==0,x-w/2,y-h/2)' --lic 200,3 -quiver[-2] [-2],10,-13,1,1,255
 lic : -skip ${1=30},${2=1}
   -e[^-1] "Render LIC representation of 2d vector field$?, with amplitude $1 and $2 channel(s)."
   -v - -repeat $! -l[$>] nm={0,n}
@@ -9252,7 +9252,7 @@ unsharp_octave : -check "${1=4}>0 && ${3=2}>=0" -skip ${2=1},${4=0}
 #@gmic : 'boundary' can be { 0=dirichlet | 1=neumann }.
 #@gmic : Default value: 'boundary=1'.
 #@gmic : $ image.jpg --vanvliet 3,1,x
-#@gmic : $ image.jpg --vanvliet 30,0,x -vanvliet.. 30,0,y -add
+#@gmic : $ image.jpg --vanvliet 30,0,x -vanvliet[-2] 30,0,y -add
 
 #@gmic watermark_fourier : text,_size>0
 #@gmic : Add a textual watermark in the frequency domain of selected images.
@@ -9282,7 +9282,7 @@ watermark_fourier : -check ${2=33}>0
 #@gmic watershed : [priority_image],_is_high_connectivity={ 0 | 1 } : (+)
 #@gmic : Compute the watershed transform of selected images.
 #@gmic : Default value: 'is_high_connectivity=1'.
-#@gmic : $ 400,400 -noise 0.2,2 --distance 1 -mul. -1 -label.. -watershed.. . -mod.. 256 -map.. 0 -reverse
+#@gmic : $ 400,400 -noise 0.2,2 --distance 1 -mul[-1] -1 -label[-2] -watershed[-2] [-1] -mod[-2] 256 -map[-2] 0 -reverse
 
 #---------------------------------
 #
@@ -9331,7 +9331,7 @@ at_line : -check ${7=100%}>=0
 
 #@gmic barycenter
 #@gmic : Compute the barycenter vector of pixel values.
-#@gmic : $ 256,256 -ellipse 50%,50%,20%,20%,0,1,1 -deform 20 --barycenter --ellipse.. {@0,1},5,5,0,10
+#@gmic : $ 256,256 -ellipse 50%,50%,20%,20%,0,1,1 -deform 20 --barycenter --ellipse[-2] {@0,1},5,5,0,10
 barycenter :
   -e[^-1] "Compute the barycenter vector of pixel values of image$?."
   -v - -norm -repeat $! -l[$>] nm={0,b}
@@ -9392,7 +9392,7 @@ detect_skin : -check "${1=0.5}>=0 && $1<=1" -skip ${2=-1},${3=-1},${4=-1}
 #@gmic : If 'smoothness>=0', regularization type is set to isotropic, else to anisotropic.
 #@gmic : If 'nbscales==0', the number of scales used is estimated from the image size.
 #@gmic : Default values: 'smoothness=0.1', 'precision=5', 'nb_scales=0', 'iteration_max=10000', 'is_backward=1' and '[guide]=(unused)'.
-#@gmic : $ image.jpg --rotate 3,1,0,50%,50% --displacement. .. -quiver. .,15,-20,1,1,{1.5*iM}
+#@gmic : $ image.jpg --rotate 3,1,0,50%,50% --displacement[-1] [-2] -quiver[-1] [-1],15,-20,1,1,{1.5*iM}
 
 #@gmic distance : isovalue[%],_metric : isovalue[%],[metric],_method : (+)
 #@gmic : Compute the unsigned distance function to specified isovalue, opt. according to a custom metric.
@@ -9567,7 +9567,7 @@ min_patch : -check "isint(${1=16}) && $1>=1"
 #@gmic minimal_path : x0[%]>=0,y0[%]>=0,z0[%]>=0,x1[%]>=0,y1[%]>=0,z1[%]>=0,_is_high_connectivity={ 0 | 1 }
 #@gmic : Compute minimal path between two points on selected potential maps.
 #@gmic : Default value: 'is_high_connectivity=0'.
-#@gmic : $ image.jpg --gradient_norm -fill. 1/(1+i) -minimal_path. 0,0,0,100%,100%,0 -pointcloud. 0 -*. 280 -to_rgb. -resize. ..,0 -or
+#@gmic : $ image.jpg --gradient_norm -fill[-1] 1/(1+i) -minimal_path[-1] 0,0,0,100%,100%,0 -pointcloud[-1] 0 -*[-1] 280 -to_rgb[-1] -resize[-1] [-2],0 -or
 minimal_path : -check "$1>=0 && $2>=0 && $3>=0" -skip ${7=0}
   -e[^-1] "Compute minimal path between points ($1,$2,$3) and ($4,$5,$6) for potential map$?, with "${-arg\ 1+$7,low,high}" connectivity."
   -v - -repeat $! -l[$>] nm={0,n}
@@ -9620,7 +9620,7 @@ patches : -check "isint($1) && $1>0 && isint($2) && $2>0 && isint($3) && $3>0"
 #@gmic : the specified patch image. If 'output_score=1', the third channel gives the corresponding
 #@gmic : matching score for each patch as well.
 #@gmic : Default values: 'patch_height=patch_width', 'patch_depth=1', 'nb_iterations=5', 'nb_randoms=5', 'output_score=0' and 'guide=(undefined)'.
-#@gmic : $ image.jpg -testimage2d 320 --patchmatch[0] [1],3 --warp.. .,0
+#@gmic : $ image.jpg -testimage2d 320 --patchmatch[0] [1],3 --warp[-2] [-1],0
 
 #@gmic plot2value
 #@gmic : Retrieve values from selected 2d graph plots.
@@ -9933,7 +9933,7 @@ ball : -check "${1=64}>0 && ${5=0.8}>=0 && $5<=8 && ${6=1}>=0 && $6<=8 && ${7=1.
   -r $1,$1,1,4,2
   -endl -v +
 
-#@gmic chessboard : size1>0,_size2>0,_offset1,_offset2,_angle,_opacity,_color1,..,_color2,..
+#@gmic chessboard : size1>0,_size2>0,_offset1,_offset2,_angle,_opacity,_color1,...,_color2,...
 #@gmic : Draw chessboard on selected images.
 #@gmic : Default values: 'size2=size1', 'offset1=offset2=0', 'angle=0', 'opacity=1', 'color1=0' and 'color2=255'.
 #@gmic : $ image.jpg -chessboard 32,32,0,0,25,0.3,255,128,0,0,128,255
@@ -9991,7 +9991,7 @@ cie1931 :
     -j... ..,0,0,0,0,1,.,400 -rm[-2,-1]
   -mv. 2 -done -rm[0,1] -v +
 
-#@gmic circle : x[%],y[%],R[%],_opacity,_pattern,_color1,..
+#@gmic circle : x[%],y[%],R[%],_opacity,_pattern,_color1,...
 #@gmic : Draw specified colored circle on selected images.
 #@gmic : A radius of '100%' stands for 'sqrt(width^2+height^2)'.
 #@gmic : 'pattern' is an hexadecimal number starting with '0x' which can be omitted
@@ -10007,7 +10007,7 @@ circle : -skip ${4=1},${5=0}
   -endif
   -v - -ellipse $1,$2,$3,$3,0,${4--1} -v +
 
-#@gmic ellipse : x[%],y[%],R[%],r[%],_angle,_opacity,_pattern,_color1,.. : (+)
+#@gmic ellipse : x[%],y[%],R[%],r[%],_angle,_opacity,_pattern,_color1,... : (+)
 #@gmic : Draw specified colored ellipse on selected images.
 #@gmic : A radius of '100%' stands for 'sqrt(width^2+height^2)'.
 #@gmic : 'pattern' is an hexadecimal number starting with '0x' which can be omitted
@@ -10016,7 +10016,7 @@ circle : -skip ${4=1},${5=0}
 #@gmic : Default values: 'opacity=1', 'pattern=(undefined)' and 'color1=0'.
 #@gmic : $ image.jpg -repeat 300 -ellipse {u(100)}%,{u(100)}%,{u(30)},{u(30)},{u(180)},0.3,${-RGB} -done -ellipse 50%,50%,100,100,0,0.7,255
 
-#@gmic flood : x[%],_y[%],_z[%],_tolerance>=0,_is_high_connectivity={ 0 | 1 },_opacity,_color1,.. : (+)
+#@gmic flood : x[%],_y[%],_z[%],_tolerance>=0,_is_high_connectivity={ 0 | 1 },_opacity,_color1,... : (+)
 #@gmic : Flood-fill selected images using specified value and tolerance.
 #@gmic : Default values: 'y=z=0', 'tolerance=0', 'is_high_connectivity=0', 'opacity=1' and 'color1=0'.
 #@gmic : $ image.jpg -repeat 1000 -flood {u(100)}%,{u(100)}%,0,20,0,1,${-RGB} -done
@@ -10045,7 +10045,7 @@ gaussian : -skip ${1=3},${2=$1},${3=0}
     -* -1 -exp -r $w,$h,$ds
   -nm $nm -endl -done -v +
 
-#@gmic graph : [function_image],_plot_type,_vertex_type,_ymin,_ymax,_opacity,_pattern,_color1,.. : 'formula',_resolution>=0,_plot_type,_vertex_type,_xmin,xmax,_ymin,_ymax,_opacity,_pattern,_color1,.. : (+)
+#@gmic graph : [function_image],_plot_type,_vertex_type,_ymin,_ymax,_opacity,_pattern,_color1,... : 'formula',_resolution>=0,_plot_type,_vertex_type,_xmin,xmax,_ymin,_ymax,_opacity,_pattern,_color1,... : (+)
 #@gmic : Draw specified function graph on selected images.
 #@gmic : 'plot_type' can be { 0=none | 1=lines | 2=splines | 3=bar }.
 #@gmic : 'vertex_type' can be { 0=none | 1=points | 2,3=crosses | 4,5=circles | 6,7=squares }.
@@ -10055,7 +10055,7 @@ gaussian : -skip ${1=3},${2=$1},${3=0}
 #@gmic : and 'color1=0'.
 #@gmic : $ image.jpg --rows 50% -blur. 3 -split. c -div[0] 1.5 -graph[0] [1],2,0,0,0,1,255,0,0 -graph[0] [2],2,0,0,0,1,0,255,0 -graph[0] [3],2,0,0,0,1,0,0,255 -keep[0]
 
-#@gmic grid : size_x[%]>=0,size_y[%]>=0,_offset_x[%],_offset_y[%],_opacity,_pattern,_color1,..
+#@gmic grid : size_x[%]>=0,size_y[%]>=0,_offset_x[%],_offset_y[%],_opacity,_pattern,_color1,...
 #@gmic : Draw xy-grid on selected images.
 #@gmic : 'pattern' is an hexadecimal number starting with '0x' which can be omitted
 #@gmic : even if a color is specified.
@@ -10103,7 +10103,7 @@ grid : -check "$1>=0 && $2>=0" -skip ${3=0},${4=0},${5=1},${6=0},${7=0}
       -if {$n>1} 1,{4*($n-1)},1,1,-128,0,0,0 -endif
       (-128;$w;1;1) $w,1,1,1 -line. 0,0,100%,0,1,$pattern,1 # Opacities
       -if {$n>1} 1,{4*($n-1)},1,1,-128,0,0,0 -endif
-      -y[^0] -a[^0] y -j3d.. .,0,0,0,$5,0,0,0 -rm.  # Merge and draw.
+      -y[^0] -a[^0] y -j3d.. .,0,0,0,$5,0,0,0 -rm. # Merge and draw.
     -endif
 
   -endl -done -v +
@@ -10116,7 +10116,7 @@ grid : -check "$1>=0 && $2>=0" -skip ${3=0},${4=0},${5=1},${6=0},${7=0}
 #@gmic : Default values: 'x=y=z=c=0', 'opacity=1', 'sprite_mask=(undefined)' and 'max_opacity_mask=1'.
 #@gmic : $ image.jpg --crop 40%,40%,60%,60% -resize. 200%,200%,1,3,5 -frame. 2,2,0 -image[0] .,30%,30% -keep[0]
 
-#@gmic line : x0[%],y0[%],x1[%],y1[%],_opacity,_pattern,_color1,.. : (+)
+#@gmic line : x0[%],y0[%],x1[%],y1[%],_opacity,_pattern,_color1,... : (+)
 #@gmic : Draw specified colored line on selected images.
 #@gmic : 'pattern' is an hexadecimal number starting with '0x' which can be omitted
 #@gmic : even if a color is specified.
@@ -10380,7 +10380,7 @@ piechart : -check $1>=0
 #@gmic : $ 400,400,1,3 -plasma
 #@gmic : $$
 
-#@gmic point : x[%],y[%],_z[%],_opacity,_color1,.. : (+)
+#@gmic point : x[%],y[%],_z[%],_opacity,_color1,... : (+)
 #@gmic : Set specified colored pixel on selected images.
 #@gmic : Default values: 'z=0', 'opacity=1' and 'color1=0'.
 #@gmic : $ image.jpg -repeat 10000 -point {u(100)}%,{u(100)}%,0,1,${-RGB} -done
@@ -10403,25 +10403,25 @@ polka_dots : -check $1>=0 -skip ${2=20},${3=50},${4=50},${5=0},${6=10},${7=1},${
     -j... .,0,0,0,0,1,.. -rm[-2,-1]
   -mv. 1 -done -rm[0] -v +
 
-#@gmic polygon : N>=1,x1[%],y1[%],..,xN[%],yN[%],_opacity,_pattern,_color1,.. : (+)
+#@gmic polygon : N>=1,x1[%],y1[%],...,xN[%],yN[%],_opacity,_pattern,_color1,... : (+)
 #@gmic : Draw specified colored N-vertices polygon on selected images.
 #@gmic : 'pattern' is an hexadecimal number starting with '0x' which can be omitted
 #@gmic : even if a color is specified. If a pattern is specified, the polygon is
 #@gmic : drawn outlined instead of filled.
 #@gmic : Default values: 'opacity=1', 'pattern=(undefined)' and 'color1=0'.
 #@gmic : $ image.jpg -polygon 4,20%,20%,80%,30%,80%,70%,20%,80%,0.3,0,255,0 -polygon 4,20%,20%,80%,30%,80%,70%,20%,80%,1,0xCCCCCCCC,255
-#@gmic : $ image.jpg 2,16,1,1,'u(if(x,{h},{w}))' -polygon.. {h},{^},0.6,255,0,255 -remove.
+#@gmic : $ image.jpg 2,16,1,1,'u(if(x,{h},{w}))' -polygon[-2] {h},{^},0.6,255,0,255 -remove[-1]
 
-#@gmic quiver : [function_image],_sampling>0,_factor,_is_arrow={ 0 | 1 },_opacity,_pattern,_color1,.. : (+)
+#@gmic quiver : [function_image],_sampling>0,_factor,_is_arrow={ 0 | 1 },_opacity,_pattern,_color1,... : (+)
 #@gmic : Draw specified 2d vector/orientation field on selected images.
 #@gmic : 'pattern' is an hexadecimal number starting with '0x' which can be omitted
 #@gmic : even if a color is specified.
 #@gmic : Default values: 'sampling=25', 'factor=-20', 'is_arrow=1', 'opacity=1', 'pattern=(undefined)'
 #@gmic : and 'color1=0'.
-#@gmic : $ 100,100,1,2,'if(c==0,x-w/2,y-h/2)' 500,500,1,3,255 -quiver. ..,10
+#@gmic : $ 100,100,1,2,'if(c==0,x-w/2,y-h/2)' 500,500,1,3,255 -quiver[-1] [-2],10
 #@gmic : $ image.jpg --resize2dy 600 -luminance[0] -gradient[0] -mul[1] -1 -reverse[0,1] -append[0,1] c -blur[0] 8 -orientation[0] -quiver[1] [0],10,10,1,0.8,255
 
-#@gmic rectangle : x0[%],y0[%],x1[%],y1[%],_opacity,_pattern,_color1,..
+#@gmic rectangle : x0[%],y0[%],x1[%],y1[%],_opacity,_pattern,_color1,...
 #@gmic : Draw specified colored rectangle on selected images.
 #@gmic : 'pattern' is an hexadecimal number starting with '0x' which can be omitted
 #@gmic : even if a color is specified. If a pattern is specified, the rectangle is
@@ -10490,7 +10490,7 @@ spiralbw :
   -f "r=min(x,y,w-1-x,h-1-y); 2*r*(w+h-2*r-1) + if(min(x,h-1-y)>=min(w-1-x,y),x+y,2*(w+h-2-2*r)-x-y)"
   -v +
 
-#@gmic spline : x0[%],y0[%],u0[%],v0[%],x1[%],y1[%],u1[%],v1[%],_nb_vertices>=2,_opacity,_color1,..
+#@gmic spline : x0[%],y0[%],u0[%],v0[%],x1[%],y1[%],u1[%],v1[%],_nb_vertices>=2,_opacity,_color1,...
 #@gmic : Draw specified colored spline curve on selected images (cubic hermite spline).
 #@gmic : Default values: 'nb_vertices=256', 'opacity=1' and 'color1=0'.
 #@gmic : $ image.jpg -repeat 30 -spline {u(100)}%,{u(100)}%,{u(-600,600)},{u(-600,600)},{u(100)}%,{u(100)}%,{u(-600,600)},{u(-600,600)},256,0.3,255 -done
@@ -10564,7 +10564,7 @@ tetraedron_shade :
 
 #@gmic t : eq. to '-text'. : (+)
 
-#@gmic text : text,_x[%],_y[%],_font_height[%]>=0,_opacity,_color1,.. : (+)
+#@gmic text : text,_x[%],_y[%],_font_height[%]>=0,_opacity,_color1,... : (+)
 #@gmic : Draw specified colored text string on selected images.
 #@gmic : (eq. to '-t').
 #@gmic : Exact pre-defined sizes are '13','23','53' and '103'. Using these sizes ensures you draw binary letters without anti-aliasing.
@@ -10575,7 +10575,7 @@ tetraedron_shade :
 #@gmic : $ image.jpg -resize2dy 600 y=0 -repeat 30 -text {2*$>}" : This is a nice text, isn't it ?",10,$y,{2*$>},0.9,255 y+={2*$>} -done
 #@gmic : $ 0 -text "G'MIC",0,0,23,1,255
 
-#@gmic text_outline : text,_x[%],_y[%],_font_height>0,_outline>=0,_opacity,_color1,..
+#@gmic text_outline : text,_x[%],_y[%],_font_height>0,_outline>=0,_opacity,_color1,...
 #@gmic : Draw specified colored and outlined text string on selected images.
 #@gmic : Default values: 'x=y=2', 'font_height=13', 'outline=2', 'opacity=1' and 'color1=255'.
 #@gmic : $ image.jpg -text_outline "Hi there!",10,10,63,3
@@ -10595,7 +10595,7 @@ text_outline : -skip ${2=2},${3=2},${4=13},${5=2},${6=1},${7=255}
   -else -t "$1",${2-4},${6--1}
   -endif -v +
 
-#@gmic triangle_shade : x0,y0,x1,y1,x2,y2,R0,G0,B0,...,R1,G1,B1,...,R2,G2,B2,....
+#@gmic triangle_shade : x0,y0,x1,y1,x2,y2,R0,G0,B0,...,R1,G1,B1,...,R2,G2,B2,...
 #@gmic : Draw triangle with interpolated colors on selected images.
 #@gmic : $ image.jpg -triangle_shade 20,20,400,100,120,200,255,0,0,0,255,0,0,0,255
 triangle_shade :
@@ -10703,7 +10703,7 @@ yinyang :
 #@gmic solve : [image] : (+)
 #@gmic : Solve linear system AX = B for selected B-matrices and specified A-matrix.
 #@gmic : If the system is under- or over-determined, the least square solution is returned.
-#@gmic : $ (0,1,0;1,0,0;0,0,1) (1;2;3) --solve. ..
+#@gmic : $ (0,1,0;1,0,0;0,0,1) (1;2;3) --solve[-1] [-2]
 
 #@gmic svd : (+)
 #@gmic : Compute SVD decomposition of selected matrices.
@@ -10720,7 +10720,7 @@ transpose :
 #@gmic : Solve tridiagonal system AX = B for selected B-vectors and specified tridiagonal A-matrix.
 #@gmic : Tridiagonal matrix must be stored as a 3 column vector, where 2nd column contains the
 #@gmic : diagonal coefficients, while 1st and 3rd columns contain the left and right coefficients.
-#@gmic : $ (0,0,1;1,0,0;0,1,0) (1;2;3) --trisolve. ..
+#@gmic : $ (0,0,1;1,0,0;0,1,0) (1;2;3) --trisolve[-1] [-2]
 
 #---------------------------------
 #
@@ -10878,7 +10878,7 @@ _axes3d :
 #@gmic box3d : _size_x,_size_y,_size_z
 #@gmic : Input 3d box at (0,0,0), with specified geometry.
 #@gmic : Default values: 'size_x=1' and 'size_z=size_y=size_x'.
-#@gmic : $ -box3d 100,40,30 --primitives3d 1 -color3d.. ${-RGB}
+#@gmic : $ -box3d 100,40,30 --primitives3d 1 -color3d[-2] ${-RGB}
 box3d : -skip ${1=1},${2=$1},${3=$2}
   -e[^-1] "Input 3d box, with size ($1,$2,$3)."
   -v -
@@ -10990,7 +10990,7 @@ colorcube3d :
 #@gmic cone3d : _radius,_height,_nb_subdivisions>0
 #@gmic : Input 3d cone at (0,0,0), with specified geometry.
 #@gmic : Default value: 'radius=1','height=1' and 'nb_subdivisions=24'.
-#@gmic : $ -cone3d 10,40 --primitives3d 1 -color3d.. ${-RGB}
+#@gmic : $ -cone3d 10,40 --primitives3d 1 -color3d[-2] ${-RGB}
 cone3d : -check ${3=24}>0 -skip ${1=1},${2=1}
   -e[^-1] "Input 3d cone, with radius $1, height $2 and $3 subdivisions."
   -v -
@@ -11057,7 +11057,7 @@ cup3d : -check ${1=128}>0
 #@gmic cylinder3d : _radius,_height,_nb_subdivisions>0
 #@gmic : Input 3d cylinder at (0,0,0), with specified geometry.
 #@gmic : Default value: 'radius=1','height=1' and 'nb_subdivisions=24'.
-#@gmic : $ -cylinder3d 10,40 --primitives3d 1 -color3d.. ${-RGB}
+#@gmic : $ -cylinder3d 10,40 --primitives3d 1 -color3d[-2] ${-RGB}
 cylinder3d : -check ${3=24}>0 -skip ${1=1},${2=1}
   -e[^-1] "Input 3d cylinder, with radius $1, height $2 and $3 subdivisions."
   -v -
@@ -11696,7 +11696,7 @@ pca_patch3d : -check "isint(${1=7}) && $1>0 && isint(${2=1000}) && $2>0 && isint
 #@gmic plane3d : _size_x,_size_y,_nb_subdivisions_x>0,_nb_subdisivions_y>0
 #@gmic : Input 3d plane at (0,0,0), with specified geometry.
 #@gmic : Default values: 'size_x=1', 'size_y=size_x' and 'nb_subdivisions_x=nb_subdivisions_y=24'.
-#@gmic : $ -plane3d 50,30 --primitives3d 1 -color3d.. ${-RGB}
+#@gmic : $ -plane3d 50,30 --primitives3d 1 -color3d[-2] ${-RGB}
 plane3d : -check "${3=24}>0 && ${4=24}>0" -skip ${1=1},${2=$1}
   -e[^-1] "Input 3d plane, with size (${1,2}) and subdivisions (${3,4})."
   -v - {$3+1},{$4+1} -elevation3d. 0 -*3d. {$1/$3},{$2/$4} -col3d. 200 -nm. [3d\ plane] -v +
@@ -11736,7 +11736,7 @@ pointcloud3d :
     -+3d
   -nm $nm -endl -done -v +
 
-#@gmic pose3d : p1,..,p12
+#@gmic pose3d : p1,...,p12
 #@gmic : Apply 3d pose matrix to selected 3d objects.
 #@gmic : $ -torus3d 100,20 -pose3d 0.152437,1.20666,-0.546366,0,-0.535962,0.559129,1.08531,0,1.21132,0.0955431,0.548966,0,0,0,-206,1 -snapshot3d 400
 pose3d :
@@ -11777,7 +11777,7 @@ projections3d : -skip ${1=50%},${2=50%},${3=50%},${4=1}
 
 #@gmic pyramid3d : width,height
 #@gmic : Input 3d pyramid at (0,0,0), with specified geometry.
-#@gmic : $ -pyramid3d 100,-100 --primitives3d 1 -color3d.. ${-RGB}
+#@gmic : $ -pyramid3d 100,-100 --primitives3d 1 -color3d[-2] ${-RGB}
 pyramid3d :
   -e[^-1] "Input new 3d pyramid, with width $1 and height $2."
   -v -
@@ -11844,7 +11844,7 @@ rotation3d :
 
 #@gmic sierpinski3d : _recursion_level>=0,_width,_height
 #@gmic : Input 3d Sierpinski pyramid.
-#@gmic : $ -sierpinski3d 3,100,-100 --primitives3d 1 -color3d.. ${-RGB}
+#@gmic : $ -sierpinski3d 3,100,-100 --primitives3d 1 -color3d[-2] ${-RGB}
 sierpinski3d : -check ${1=4}>=0 -skip ${2=1},${3=1}
 -e[^-1] "Input 3d Sierpinski pyramid of degree $1, with width $2 and height $3."
   -v - -l[] -_sierpinski3d {-$2/2},{-$2/2},{-$3/2},{$2/2},{-$2/2},{-$3/2},{$2/2},{$2/2},{-$3/2},{-$2/2},{$2/2},{-$3/2},0,0,{$3/2},$1 -+3d -endl
@@ -11996,7 +11996,7 @@ snapshot3d : -check "${2=1}>=0" -skip ${1=512},${3=""}
 #@gmic sphere3d : radius,_nb_recursions>=0 : (+)
 #@gmic : Input 3d sphere at (0,0,0), with specified geometry.
 #@gmic : Default value: 'nb_recursions=3'.
-#@gmic : $ -sphere3d 100 --primitives3d 1  -color3d.. ${-RGB}
+#@gmic : $ -sphere3d 100 --primitives3d 1  -color3d[-2] ${-RGB}
 
 #@gmic spherical3d : _nb_azimuth>=3,_nb_zenith>=3,_radius_function(phi,theta)
 #@gmic : Input 3d spherical object at (0,0,0), with specified geometry.
@@ -12084,7 +12084,7 @@ sprite3d :
 #@gmic : Convert selected 3d objects as a sprite cloud.
 #@gmic : Set 'sprite_has_alpha_channel' to 1 to make the last channel of the selected sprite be a transparency mask.
 #@gmic : Default value: 'mask_has_alpha_channel=0'.
-#@gmic : $ -torus3d 100,20 image.jpg -resize2dy. 64 100%,100% -gaussian. 30%,30% -*. 255 -append[-2,-1] c --sprites3d[0] [1],1 -display_rgba..
+#@gmic : $ -torus3d 100,20 image.jpg -resize2dy[-1] 64 100%,100% -gaussian[-1] 30%,30% -*[-1] 255 -append[-2,-1] c --sprites3d[0] [1],1 -display_rgba[-2]
 sprites3d : -check ${-is_image_arg\ $1} -skip ${2=0}
   -e[^-1] "Convert image$? as 3d sprites clouds, using sprite $1 ("${"-arg {1+!$2},with,without"}" alpha-channel)."
   -v - -repeat $!
@@ -12117,7 +12117,7 @@ sprites3d : -check ${-is_image_arg\ $1} -skip ${2=0}
 #@gmic star3d : _nb_branches>0,0<=_thickness<=1
 #@gmic : Input 3d star at (0,0,0), with specified geometry.
 #@gmic : Default values: 'nb_branches=5' and 'thickness=0.38'.
-#@gmic : $ -star3d , --primitives3d 1 -color3d.. ${-RGB}
+#@gmic : $ -star3d , --primitives3d 1 -color3d[-2] ${-RGB}
 star3d : -check "${1=5}>0 && ${2=0.38}>=0 && $2<=1"
   -e[^-1] "Input 3d star, with $1 branches and thickness $2."
   -v -
@@ -12207,12 +12207,12 @@ text3d : -skip ${2=53},${3=10},${4=1.5}
 #@gmic : (eq. to '-t3d').
 #@gmic : When '[ind_coords]' is omitted, default XY texture projection is performed.
 #@gmic : Default value: 'ind_coords=(undefined)'.
-#@gmic : $ image.jpg -torus3d 100,30 -texturize3d. .. -keep.
+#@gmic : $ image.jpg -torus3d 100,30 -texturize3d[-1] [-2] -keep[-1]
 
 #@gmic torus3d : _radius1,_radius2,_nb_subdivisions1>2,_nb_subdivisions2>2
 #@gmic : Input 3d torus at (0,0,0), with specified geometry.
 #@gmic : Default values: 'radius1=1', 'radius2=0.3', 'nb_subdivisions1=24' and 'nb_subdivisions2=12'.
-#@gmic : $ -torus3d 10,3 --primitives3d 1 -color3d.. ${-RGB}
+#@gmic : $ -torus3d 10,3 --primitives3d 1 -color3d[-2] ${-RGB}
 torus3d : -check "${3=24}>2 && ${4=12}>2" -skip ${1=1},${2=0.3}
   -e[^-1] "Input 3d torus, with radii ($1,$2) and subdivisions ($3,$4)."
   -v -
@@ -12260,7 +12260,7 @@ volume3d :
 #@gmic weird3d : _resolution>0
 #@gmic : Input 3d weird object at (0,0,0), with specified resolution.
 #@gmic : Default value: 'resolution=32'.
-#@gmic : $ -weird3d 48 --primitives3d 1 -color3d.. ${-RGB}
+#@gmic : $ -weird3d 48 --primitives3d 1 -color3d[-2] ${-RGB}
 weird3d : -skip ${1=32}
   -e[^-1] "Input 3d weird object, with resolution $1."
   -v -
@@ -12427,22 +12427,22 @@ apply_timeout :
 #@gmic : Default value: 'is_full_check=1'.
 
 #@gmic continue : (+)
-#@gmic : Go to end of current block 'repeat..done', 'do..while' or 'local..endlocal'.
+#@gmic : Go to end of current block 'repeat...done', 'do...while' or 'local...endlocal'.
 #@gmic : $ image.jpg -repeat 10 -blur 1 -if {1==1} -continue -endif -deform 10 -done
 
 #@gmic break : (+)
-#@gmic : Break current 'repeat..done', 'do..while' or 'local..endlocal' block.
+#@gmic : Break current 'repeat...done', 'do...while' or 'local...endlocal' block.
 #@gmic : $ image.jpg -repeat 10 -blur 1 -if {1==1} -break -endif -deform 10 -done
 
 #@gmic do : (+)
-#@gmic : Start a 'do..while' block.
+#@gmic : Start a 'do...while' block.
 #@gmic : $ image.jpg -luminance i={ia+2} -do -set 255,{u(100)}%,{u(100)}% -while {ia<$i}
 
 #@gmic done : (+)
-#@gmic : End a 'repeat..done' block, and go to associated '-repeat' position, if iterations remain.
+#@gmic : End a 'repeat...done' block, and go to associated '-repeat' position, if iterations remain.
 
 #@gmic elif : boolean : filename : (+)
-#@gmic : Start a 'elif..[else]..endif' block if previous '-if' was not verified
+#@gmic : Start a 'elif...[else]...endif' block if previous '-if' was not verified
 #@gmic : and test if specified boolean is true, or if specified filename exists.
 #@gmic : 'boolean' can be a float number standing for { 0=false | other=true }.
 
@@ -12450,12 +12450,12 @@ apply_timeout :
 #@gmic : Execute following commands if previous '-if' or '-elif' conditions failed.
 
 #@gmic endif : (+)
-#@gmic : End a 'if..[elif]..[else]..endif' block.
+#@gmic : End a 'if...[elif]...[else]...endif' block.
 
 #@gmic endl : eq. to '-endlocal'. : (+)
 
 #@gmic endlocal : (+)
-#@gmic : End a 'local..endlocal' block.
+#@gmic : End a 'local...endlocal' block.
 #@gmic : (eq. to '-endl').
 
 #@gmic error : message : (+)
@@ -12471,7 +12471,7 @@ apply_timeout :
 #@gmic : (eq. to '-x').
 
 #@gmic if : boolean : filename : (+)
-#@gmic : Start a 'if..[elif]..[else]..endif' block and test if specified boolean is true,
+#@gmic : Start a 'if...[elif]...[else]...endif' block and test if specified boolean is true,
 #@gmic : or if specified filename exists.
 #@gmic : 'boolean' can be a float number standing for { 0=false | other=true }.
 #@gmic : $ image.jpg -if {ia<64} -add 50% -elif {ia<128} -add 25% -elif {ia<192} -sub 25% -else -sub 50% -endif -cut 0,255
@@ -12479,7 +12479,7 @@ apply_timeout :
 #@gmic l : eq. to '-local'. : (+)
 
 #@gmic local : (+)
-#@gmic : Start a 'local..[onfail]..endlocal' block, with selected images.
+#@gmic : Start a 'local...[onfail]...endlocal' block, with selected images.
 #@gmic : (eq. to '-l').
 #@gmic : $ image.jpg -local[] 300,300,1,3 -rand[0] 0,255 -blur 4 -sharpen 1000 -endlocal
 #@gmic : $ image.jpg --local -repeat 3 -deform 20 -done -endlocal
@@ -12498,7 +12498,7 @@ apply_timeout :
 #@gmic : Use this command to write a custom command which can decide if it takes arguments or not.
 
 #@gmic onfail : (+)
-#@gmic : Execute following commands when an error is encountered in the body of the 'local..endlocal' block.
+#@gmic : Execute following commands when an error is encountered in the body of the 'local...endlocal' block.
 #@gmic : The status value is set with the corresponding error message.
 #@gmic : $ image.jpg --local -blur -3 -onfail -mirror x -endlocal
 
@@ -12527,7 +12527,7 @@ parallel : -skip "${1=},${2=},${3=},${4=},${5=},${6=},${7=},${8=},${9=},${10=},$
 #@gmic : (eq. to '-q').
 
 #@gmic repeat : nb_iterations,_variable_name : (+)
-#@gmic : Start iterations of a 'repeat..done' block.
+#@gmic : Start iterations of a 'repeat...done' block.
 #@gmic : $ image.jpg -split y -repeat $!,n -shift[$n] $<,0,0,0,2 -done -append y
 #@gmic : $ image.jpg -mode3d 2 -repeat 4 -imagecube3d -rotate3d 1,1,0,40 -snapshot3d 400,1.4 -done
 #@gmic : $$
@@ -12569,7 +12569,7 @@ _rprogress : $*
 #@gmic : $ image.jpg -command "foo : u0=Dark u1=Bright -status ${u{ia>=128}}" -text_outline ${-foo},2,2,23,2,1,255
 
 #@gmic while : boolean : filename : (+)
-#@gmic : End a 'do..while' block and go back to associated '-do'
+#@gmic : End a 'do...while' block and go back to associated '-do'
 #@gmic : if specified boolean is true or if specified filename exists.
 #@gmic : 'boolean' can be a float number standing for { 0=false | other=true }.
 
@@ -13646,12 +13646,12 @@ houghsketchbw : -check "${1=8}>=0 && ${2=5}>=0 && ${3=80}>=0 && $3<=100 && ${4=0
     -s. x,2
     -*.. {2*pi/$res}                   # theta
     -*. {$rhomax/$res}                 # rho
-    --cos.. -*. .. -+. {$w/2}        # x
-    --sin... -*. ... -+. {$h/2}       # y
+    --cos.. -*. .. -+. {$w/2}          # x
+    --sin... -*. ... -+. {$h/2}        # y
     -rm...                             # Remove rho
     -i... ...
     -cos[-4] -sin... -*[-4,-3] 10000   # cos(t) sin(t)
-    --+.. ...                         # x + sin(t)
+    --+.. ...                          # x + sin(t)
     ---.. [-5]                         # y - cos(t)
     --[-4] [-5]                        # x - sin(t)
     -+... [-6]                         # y + cos(t)
@@ -14580,7 +14580,7 @@ watermark_visible : -skip "${1=\251\ G\47MIC}" -check "${2=0.3}>0 && $2<1 && ${3
 #@gmic : screen | shapeaverage | shapeaverage0 | softburn | softdodge | softlight | stamp | subtract | value |
 #@gmic : vividlight | xor }.
 #@gmic : Default values: 'blending_mode=alpha', 'opacity=1' and 'selection_is=0'.
-#@gmic : $ image.jpg --drop_shadow , -resize2dy. 200 -rotate. 20 --blend alpha -display_rgba..
+#@gmic : $ image.jpg --drop_shadow , -resize2dy[-1] 200 -rotate[-1] 20 --blend alpha -display_rgba[-2]
 #@gmic : $ image.jpg -testimage2d {w},{h} -blend overlay
 #@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline. Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex add,alpha,and,average,blue,burn,darken
 #@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline. Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex difference,divide,dodge,exclusion,freeze,grainextract,grainmerge
@@ -14913,7 +14913,7 @@ sub_alpha : -check "${2=1}>=1 && "${"-is_image_arg $1"}
 #
 #---------------------------------------------
 
-#@gmic animate : filter_name,"param1_start,..,paramN_start","param1_end,..,paramN_end",nb_frames>=0,_output_frames={ 0 | 1 },_output_filename : delay>0
+#@gmic animate : filter_name,"param1_start,...,paramN_start","param1_end,...,paramN_end",nb_frames>=0,_output_frames={ 0 | 1 },_output_filename : delay>0
 #@gmic : Animate filter from starting parameters to ending parameters or animate selected images
 #@gmic : in a display window.
 #@gmic : Default value: 'delay=30'.
@@ -15541,9 +15541,9 @@ output_pink3d :
   -endl -done -v +
 
 #@gmic pink
-#@gmic : Pink wrapper name,p1, .. ,pn (requires the PINK library to be installed).
+#@gmic : Pink wrapper name,p1,...,pn (requires the PINK library to be installed).
 #@gmic : (http://pinkhq.com/)
-#@gmic : prepares input, calls external "name input p1 ... pn output" and reads output (/tmp)
+#@gmic : prepares input, calls external "name input p1...pn output" and reads output (/tmp)
 #@gmic : $ image.jpg --pink asfr,5 -pink[0] asf,5
 #@gmic : $ image.jpg --blur 2 -pink maxima,4
 pink : -v -
@@ -15623,7 +15623,7 @@ pink_reg_minima : -check "${1=4}==4 || $1==8 || $1==6 || $1==26"
 #@gmic : Curvilinear binary skeleton guided by a priority function or image (requires the PINK library to be installed).
 #@gmic : Default values: 'prio=0', 'connectivity=4' and 'inhibit=""'.
 #@gmic : $ image.jpg -threshold 50% {w},{h} -fill. 'if(x>w/2,255,0)' tp=${-path_tmp} -output. ${tp}/inhibit.pgm -remove. --pink_skelcurv[0] , --pink_skelcurv[0] ,,${tp}/inhibit.pgm -exec "rm "${tp}"/inhibit.pgm"
-#@gmic : $ image.jpg -threshold 50% --pink_skelcurv , --pink_skelcurv.. ,8
+#@gmic : $ image.jpg -threshold 50% --pink_skelcurv , --pink_skelcurv[-2] ,8
 pink_skelcurv : -skip ${1=0},${2=4},${3=""}
   -e[^-1] "Curvilinear binary skeleton guided by a priority function or image from image$?, prio=$1, connectivity=$2, inhibit=$3."
   -repeat $! -l[$>] -_xpinks "skelcurv","$1 $2 $3" -endl -done
@@ -15632,7 +15632,7 @@ pink_skelcurv : -skip ${1=0},${2=4},${3=""}
 #@gmic : (http://pinkhq.com/doxygen/skelend_8c.html)
 #@gmic : Homotopic skeleton of a 2d or 3d binary image with dynamic detection of end points (requires the PINK library to be installed).
 #@gmic : Default values: 'connectivity=4' and 'n=0'.
-#@gmic : $ image.jpg -threshold 50% --pink_skelend , --pink_skelend.. ,-1
+#@gmic : $ image.jpg -threshold 50% --pink_skelend , --pink_skelend[-2] ,-1
 pink_skelend : -skip ${1=4},${2=0}
   -repeat $! -l[$>] -_xpinks "skelend","$1 $2" -endl -done
 
@@ -15644,7 +15644,7 @@ pink_skelend : -skip ${1=4},${2=0}
  pink_skeleton : -skip ${1=0},${2=4},${3=""}
   -repeat $! -l[$>] -_xpinks "skeleton","$1 $2 $3" -endl -done
 
-#@gmic pink_skelpar : _algorithm={0..29},_nsteps=_1,_inhibit=""
+#@gmic pink_skelpar : _algorithm={0...29},_nsteps=_1,_inhibit=""
 #@gmic : (http://pinkhq.com/doxygen/skelpar_8c.html)
 #@gmic : Parallel binary skeleton (requires the PINK library to be installed).
 #@gmic : Default values: 'algorithm=4', 'nsteps=-1' and 'inhibit=""'.
@@ -15815,7 +15815,7 @@ arg : -check "isint($1) && ($1)>0"
   -v - $=arg -u ${arg{1+($1)}} -v +
 
 #@gmic arg2var : variable_name,argument_1,...,argument_N
-#@gmic : For each i in [1..N], set 'variable_name$i=argument_i'.
+#@gmic : For each i in [1...N], set 'variable_name$i=argument_i'.
 #@gmic : The variable name should be global to make this command useful (i.e. starts by an underscore).
 arg2var :
   -v - $=arg -u {$#-1} -repeat ${} $1{1+$>}=${arg{2+$>}} -done -v +
@@ -17534,8 +17534,8 @@ x_fireworks :
              255,255,255)    # Color
       time={u(20)}           # Elapsed time until next rocket.
     -endif
-    -*. 0.99               # Create fading effect with previous frames.
-    -j. ..,0,0,0,0,0.2   # Add background.
+    -*. 0.99                 # Create fading effect with previous frames.
+    -j. ..,0,0,0,0,0.2       # Add background.
     i=0
     -repeat {$!-2}
       to_be_removed=0
@@ -20066,7 +20066,7 @@ x_spline :
     # Estimate screen-normalized coordinates [2], curve tangents [3] and tangent orientations [4].
     [1] ({{*,w}/{0,w}},{{*,h}/{0,h}}) -*[-2,-1]                         # Normalized coordinates.
     --shift[2] 0,-1,0,0,2 --shift[2] 0,1,0,0,2 --[-2,-1] -*. $roundness # Curve tangents.
-    --s. x -sqr[-2,-1] -+[-2,-1] -sqrt. -r. 2 --/[-2,-1] -rm..        # Tangent orientations.
+    --s. x -sqr[-2,-1] -+[-2,-1] -sqrt. -r. 2 --/[-2,-1] -rm..          # Tangent orientations.
 
     # Display curve, control points, polygon and tangents.
     --r[0] {*,w},{*,h},1,3
@@ -20300,7 +20300,7 @@ x_tictactoe :
 
     # Draw symbol on selected position and update board state.
     -_x_tictactoe{$player%2}                                                  # Generate the symbol sprite and his mask.
-    -j... ..,{"130*"$tmp3" + 15+u(-5,5)"},\                                 # Draw symbol at its position (with some fuzzyness).
+    -j... ..,{"130*"$tmp3" + 15+u(-5,5)"},\                                   # Draw symbol at its position (with some fuzzyness).
                {"130*"$tmp2" + 15+u(-5,5)"},0,0,1,.
     -rm[-2--1]                                                                # Delete the sprite and the mask (not needed anymore).
     -w.                                                                       # Update display window.
@@ -20315,7 +20315,7 @@ x_tictactoe :
       tmp1={@$>}                                                              # Save the current configuration code (used several times).
       -if {($state&$tmp1)==$tmp1||($state&(2*$tmp1))==2*$tmp1}                # If a winner has been found.
         -_x_tictactoe{i($>,3)}                                                # Generate the stroke symbol and his mask.
-        -j[-4] ..,{130*{-3,i($>,1)}+u(-5,5)},\                              # And display it on the board at its position.
+        -j[-4] ..,{130*{-3,i($>,1)}+u(-5,5)},\                                # And display it on the board at its position.
                         {130*{-3,i($>,2)}+u(-5,5)},0,0,1,. -rm[-2--1]
         -if {($state&$tmp1)==$tmp1} -w.. -1,-1,0,"Tic-Tac-Toe (X won!)"
         -else -w.. -1,-1,0,"Tic-Tac-Toe (O won!)"                             # Update display window.
@@ -20401,7 +20401,7 @@ x_waves :
   0 $w,$w .
   -l3d {$w/2},-200,-1000 -sl3d 0.4 -ss3d 0.8 -f3d 500 time0=$|
   -do
-    --convolve. [3],1 --. ... -rm... -b. 0.8 --. {ia}   # Update height map.
+    --convolve. [3],1 --. ... -rm... -b. 0.8 --. {ia} # Update height map.
     -r. 1,{$w*$w},1,1,-1 -j[2] .,2,0 -r. $w,$w,1,1,-1 # Set 3d object coordinates.
     [1]
     -if {5,h} --l[5] -rows 0,2
