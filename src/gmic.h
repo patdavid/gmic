@@ -178,7 +178,7 @@ static struct cimg_is_abort {
 #endif // #if cimg_OS==2
 
 // Define some special character codes used for replacement in double quoted strings.
-const char gmic_dollar = 23, gmic_lbrace = 24, gmic_rbrace = 25, gmic_comma = 26, gmic_dquote = 28, gmic_newline = 29;
+const char gmic_dollar = 22, gmic_dot = 23, gmic_lbrace = 24, gmic_rbrace = 25, gmic_comma = 26, gmic_dquote = 28, gmic_newline = 29;
 
 #endif // #ifndef gmic_build
 
@@ -278,7 +278,8 @@ struct gmic {
                                    gmic_list<T>& images, gmic_list<char>& images_names,
                                    gmic_list<T>& parent_images, gmic_list<char>& parent_images_names,
 				   const unsigned int *const variables_sizes,
-                                   const gmic_image<unsigned int> *const command_selection);
+                                   const gmic_image<unsigned int> *const command_selection,
+                                   const bool is_image_expr);
   template<typename T>
   gmic& print(const gmic_list<T>& list, const gmic_image<unsigned int> *const callstack_selection,
 	      const char *format, ...);
