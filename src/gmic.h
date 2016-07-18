@@ -44,7 +44,7 @@
 */
 
 #ifndef gmic_version
-#define gmic_version 174
+#define gmic_version 175
 
 #include <cstdio>
 #include <cstring>
@@ -254,9 +254,8 @@ struct gmic {
                                     const bool is_debug=false) const;
 
   gmic_image<unsigned int> selection2cimg(const char *const string, const unsigned int indice_max,
-                                          const gmic_list<char>& names,
-                                          const char *const command, const bool is_selection,
-                                          const bool allow_new_name, gmic_image<char>& new_name);
+                                          const gmic_list<char>& names, const char *const command,
+                                          const bool is_selection=true, gmic_image<char> *const new_name=0);
 
   gmic_image<char>& selection2string(const gmic_image<unsigned int>& selection,
                                      const gmic_list<char>& images_names,
