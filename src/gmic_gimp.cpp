@@ -4278,7 +4278,7 @@ void gmic_run(const gchar *name, gint nparams, const GimpParam *param,
       h = CImgDisplay::screen_height();
       cimg::exception_mode(cimg_exception_mode);
     } catch (...) { h = 800; }
-    preview_size = h>=1024?4:h>=800?3:0;
+    preview_size = h>=1024?4:h>=800?3:2;
     set_preview_size(preview_size);
   }
 
