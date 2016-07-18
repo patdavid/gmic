@@ -2233,7 +2233,7 @@ char *gmic::strreplace_fw(char *const str) {
   if (str) for (char *s = str ; *s; ++s) {
       const char c = *s;
       if (c<' ')
-        *s = c==gmic_dollar?'$':c==gmic_dot?'.':c==gmic_lbrace?'{':c==gmic_rbrace?'}':c==gmic_comma?',':
+        *s = c==gmic_dollar?'$':c==gmic_lbrace?'{':c==gmic_rbrace?'}':c==gmic_comma?',':
           c==gmic_dquote?'\"':c;
     }
   return str;
@@ -2242,7 +2242,7 @@ char *gmic::strreplace_fw(char *const str) {
 char *gmic::strreplace_bw(char *const str) {
   if (str) for (char *s = str ; *s; ++s) {
       const char c = *s;
-      *s = c=='$'?gmic_dollar:c=='.'?gmic_dot:c=='{'?gmic_lbrace:c=='}'?gmic_rbrace:c==','?gmic_comma:
+      *s = c=='$'?gmic_dollar:c=='{'?gmic_lbrace:c=='}'?gmic_rbrace:c==','?gmic_comma:
         c=='\"'?gmic_dquote:c;
     }
   return str;
@@ -2483,7 +2483,6 @@ CImgList<char> gmic::commands_line_to_CImgList(const char *const commands_line) 
       c = *(++ptrs);
       if (!c) { c = '\\'; --ptrs; }
       else if (c=='$') c = gmic_dollar;
-      else if (c=='.') c = gmic_dot;
       else if (c=='{') c = gmic_lbrace;
       else if (c=='}') c = gmic_rbrace;
       else if (c==',') c = gmic_comma;
@@ -2494,7 +2493,7 @@ CImgList<char> gmic::commands_line_to_CImgList(const char *const commands_line) 
     } else if (is_dquoted) { // If non-escaped character inside string.
       if (c=='\"') is_dquoted = false;
       else if (c==1) while (c && c!=' ') c = *(++ptrs); // Discard debug info inside string.
-      else *(ptrd++) = (c=='$' && ptrs[1]!='?')?gmic_dollar:c=='.'?gmic_dot:c=='{'?gmic_lbrace:c=='}'?gmic_rbrace:
+      else *(ptrd++) = (c=='$' && ptrs[1]!='?')?gmic_dollar:c=='{'?gmic_lbrace:c=='}'?gmic_rbrace:
              c==','?gmic_comma:c;
     } else { // Non-escaped character outside string.
       if (c=='\"') is_dquoted = true;
@@ -2647,7 +2646,6 @@ gmic& gmic::debug(const char *format, ...) {
     char c = *s;
     if (c<' ') switch (c) {
       case gmic_dollar : std::fprintf(cimg::output(),"\\$"); break;
-      case gmic_dot : std::fprintf(cimg::output(),"\\."); break;
       case gmic_lbrace : std::fprintf(cimg::output(),"\\{"); break;
       case gmic_rbrace : std::fprintf(cimg::output(),"\\}"); break;
       case gmic_comma : std::fprintf(cimg::output(),"\\,"); break;
@@ -3219,7 +3217,6 @@ gmic& gmic::debug(const CImgList<T>& list, const char *format, ...) {
     if (c<' ') {
       switch (c) {
       case gmic_dollar : std::fprintf(cimg::output(),"\\$"); break;
-      case gmic_dot : std::fprintf(cimg::output(),"\\."); break;
       case gmic_lbrace : std::fprintf(cimg::output(),"\\{"); break;
       case gmic_rbrace : std::fprintf(cimg::output(),"\\}"); break;
       case gmic_comma : std::fprintf(cimg::output(),"\\,"); break;
@@ -9250,7 +9247,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
               for (char *s = arguments[l].data(); *s; ++s) {
                 const char c = *s;
                 if (c=='\"') is_dquoted = !is_dquoted;
-                if (!is_dquoted) *s = c<' '?(c==gmic_dollar?'$':c==gmic_dot?'.':c==gmic_lbrace?'{':c==gmic_rbrace?'}':
+                if (!is_dquoted) *s = c<' '?(c==gmic_dollar?'$':c==gmic_lbrace?'{':c==gmic_rbrace?'}':
                                              c==gmic_comma?',':c==gmic_dquote?'\"':c):c;
               }
               gi.commands_line_to_CImgList(arguments[l].data()).
@@ -12741,7 +12738,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                 for (char *s = substituted_command.data(); *s; ++s) {
                   const char c = *s;
                   if (c=='\"') is_dquoted = !is_dquoted;
-                  if (!is_dquoted) *s = c<' '?(c==gmic_dollar?'$':c==gmic_dot?'.':c==gmic_lbrace?'{':c==gmic_rbrace?'}':
+                  if (!is_dquoted) *s = c<' '?(c==gmic_dollar?'$':c==gmic_lbrace?'{':c==gmic_rbrace?'}':
                                                c==gmic_comma?',':c==gmic_dquote?'\"':c):c;
                 }
 
