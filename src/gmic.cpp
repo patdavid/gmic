@@ -7884,7 +7884,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
           // Set 3d light position.
           if (!std::strcmp("-light3d",item)) {
-            gmic_substitute_args(false);
+            gmic_substitute_args(true);
             float lx = 0, ly = 0, lz = -5e8f;
             sep = *indices = 0;
             if (cimg_sscanf(argument,"%f,%f,%f%c",
