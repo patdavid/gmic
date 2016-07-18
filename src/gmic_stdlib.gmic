@@ -8782,7 +8782,7 @@ nlmeans: -check "${1=4}>0 && ${2=4}>0 && ${3=10}>0" -skip "${4=-norm}"
 
 #@gmic nlmeans_core: _reference_image,_scaling_map,_patch_radius>0,_spatial_bandwidth>0
 #@gmic : Apply non local means denoising using a image for weigth and a map for scaling
-nlmeans_core: -check ${-is_image_arg\ $1}" && "${-is_image_arg\ $2}" && $3>0 && $4>0"
+nlmeans_core : -check ${-is_image_arg\ $1}" && "${-is_image_arg\ $2}" && $3>0 && $4>0"
   -e[^-1] "Apply non-local means denoising using weight images $1, scaling map $2, patch size $3 and spatial bandwidth $4."
   -v - -pass$1 0 -pass$2 0
   -repeat {$!-2} -l[$>,-1,-2]
@@ -16218,9 +16218,9 @@ is_ext : -skip "${1=}"
 #@gmic : Return 1 if specified string looks like '[ind]'.
 is_image_arg : -skip "${1=;}"
   -v -
-  -u "str = ['$1'];
+  -u {"str = ['$1'];
       s1 = size(str) - 1;
-      (str[0]==_'[' && str[s1]==_']') || (str[0]=='.' && str[s1]=='.') && min(str)>=45 && max(str)<=122"
+      (str[0]==_'[' && str[s1]==_']') || (str[0]=='.' && str[s1]=='.') && min(str)>=45 && max(str)<=122"}
   -v +
 
 #@gmic is_percent : string
