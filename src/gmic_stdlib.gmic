@@ -7757,7 +7757,7 @@ compose_freq :
 #@gmic : 'boundary' can be { 0=dirichlet | 1=neumann }.
 #@gmic : Default values: 'boundary=1' and 'is_normalized=0'.
 #@gmic : $ image.jpg (0,1,0;1,-4,1;0,1,0) -convolve[-2] [-1] -keep[-2]
-#@gmic : $ image.jpg (0,1,0) -resize. 130,1,1,1,3 --convolve[0] [1]
+#@gmic : $ image.jpg (0,1,0) -resize[-1] 130,1,1,1,3 --convolve[0] [1]
 #@gmic : $$
 
 #@gmic convolve_fft : [mask]
