@@ -3570,11 +3570,11 @@ update_gallery_html :
   -_update_gallery_html "-old_photo -drop_shadow 3,3 -rotate -20,1 -display_rgba"
   -_update_gallery_html "-old_photo -drop_shadow 3,3 -rotate -25,1 -display_rgba"
 
-  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 40,0,1,1,3 -n 0,255 -negative"
-  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 60,0,1,1,3 -n 0,255 -negative"
-  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 80,0,1,1,3 -n 0,255 -negative"
-  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 100,0,1,1,3 -n 0,255 -negative"
-  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 120,0,1,1,3 -n 0,255 -negative"
+  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 40,0,1,1,3 -normalize 0,255 -negative"
+  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 60,0,1,1,3 -normalize 0,255 -negative"
+  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 80,0,1,1,3 -normalize 0,255 -negative"
+  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 100,0,1,1,3 -normalize 0,255 -negative"
+  -_update_gallery_html "-erode 10 --erode 3 -- -equalize 255 -smooth 120,0,1,1,3 -normalize 0,255 -negative"
 
   -_update_gallery_html "-light_relief ,"
   -_update_gallery_html "-light_relief ,"
@@ -3588,16 +3588,16 @@ update_gallery_html :
   -_update_gallery_html "--warhol 5 -fade_radial 50,70"
   -_update_gallery_html "--warhol 6 -fade_radial 50,70"
 
-  -_update_gallery_html "--sketchbw , -rv -blend overlay"
-  -_update_gallery_html "--sketchbw , -rv -blend overlay"
-  -_update_gallery_html "--mirror x -a x -map_sphere ,"
-  -_update_gallery_html "--mirror x -a x -map_sphere ,"
+  -_update_gallery_html "--sketchbw , -reverse -blend overlay"
+  -_update_gallery_html "--sketchbw , -reverse -blend overlay"
+  -_update_gallery_html "--mirror x -append x -map_sphere ,"
+  -_update_gallery_html "--mirror x -append x -map_sphere ,"
   -_update_gallery_html "-gimp_painting 2,1.5,2"
 
-  -_update_gallery_html "-f3d 800 -rm 512,512,1,3 -chessboard 64,64,0,0,15,1,${-RGB},${-RGB} --imagecube3d -*3d. 230 -r3d. 1,1,0.5,50 -m3d 3 -object3d[-2] [-1],50%,50%,0 -rm. -gimp_painting 1,1.5,2 -equalize. 256"
-  -_update_gallery_html "--histogram 256 -display_graph. {0,w},{0,h},3 -to_rgba. -*. 0.5 -blend alpha"
-  -_update_gallery_html "100%,100%,1,1,'X=(x-w/2)/30;Y=(y-h/2)/30;5*cos(X*Y)*sqrt(X^2+Y^2)' -elevation3d[0] [1] -k[0] -r3d 1,1,0,60 -snapshot3d 500,2"
-  -_update_gallery_html "-kuwahara 10 -noise 30 -smooth 100,0,1,3,3 -sharpen 400 -n 0,255 -equalize 256"
+  -_update_gallery_html "-focale3d 800 -remove 512,512,1,3 -chessboard 64,64,0,0,15,1,${-RGB},${-RGB} --imagecube3d -mul3d[-1] 230 -rotate3d[-1] 1,1,0.5,50 -mode3d 3 -object3d[-2] [-1],50%,50%,0 -remove[-1] -gimp_painting 1,1.5,2 -equalize. 256"
+  -_update_gallery_html "--histogram 256 -display_graph. {0,w},{0,h},3 -to_rgba[-1] -mul[-1] 0.5 -blend alpha"
+  -_update_gallery_html "100%,100%,1,1,'X=(x-w/2)/30;Y=(y-h/2)/30;5*cos(X*Y)*sqrt(X^2+Y^2)' -elevation3d[0] [1] -keep[0] -rotate3d 1,1,0,60 -snapshot3d 500,2"
+  -_update_gallery_html "-kuwahara 10 -noise 30 -smooth 100,0,1,3,3 -sharpen 400 -normalize 0,255 -equalize 256"
   -_update_gallery_html "-frame 4,4,0 -array_mirror 1,3"
 
   _nb_coms+=1
