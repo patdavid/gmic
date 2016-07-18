@@ -389,8 +389,8 @@ gzip ${TARFILE}
 cp -f ${TARFILE}.gz ${HOME}/work/src/
 if [ "$1" == "final" ]; then
    lftp ftp://$GMIC_LOGIN:$GMIC_PASSWD@ftp.gmic.eu -e "put -O /www/gmic/files/source/ ${HOME}/work/src/${TARFILE}.gz; quit";
-   lftp ftp://$GMIC_LOGIN:$GMIC_PASSWD@ftp.gmic.eu -e "put -O /www/gmic/files/source/ ${HOME}/work/src/${TARFILE}.gz -o gmic_source.tar.gz; quit";
 fi
+lftp ftp://$GMIC_LOGIN:$GMIC_PASSWD@ftp.gmic.eu -e "put -O /www/gmic/files/source/ ${HOME}/work/src/${TARFILE}.gz -o gmic_source.tar.gz; quit";
 lftp ftp://$GMIC_LOGIN:$GMIC_PASSWD@ftp.gmic.eu -e "put -O /www/gmic/files/prerelease ${HOME}/work/src/${TARFILE}.gz -o gmic_source.tar.gz; quit"
 
 # Create debian packages for debian/ubuntu 64 bits.
