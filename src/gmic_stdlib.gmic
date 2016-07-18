@@ -4129,9 +4129,10 @@ _update_server_binaries :
         -if {!$is_pre}
           -v + -e[] "- Upload file '"$file"' to 'http://gmic.eu/files/"$folder/$file"'." -v -
           -_update_server_upload $file,"files/"$folder/$file
-          -v + -e[] "- Upload file '"$file"' to 'http://gmic.eu/files/"$folder/$file_short"'." -v -
-          -_update_server_upload $file,"files/"$folder/$file_short
         -endif
+
+        -v + -e[] "- Upload file '"$file"' to 'http://gmic.eu/files/"$folder/$file_short"'." -v -
+        -_update_server_upload $file,"files/"$folder/$file_short
 
         file$>= N-=1
       -endif
