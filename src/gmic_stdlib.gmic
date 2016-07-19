@@ -1417,7 +1417,7 @@ _display_array : -check ${1=13}>0" && "${2=$1}>0
   dyb={round($2/2,1,1)} dyf={$2-1-$dyb}
 
   -repeat $! -l[$>]
-    -if {w<128" && "h<128} -r 128,128,100%,100%,0,0,0.5,0.5 -endif    # Manage cases of small and large images.
+    -if {w<128" && "h<128} -r 128,128,100%,100%,0,0,0.5,0.5 -endif # Manage cases of small and large images.
     x0=0 y0=0 w={w} h={h}
     wmax={0.9*{*,u}} hmax={0.9*{*,v}}
     -do
@@ -1932,7 +1932,7 @@ _document_gmic_declaration_ascii :
     _shortcutlink$_shortcut={t}
     _shortcutqualifier$_shortcut=$qualifier
     _shortcut+=1
-  -else                                         # Declaration of a regular command.
+  -else                                     # Declaration of a regular command.
     -v + -e[] "\n    "$_gmic_m${_gmic_b}"-"{0,t}${qualifier}":"$_gmic_n -v - -rm[0]
     -if $!
       s="                        "
@@ -9818,12 +9818,12 @@ arrow : -check "${5=1%}>=0 && ${6=10%}>=0 && ${7=3%}" -skip ${8=1}
 #@gmic : Default values: 'font_height=14', 'opacity=1', 'pattern=(undefined)' and 'color1=0'.
 #@gmic : $ 400,400,1,3,255 -axes -1,1,1,-1
 axes : -check "isint(${5=14}) && $5>=0 && ${6=1}>=0" -skip ${7=0},${8=0}
-  -if {same(['"$7"'],'0x',2)}
+  -if ${"-is_pattern \"$7\""}
     -e[0--3] "Draw xy-axes on image$?, with x-range ($1,$2), y-range ($3,$4), font height $5, opacity $6, pattern $7 and color (${8--1})."
     -v - pattern=$7 color=${8--1}
   -else
     -e[0--3] "Draw xy-axes on image$?, with x-range ($1,$2), y-range ($3,$4), font height $5, opacity $6 and color (${7--1})."
-     -v - pattern=0xffffffff color=${7--1}
+     -v - pattern=0xFFFFFFFF color=${7--1}
   -endif
   -if {!$5" || "!$6} -v + -return -endif
   mx={min($1,$2)} Mx={max($1,$2)}
@@ -9992,7 +9992,7 @@ cie1931 :
 #@gmic : Default values: 'opacity=1', 'pattern=(undefined)' and 'color1=0'.
 #@gmic : $ image.jpg -repeat 300 -circle {u(100)}%,{u(100)}%,{u(30)},0.3,${-RGB} -done -circle 50%,50%,100,0.7,255
 circle : -skip ${4=1},${5=0}
-  -if {same(['"$5"'],'0x',2)}
+  -if ${"-is_pattern \"$5\""}
     -e[0--3] "Draw outlined circle at ($1,$2) with radius $3 on image$?, with opacity $4, pattern $5 and color (${6--1})."
   -else
     -e[0--3] "Draw filled circle at ($1,$2) with radius $3 on image$?, with opacity $4 and color (${5--1})."
@@ -10054,8 +10054,8 @@ gaussian : -skip ${1=3},${2=$1},${3=0}
 #@gmic : Default values: 'offset_x=offset_y=0', 'opacity=1', 'pattern=(undefined)' and 'color1=0'.
 #@gmic : $ image.jpg -grid 10%,10%,0,0,0.5,255
 #@gmic : $ 400,400,1,3,255 -grid 10%,10%,0,0,0.3,0xCCCCCCCC,128,32,16
-grid : -check "$1>=0 && $2>=0" -skip ${3=0},${4=0},${5=1},${6=0},${7=0}
-  -if {same(['"$6"'],'0x',2)}
+grid : -check "$1>=0 && $2>=0" -skip ${3=0},${4=0},${5=1},${6=0},${7=$6}
+  -if ${"-is_pattern \"$6\""}
     -e[0--3] "Draw xy-grid on image$?, with sizes ($1,$2), offsets ($3,$4), opacity $5, pattern $6 and color (${7--1})."
     -v - pattern=$6 color=${7--1}
   -else
@@ -10421,7 +10421,7 @@ polka_dots : -check $1>=0 -skip ${2=20},${3=50},${4=50},${5=0},${6=10},${7=1},${
 #@gmic : Default values: 'opacity=1', 'pattern=(undefined)' and 'color1=0'.
 #@gmic : $ image.jpg -repeat 30 -rectangle {u(100)}%,{u(100)}%,{u(100)}%,{u(100)}%,0.3,${-RGB} -done
 rectangle : -skip ${5=1},${6=0}
-  -if {same(['"$5"'],'0x',2)}
+  -if ${"-is_pattern \"$5\""}
     -e[0--3] "Draw outlined rectangle from ($1,$2) to ($3,$4) on image$?, with opacity $5 and color (${7--1})."
   -else
     -e[0--3] "Draw filled rectangle from ($1,$2) to ($3,$4) on image$?, with opacity $5 and color (${6--1})."
@@ -16215,6 +16215,11 @@ is_image_arg : -skip "${1=;}"
       s1 = size(str) - 1;
       (str[0]==_'[' && str[s1]==_']') || (str[0]=='.' && str[s1]=='.') && min(str)>=45 && max(str)<=122"}
   -v +
+
+#@gmic is_pattern : string
+#@gmic : Return 1 if specified string looks like a drawing pattern '0x......'.
+is_pattern : -skip "${1=;}"
+  -v - -u {"str = ['$1']; size(str)>2 && same(str,'0x',2)"} -v +
 
 #@gmic is_percent : string
 #@gmic : Return 1 if specified string ends with a '%', 0 otherwise.
