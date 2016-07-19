@@ -23389,23 +23389,27 @@ gimp_boost_fade_preview :
   -gimp_split_preview "-gimp_boost_fade $*",$-1
 
 #@gimp Boost chromaticity : gimp_boost_chroma, gimp_boost_chroma_preview(1)
-#@gimp : Amplitude = float(0.5,0,1)
-#@gimp : Color space = choice("YCbCr","Lab")
+#@gimp : Amplitude (%) = float(50,0,100)
+#@gimp : Color space = choice{"YCbCr (distinct)","YCbCr (mixed)","Lab (distinct)","Lab (mixed)"}
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
-#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>08/19/2014</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>07/19/2016</i>.</small>")
 gimp_boost_chroma :
   -repeat $! -l[$>] -split_opacity -l[0]
     --to_rgb
-    -if $2
+    -if {$2>=2}
       -srgb2rgb -rgb2lab.
-      -sh. 1,2 -equalize. -rm.
+      -if {$2==2} -sh. 1 -sh.. 2 -equalize[-2,-1] -rm[-2,-1]
+      -else -sh. 1,2 -equalize. -rm.
+      -endif
       -lab2rgb. -rgb2srgb
     -else
       -rgb2ycbcr.
-      -sh. 1,2 -equalize. -rm.
+      -if {$2==0} -sh. 1 -sh.. 2 -equalize[-2,-1] -rm[-2,-1]
+      -else -sh. 1,2 -equalize. -rm.
+      -endif
       -ycbcr2rgb.
     -endif
-    -blend alpha,$1
+    -j.. .,0,0,0,0,{$1%} -rm.
   -endl -a c -endl -done
 
 gimp_boost_chroma_preview :
