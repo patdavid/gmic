@@ -1140,7 +1140,7 @@ _help_header_html :
 \n<li><a href=\"#subsection20\">PINK-library operators</a></li>
 \n<li><a href=\"#subsection21\">Convenience functions</a></li>
 \n<li><a href=\"#subsection22\">Other interactive commands</a></li>
-\n<li><a href=\"#subsection23\">Commands shortcuts</a></li>
+\n<li><a href=\"#subsection23\">Command shortcuts</a></li>
 \n</ul>
 \n<li><a href=\"#section13\">Examples of use</a></li>
 \n</ul>
@@ -1961,7 +1961,7 @@ _document_gmic_example_ascii :
 
 _document_gmic_footer_ascii : -skip $1
   -if $_shortcut # Document shortcuts.
-    ({'"Commands shortcuts"'}) -_document_gmic_subsection_ascii. -v + -e[] "" -v - -rm.
+    ({'"Command shortcuts"'}) -_document_gmic_subsection_ascii. -v + -e[] "" -v - -rm.
     -v + -repeat $_shortcut
       -e[] "    "$_gmic_m$_gmic_b"-"${_shortcut$>}" "${_shortcutqualifier$>}":"$_gmic_n" eq. to '"$_gmic_g${_shortcutlink$>}$_gmic_n"'."
     -done -v -
@@ -2206,7 +2206,7 @@ _document_gmic_example_html :
 _document_gmic_footer_html : -skip $1
   -if $_shortcut # Document shortcuts.
     _subsection+=1
-    ({'"Commands shortcuts"'}) -_document_gmic_subsection_html. -rm.
+    ({'"Command shortcuts"'}) -_document_gmic_subsection_html. -rm.
     -v + -e[] "<p style=\"margin-left:20px\">"
     -repeat $_shortcut
       -e[] "<font color=\"green\"><b>&nbsp;&nbsp;-"${_shortcut$>}" "${_shortcutqualifier$>}"</b>:</font>"
@@ -2391,7 +2391,7 @@ _document_gmic_example_latex :
 
 _document_gmic_footer_latex :
   -if $_shortcut # Document shortcuts.
-    ({'"Commands shortcuts"'}) -_document_gmic_subsection_latex. -rm.
+    ({'"Command shortcuts"'}) -_document_gmic_subsection_latex. -rm.
     -v + -repeat $_shortcut
       -e[] "$\\bullet$~'\\texttt{\\Ca{-"${_shortcut$>}"}}' "${_shortcutqualifier$>}"~is equivalent to~~'\\texttt{\\Ca{"${_shortcutlink$>}"}}'.\\\\"
     -done -v -
