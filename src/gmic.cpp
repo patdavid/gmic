@@ -3692,10 +3692,10 @@ CImg<char> gmic::substitute_item(const char *const source,
   CImg<char> substituted_items(32), inbraces, substr(40), vs;
   char *ptrd = substituted_items.data();
   CImg<unsigned int> _ind;
+  const char dot = is_image_expr?'.':0;
 
   for (const char *nsource = source; *nsource; )
-    if (*nsource!='{' && *nsource!='$' &&
-        (!is_image_expr || *nsource!='.' || (nsource!=source && *(nsource - 1)!=','))) {
+    if (*nsource!='{' && *nsource!='$' && *nsource!=dot) {
 
       // If not starting with '{', '.' or '$'.
       const char *const nsource0 = nsource;
@@ -3712,12 +3712,15 @@ CImg<char> gmic::substitute_item(const char *const source,
 
       // '.' expression ('.', '..' or '...').
       if (*nsource=='.') {
-        unsigned int N = 0; const char *str = 0;
-        if (!nsource[1] || nsource[1]==',') { str = "[-1]"; N = 1; }
-        else if (nsource[1]=='.') {
-          if (!nsource[2] || nsource[2]==',') { str = "[-2]"; N = 2; }
-          else if (nsource[2]=='.') {
-            if (!nsource[3] || nsource[3]==',') { str = "[-3]"; N = 3; }
+        const char *str = 0;
+        unsigned int N = 0;
+        if (nsource==source || *(nsource - 1)==',') {
+          if (!nsource[1] || nsource[1]==',') { str = "[-1]"; N = 1; }
+          else if (nsource[1]=='.') {
+            if (!nsource[2] || nsource[2]==',') { str = "[-2]"; N = 2; }
+            else if (nsource[2]=='.') {
+              if (!nsource[3] || nsource[3]==',') { str = "[-3]"; N = 3; }
+            }
           }
         }
         if (N) { CImg<char>::string(str,false,true).append_string_to(substituted_items,ptrd); nsource+=N; }
