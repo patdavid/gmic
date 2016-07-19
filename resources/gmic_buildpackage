@@ -157,7 +157,7 @@ fi
 DIST=`lsb_release -d | tail -c+13 | xargs`
 BITS=`uname -m`
 
-if [ "$DIST" != "Ubuntu 16.04 LTS" ] || [ "$BITS" != "x86_64" ] ; then
+if [ "$DIST" != "Ubuntu 16.04.1 LTS" ] || [ "$BITS" != "x86_64" ] ; then
     SF_HOME=/media/sf_dtschump/
     cd ${SF_HOME}/work/src
     RELEASE0=`grep "#define gmic_version" gmic/src/gmic.h | tail -c5`

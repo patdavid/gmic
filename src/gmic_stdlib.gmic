@@ -1835,7 +1835,7 @@ dw :
 #@gmic : Render selected 2d warping fields.
 #@gmic : (eq. to '-dw').
 #@gmic : Default value: 'cell_size=15'.
-#@gmic : $ image.jpg -luminance -blur 5 -gradient -append c -display_warp ,
+#@gmic : $ 400,400,1,2,'x=x-w/2;y=y-h/2;r=sqrt(x*x+y*y);a=atan2(y,x);5*sin(r/10)*[cos(a),sin(a)]' --display_warp 10
 display_warp :
   -v - _gmic_s="$?" -v +
   -_$0 $*
@@ -2141,7 +2141,7 @@ _document_gmic_subsection_html :
 _document_gmic_declaration_html :
   -if {[{^}]=='(+)'} qualifier=" "{t} -rm. -else qualifier="" -endif
   s1="\n" s0=" |<br/>"
-  -if {$!>1" && "[{^}]=='"eq. to "'}  # Declaration of a shortcut command.
+  -if {$!>1" && "same([{^}],'"eq. to "',7)} # Declaration of a shortcut command.
     -rows. 7,100% -autocrop. {'.'} -autocrop. {'" "'} -autocrop. 39
     _shortcut$_shortcut={0,t}
     _shortcutlink$_shortcut={t}
@@ -2210,7 +2210,8 @@ _document_gmic_footer_html : -skip $1
     -v + -e[] "<p style=\"margin-left:20px\">"
     -repeat $_shortcut
       -e[] "<font color=\"green\"><b>&nbsp;&nbsp;-"${_shortcut$>}" "${_shortcutqualifier$>}"</b>:</font>"
-      -e[] "<font color=\"blue\"><i>eq. to '"${_shortcutlink$>}"'</i></font><br/>"
+      -v - ({'${_shortcutlink$>}'}) -z. 1,100% scl={t} -rm. -v +
+      -e[] "<font color=\"blue\"><i>eq. to '<a href=\"#"$scl"\">"${_shortcutlink$>}"</a>'</i></font><br/>"
     -done
     -e[] "</p>" -v -
   -endif
@@ -21241,6 +21242,7 @@ gimp_gmicky_preview :
 #@gimp : - <b>08/20/2014</b> : version <i>1.6.0</i>.\n
 #@gimp : - <b>03/25/2016</b> : version <i>1.7.0</i>.\n
 #@gimp : - <span foreground="purple"><b>07/13/2016</b> : version <i>1.7.4</i> (Current stable).</span>\n
+#@gimp : - <b>07/19/2016</b> : version <i>1.7.5</i> (Current pre-release).\n
 #@gimp : "}
 #@gimp : sep = separator()
 #@gimp : link = link("View latest changelog","https://discuss.pixls.us/t/release-of-gmic-1-7-4")
@@ -27582,7 +27584,7 @@ gimp_halftone_preview :
   -gimp_split_preview "-gimp_halftone $*",$-1
 
 #@gimp Hearts : gimp_hearts, gimp_hearts_preview(0)
-#@gimp : Density = float(10,0,100)
+#@gimp : Density = float(2,0,30)
 #@gimp : sep = separator(), Channel(s) = choice("All","RGBA [all]","RGB [all]","RGB [red]","RGB [green]","RGB [blue]","RGBA [alpha]","Linear RGB [all]","Linear RGB [red]","Linear RGB [green]","Linear RGB [blue]","YCbCr [luminance]","YCbCr [blue-red chrominances]","YCbCr [blue chrominance]","YCbCr [red chrominance]","YCbCr [green chrominance]","Lab [lightness]","Lab [ab-chrominances]","Lab [a-chrominance]","Lab [b-chrominance]","Lch [ch-chrominances]","Lch [c-chrominance]","Lch [h-chrominance]","HSV [hue]","HSV [saturation]","HSV [value]","HSI [intensity]","HSL [lightness]","CMYK [cyan]","CMYK [magenta]","CMYK [yellow]","CMYK [key]","YIQ [luma]","YIQ [chromas]")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>12/29/2010</i>.</small>")
