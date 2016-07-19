@@ -3485,7 +3485,7 @@ update_gallery_html :
   -_update_gallery_html "-wave 15,0.2"
   -_update_gallery_html "-deform 10"
   -_update_gallery_html "-light_patch 4,0.7,1.7"
-  -_update_gallery_html "-mosaic 0.5"
+  -_update_gallery_html "-mosaic 50"
 
   -_update_gallery_html "-sponge 13"
   -_update_gallery_html "-hearts 15"
@@ -13694,15 +13694,16 @@ light_relief : -skip ${1=0.3},${2=0.5},${3=0.2},${4=0},${5=0.2},${6=0.5},${7=0.5
     -split_opacity[0] -+[0,-1] -a c -c 0,255
   -endl -done -v +
 
-#@gmic mosaic : _density>=0
+#@gmic mosaic : 0<=_density<=100
 #@gmic : Create random mosaic from selected images.
-#@gmic : Default values: 'density=0.8'.
+#@gmic : Default values: 'density=50'.
 #@gmic : $ image.jpg --mosaic ,
-mosaic : -skip ${1=0.8}
+mosaic : -check "${1=50}>=0"
   -e[^-1] "Apply mosaic effect on image$?, with density $1."
   -v - -repeat $! -l[$>]
-    label0={1+im} -+ $label0
-    100%,100% -noise. {$1*2},2 -*.. . -distance. 1 -*. -1 -watershed.. . -rm.
+    100%,100%,1,1,'u<0.25*($1%)^4'
+    --label_fg. 0 -distance.. 1 -*.. -1 -watershed. .. -rm..
+    -blend shapeaverage
   -endl -done -v +
 
 #@gmic old_photo
@@ -27667,10 +27668,10 @@ gimp_mineral_mosaic :
   -endl -done
 
 #@gimp Mosaic : gimp_mosaic, gimp_mosaic_preview(0)
-#@gimp : Density = float(1,0.1,10)
+#@gimp : Density (%) = float(50,0,100)
 #@gimp : sep = separator(), Channel(s) = choice("All","RGBA [all]","RGB [all]","RGB [red]","RGB [green]","RGB [blue]","RGBA [alpha]","Linear RGB [all]","Linear RGB [red]","Linear RGB [green]","Linear RGB [blue]","YCbCr [luminance]","YCbCr [blue-red chrominances]","YCbCr [blue chrominance]","YCbCr [red chrominance]","YCbCr [green chrominance]","Lab [lightness]","Lab [ab-chrominances]","Lab [a-chrominance]","Lab [b-chrominance]","Lch [ch-chrominances]","Lch [c-chrominance]","Lch [h-chrominance]","HSV [hue]","HSV [saturation]","HSV [value]","HSI [intensity]","HSL [lightness]","CMYK [cyan]","CMYK [magenta]","CMYK [yellow]","CMYK [key]","YIQ [luma]","YIQ [chromas]")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
-#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>12/29/2010</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>07/19/2016</i>.</small>")
 gimp_mosaic :
   -ac "-repeat $! -l[$>] -split_opacity -mosaic[0] $1 -a c -endl -done",$2
 
@@ -27916,7 +27917,7 @@ gimp_syntexturize_patchmatch_preview :
 
 #@gimp Rorschach : gimp_rorschach, gimp_rorschach
 #@gimp : Scale = float(3,0,10)
-#@gimp : Mirror = choice(1,"None","x-axis","y-axis","xy-axes")
+#@gimp : Mirror = choice(1,"None","X-axis","Y-axis","XY-axes")
 #@gimp : Stencil type = choice(2,"Black &amp; White","RGB","Color")
 #@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>03/12/2011</i>.</small>")
 gimp_rorschach :
