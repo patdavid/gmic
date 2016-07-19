@@ -20511,11 +20511,11 @@ gimp_layer_opacity :
 gimp_layer_pos :
   -u ${"-_gimp_merge_layers[0] pos,0,0"}
 
-# Set (x,y) position of a gimp layer.
-gimp_set_layer_pos :
+# Set name of a gimp layer.
+gimp_set_layer_name :
   -repeat $! -l[$>]
-    name=${-gimp_layer_name} mode=${-gimp_layer_mode} opacity=${-gimp_layer_opacity}
-    -nm "name("$name"),mode("$mode"),opacity("$opacity"),pos("{round($1)},{round($2)}")"
+    opacity=${-gimp_layer_opacity} mode=${-gimp_layer_mode} pos=${-gimp_layer_pos}
+    -nm "name($1),mode("$mode"),opacity("$opacity"),pos("$pos")"
   -endl -done
 
 # Set blending mode of a gimp layer.
@@ -20530,6 +20530,13 @@ gimp_set_layer_opacity :
   -repeat $! -l[$>]
     name=${-gimp_layer_name} mode=${-gimp_layer_mode} pos=${-gimp_layer_pos}
     -nm "name("$name"),mode("$mode"),opacity($1),pos("$pos")"
+  -endl -done
+
+# Set position of a gimp layer.
+gimp_set_layer_pos :
+  -repeat $! -l[$>]
+    name=${-gimp_layer_name} mode=${-gimp_layer_mode} opacity=${-gimp_layer_opacity}
+    -nm "name("$name"),mode("$mode"),opacity("$opacity"),pos("{round($1)},{round($2)}")"
   -endl -done
 
 # Flatten list of input layers according to their blending modes, opacities and positions,
@@ -23352,7 +23359,7 @@ gimp_stamp_preview :
 
 #@gimp Abstraction : gimp_color_abstraction, gimp_color_abstraction_preview(0)
 #@gimp : Smoothness = float(1,0,10)
-#@gimp : Levels = int(10,2,255)
+#@gimp : Levels = int(10,2,100)
 #@gimp : Contrast = float(0.2,0.01,1)
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>10/19/2011</i>.</small>")
@@ -23765,19 +23772,21 @@ gimp_customize_clut_preview :
 #@gimp Decompose channels : gimp_decompose_channels, gimp_decompose_channels_preview
 #@gimp : Color basis = choice(7,"RGB","HSV","HSL","HSI","YUV","YCbCr","XYZ","Lab","Lch","CMY","CMYK","YIQ")
 #@gimp : Action = choice("Decompose","Recompose")
-#@gimp : Output multiple layers = bool(0)
+#@gimp : Output multiple layers = _bool(0)
 #@gimp : Include opacity layer = bool(1)
-#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>12/29/2010</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>07/19/2016</i>.</small>")
 gimp_decompose_channels :
   -if {!$2} # Decompose
     -if $4 -to_rgba -else -to_rgb -endif
-    -repeat $! -l.
-      nm={0,n}
-      -split_opacity -_gimp_decompose_channels$1[0]
-      -s[0] c -if {!$3} -a x -endif
-      nb=$!
-      -nm $nm
-    -endl -mv[-$nb--1] 0 -done
+    -repeat $! -l[$<] nm={0,n}
+      -split_opacity
+      _s3=A _s4=A
+      -_gimp_decompose_channels$1[0]
+      -s[0] c
+      -if {!$3} -a x -nm $nm
+      -else nm=${-gimp_layer_name} -repeat $! -gimp_set_layer_name[$>] {``$nm}" ["${_s$>}"]" -done
+      -endif
+    -endl -done
   -else # Recompose
     -channels 0 nbc={3+($1==10)} nb={$nbc+$4}
     -if $3 -repeat {int($!/$nb)} -l[0-{$nb-1}]
@@ -23789,20 +23798,29 @@ gimp_decompose_channels :
   -endif
 
 gimp_decompose_channels_preview :
-  -gimp_decompose_channels ${^0} -append_tiles ,
+  -repeat $! -l[$<]
+    _s3=A _s4=A
+    -gimp_decompose_channels $1,$2,1,$4
+    -if {!$2}
+      fs={round(min(w,h)*15%)}
+      -repeat $! -text_outline[$>] ${_s$>},5,3,$fs,{max(2,round($fs/15))} -done
+      -to_rgba
+    -endif
+  -endl -done
+  -append_tiles ,
 
-_gimp_decompose_channels0 :
-_gimp_decompose_channels1 : -rgb2hsv8
-_gimp_decompose_channels2 : -rgb2hsl8
-_gimp_decompose_channels3 : -rgb2hsi8
-_gimp_decompose_channels4 : -rgb2yuv8
-_gimp_decompose_channels5 : -rgb2ycbcr
-_gimp_decompose_channels6 : -rgb2xyz8
-_gimp_decompose_channels7 : -rgb2lab8
-_gimp_decompose_channels8 : -rgb2lch8
-_gimp_decompose_channels9 : -rgb2cmy
-_gimp_decompose_channels10 : -rgb2cmyk
-_gimp_decompose_channels11 : -rgb2yiq8
+_gimp_decompose_channels0 : _s0=R _s1=G _s2=B
+_gimp_decompose_channels1 : -rgb2hsv8 _s0=H _s1=S _s2=V
+_gimp_decompose_channels2 : -rgb2hsl8 _s0=H _s1=S _s2=L
+_gimp_decompose_channels3 : -rgb2hsi8 _s0=H _s1=S _s2=I
+_gimp_decompose_channels4 : -rgb2yuv8 _s0=Y _s1=U _s2=V
+_gimp_decompose_channels5 : -rgb2ycbcr _s0=Y _s1=Cb _s2=Cr
+_gimp_decompose_channels6 : -rgb2xyz8 _s0=X _s1=Y _s2=Z
+_gimp_decompose_channels7 : -rgb2lab8 _s0=L _s1=a _s2=b
+_gimp_decompose_channels8 : -rgb2lch8 _s0=L _s1=c _s2=h
+_gimp_decompose_channels9 : -rgb2cmy _s0=R _s1=G _s2=B
+_gimp_decompose_channels10 : -rgb2cmyk _s0=C _s1=M _s2=Y _s3=K
+_gimp_decompose_channels11 : -rgb2yiq8 _s0=Y _s1=I _s2=Q
 
 _gimp_recompose_channels0 :
 _gimp_recompose_channels1 : -hsv82rgb
