@@ -13612,7 +13612,7 @@ hearts : -skip ${1=10}
   -e[^-1] "Apply heart filter on image$?, with density $1."
   -v - -repeat $! -l[$>]
     100%,100%,1 -noise. $1,2 -r. .. -n. 0,1 -*[-1,-2] -_heart9x7
-    -mirror. y -dilate.. . -rm.
+    -dilate.. . -rm.
   -endl -done -v +
 
 _heart9x7 :
