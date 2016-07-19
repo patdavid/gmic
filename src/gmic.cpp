@@ -3699,7 +3699,7 @@ CImg<char> gmic::substitute_item(const char *const source,
 
       // If not starting with '{', '.' or '$'.
       const char *const nsource0 = nsource;
-      do { ++nsource; } while (*nsource && *nsource!='{' && *nsource!='$' && (!is_image_expr || *nsource!='.'));
+      do { ++nsource; } while (*nsource && *nsource!='{' && *nsource!='$' && *nsource!=dot);
       CImg<char>(nsource0,(unsigned int)(nsource - nsource0),1,1,1,true).
         append_string_to(substituted_items,ptrd);
     } else { // '{...}', '...' or '${...}' expression found.
