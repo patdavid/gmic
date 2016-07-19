@@ -13616,7 +13616,8 @@ hearts : -skip ${1=10}
   -endl -done -v +
 
 _heart9x7 :
-  (0,1,1,0,0,0,1,1,0;1,1,1,1,0,1,1,1,1;1,1,1,1,1,1,1,1,1;0,1,1,1,1,1,1,1,0;0,0,1,1,1,1,1,0,0;0,0,0,1,1,1,0,0,0;0,0,0,0,1,0,0,0,0)
+  (9,7,1,1,0,1,-1,2,-3,2,-1,4,-1,13,-1,7,-3,5,-5,3,-7,1,-4)
+  -decompress_rle.
 
 #@gmic houghsketchbw : _density>=0,_radius>0,0<=_threshold<=100,0<=_opacity<=1,_votesize[%]>0
 #@gmic : Apply hough B&W sketch effect on selected images.
