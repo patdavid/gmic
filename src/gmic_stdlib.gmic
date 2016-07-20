@@ -14403,18 +14403,23 @@ zoom : -skip ${1=2},${2=0.5},${3=0.5},${4=0.5},${5=0}
 #
 #-----------------------------
 
-#@gmic cracks : 0<=_density<=100,_amplitude,_relief={ 0 | 1 }
-#@gmic : Add random cracks to selected images.
-#@gmic : Default values: 'density=25', 'amplitude=100' and 'relief=0'.
-#@gmic : $ image.jpg --cracks 25,60,1
-cracks : -check "${1=25}>=0" -skip ${2=100},${3=0}
-  -e[^-1] "Add random cracks to image$?, with density $1."
+#@gmic cracks : 0<=_density<=100,_is_relief={ 0 | 1 },_opacity,_color1,...
+#@gmic : Draw random cracks on selected images with specified color.
+#@gmic : Default values: 'density=25', 'is_relief=0', 'opacity=1' and 'color1=0'.
+#@gmic : $ image.jpg --cracks ,
+cracks : -check "${1=25}>=0" -skip ${2=0},${3=1},${4=0}
+  -e[^-1] "Add random cracks to image$?, with density $1, opacity $3 and color (${4--1})."
   -v - -repeat $! -l[$>] cut={[im,iM]}
     100%,100%,1,2,'u<0.25*($1%)^4?[u,1]:[0,0]'
     -s. c -distance. 1 -*. -1 -watershed.. . -rm.
     --dilate. 3 --[-2,-1] -!=. 0 -thinning.
-    -if $3 -g. xy,1 -+[-2,-1] -n. -1,1 -endif
-    -*. $2 -+ -c $cut
+    -if $2
+      -f. "i?i:j(1)?2:j(-1)?0.5:i" -n. 0,1
+      --fc.. ${4--1} -*. .. -neq.. 0 -j... .,0,0,0,0,$3,..
+    -else
+      --fc.. ${4--1} -j... .,0,0,0,0,$3,..
+    -endif
+    -k[0]
   -endl -done -v +
 
 #@gmic light_patch : _density>0,_darkness>=0,_lightness>=0
@@ -27548,13 +27553,13 @@ gimp_canvas_preview :
 
 #@gimp Cracks : gimp_cracks, gimp_cracks_preview(0)
 #@gimp : Density (%) = float(30,0,100)
-#@gimp : Amplitude = float(-80,-255,255)
 #@gimp : Relief = bool(true)
+#@gimp : Color = color(255,255,255,128)
 #@gimp : sep = separator(), Channel(s) = choice("All","RGBA [all]","RGB [all]","RGB [red]","RGB [green]","RGB [blue]","RGBA [alpha]","Linear RGB [all]","Linear RGB [red]","Linear RGB [green]","Linear RGB [blue]","YCbCr [luminance]","YCbCr [blue-red chrominances]","YCbCr [blue chrominance]","YCbCr [red chrominance]","YCbCr [green chrominance]","Lab [lightness]","Lab [ab-chrominances]","Lab [a-chrominance]","Lab [b-chrominance]","Lch [ch-chrominances]","Lch [c-chrominance]","Lch [h-chrominance]","HSV [hue]","HSV [saturation]","HSV [value]","HSI [intensity]","HSL [lightness]","CMYK [cyan]","CMYK [magenta]","CMYK [yellow]","CMYK [key]","YIQ [luma]","YIQ [chromas]")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>07/20/2016</i>.</small>")
 gimp_cracks :
-  -ac "-cracks $1,$2,$3",$4
+  -ac "-cracks $1,$2,{$6/255},${3-5}",$7
 
 gimp_cracks_preview :
   -gimp_split_preview "-gimp_cracks $*",$-1
