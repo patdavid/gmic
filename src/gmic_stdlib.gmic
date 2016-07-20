@@ -20482,11 +20482,21 @@ __help_end : #  <-- don't remove me, used as a end marker for command '-help' !
 
 # Function that returns the list of external sources to be included in the GIMP plug-in.
 # This command can be superseded on the user '.gmic' file to add sources for the plug-in.
-gimp_filter_sources : -skip ${1=0}
-  ({'{/$_path_user}'})
-  -l[] -_gimp_filter_sources $1 -onfail -rm -endl
-  ({'http://gmic.eu/update$_version.gmic'},1) # Last 1 -> Override default filters.
-  -l[] -i cimgz:${_path_rc}gimp_filter_sources -onfail -endl # Include own users external sources.
+# $1 = try network update
+# $2 = try '-gimp_filter_sources' defined in local update file.
+gimp_filter_sources : -skip ${1=0},${2=1}
+
+  # Try to update the command '-gimp_filter_sources' itself.
+  -if {$2}
+    local=${_path_rc}update$_version.gmic
+    -if $local -m $local -gimp_filter_sources $1,0 -return -endif
+  -endif
+
+  # Build list of filter sources.
+  ({'{/$_path_user}'}) # Include local '.gmic' (or 'user.gmic') file.
+  ({'http://gmic.eu/update$_version.gmic'},1) # Include stdlib update (last 1 -> Override default filters).
+  -l[] -_gimp_filter_sources $1 -onfail -rm -endl # Invoke custom command to include other filter sources.
+  -l[] -i cimgz:${_path_rc}gimp_filter_sources -onfail -endl # Include other user-defined filters sources.
 
 # Function used for filters based on parallelization with spatial splitting.
 gimp_parallel_overlap :

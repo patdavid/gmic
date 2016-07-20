@@ -1180,7 +1180,7 @@ CImgList<char> update_filters(const bool try_net_update, const bool is_silent=fa
   CImgList<char> _names;
   CImg<char> command(1024);
   cimg_snprintf(command,command.width(),
-                "%s-if ${_path_rc}update%u.gmic ${_path_rc}update%u.gmic -endif -gimp_filter_sources %d",
+                "%s-gimp_filter_sources %d",
                 get_verbosity_mode()>5?"-debug ":get_verbosity_mode()>3?"":"-v -99 ",
                 gmic_version,gmic_version,
                 try_net_update?1:0);
