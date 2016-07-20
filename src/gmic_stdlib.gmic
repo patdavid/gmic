@@ -20486,9 +20486,7 @@ gimp_filter_sources : -skip ${1=0}
   ({'{/$_path_user}'})
   -l[] -_gimp_filter_sources -onfail -endl
   ({'http://gmic.eu/update$_version.gmic'},1) # Last 1 -> Override default filters.
-
-  # Include own users external sources.
-  -l[] -i cimgz:${_path_rc}gimp_filter_sources -onfail -endl
+  -l[] -i cimgz:${_path_rc}gimp_filter_sources -onfail -endl # Include own users external sources.
 
 # Function used for filters based on parallelization with spatial splitting.
 gimp_parallel_overlap :
