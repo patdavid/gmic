@@ -20484,7 +20484,7 @@ __help_end : #  <-- don't remove me, used as a end marker for command '-help' !
 # This command can be superseded on the user '.gmic' file to add sources for the plug-in.
 gimp_filter_sources : -skip ${1=0}
   ({'{/$_path_user}'})
-  -l[] -_gimp_filter_sources -onfail -endl
+  -l[] -_gimp_filter_sources $1 -onfail -rm -endl
   ({'http://gmic.eu/update$_version.gmic'},1) # Last 1 -> Override default filters.
   -l[] -i cimgz:${_path_rc}gimp_filter_sources -onfail -endl # Include own users external sources.
 
