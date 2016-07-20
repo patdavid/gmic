@@ -14412,7 +14412,7 @@ cracks : -check "${1=25}>=0" -skip ${2=100},${3=0}
   -v - -repeat $! -l[$>] cut={[im,iM]}
     100%,100%,1,1,'u<0.25*($1%)^4'
     --label_fg. 0 -distance.. 1 -*.. -1 -watershed. .. -rm..
-    -g. xy,1 -a[-2,-1] c -norm. ->. 0 -thinning.
+    --dilate. 3 --[-2,-1] -!=. 0
     -if $3 -g. xy -+[-2,-1] -n. -1,1 -endif
     -*. $2 -+ -c $cut
   -endl -done -v +
@@ -27547,7 +27547,7 @@ gimp_canvas_preview :
 #@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>12/29/2010</i>.</small>")
 
 #@gimp Cracks : gimp_cracks, gimp_cracks_preview(0)
-#@gimp : Density = float(30,0,100)
+#@gimp : Density (%) = float(30,0,100)
 #@gimp : Amplitude = float(-80,-255,255)
 #@gimp : Relief = bool(true)
 #@gimp : sep = separator(), Channel(s) = choice("All","RGBA [all]","RGB [all]","RGB [red]","RGB [green]","RGB [blue]","RGBA [alpha]","Linear RGB [all]","Linear RGB [red]","Linear RGB [green]","Linear RGB [blue]","YCbCr [luminance]","YCbCr [blue-red chrominances]","YCbCr [blue chrominance]","YCbCr [red chrominance]","YCbCr [green chrominance]","Lab [lightness]","Lab [ab-chrominances]","Lab [a-chrominance]","Lab [b-chrominance]","Lch [ch-chrominances]","Lch [c-chrominance]","Lch [h-chrominance]","HSV [hue]","HSV [saturation]","HSV [value]","HSI [intensity]","HSL [lightness]","CMYK [cyan]","CMYK [magenta]","CMYK [yellow]","CMYK [key]","YIQ [luma]","YIQ [chromas]")
