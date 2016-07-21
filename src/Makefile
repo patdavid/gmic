@@ -129,7 +129,7 @@ MANDATORY_CFLAGS += -std=c++11
 endif
 MANDATORY_LIBS += -L$(USR)/$(LIB)
 ifeq ($(notdir $(CXX)),g++)
-MANDATORY_CFLAGS += -Wall -Wextra
+MANDATORY_CFLAGS += -Wall -Wextra -Wfatal-errors
 MANDATORY_LIBS += -lm
 endif
 ifeq ($(OS),Unix)
@@ -249,8 +249,8 @@ MAGICK_LIBS = `pkg-config --libs GraphicsMagick++ || echo -lGraphicsMagick++`
 
 # Flags to enable native support of EXR file format, using the OpenEXR library/
 # This requires the presence of the OpenEXR include and library files.
-EXR_CFLAGS = -Dcimg_use_openexr -I$(USR)/$(INCLUDE)/OpenEXR
-EXR_LIBS = -lIlmImf -lHalf
+OPENEXR_CFLAGS = -Dcimg_use_openexr -I$(USR)/$(INCLUDE)/OpenEXR
+OPENEXR_LIBS = -lIlmImf -lHalf
 
 # Flags to enable the use of the FFTW3 library.
 # This requires the presence of the FFTW3 include and library files.
@@ -274,12 +274,12 @@ BOARD_LIBS = -lboard
 GMIC_CLI_CFLAGS = $(MANDATORY_CFLAGS) $(ABORT_CFLAGS) $(PARALLEL_CFLAGS) $(FFTW_CFLAGS) $(CURL_CFLAGS) $(PNG_CFLAGS) $(JPEG_CFLAGS) $(TIFF_CFLAGS)
 GMIC_CLI_LIBS = $(MANDATORY_LIBS) $(PARALLEL_LIBS) $(FFTW_LIBS) $(CURL_LIBS) $(PNG_LIBS) $(JPEG_LIBS) $(TIFF_LIBS)
 ifeq ($(OS),Unix) # Unix.
-GMIC_CLI_CFLAGS += $(OPENMP_CFLAGS) $(X11_CFLAGS) $(EXR_CFLAGS) $(OPENCV_CFLAGS) # $(XSHM_CFLAGS) $(MAGICK_CFLAGS)
-GMIC_CLI_LIBS += $(OPENMP_LIBS) $(X11_LIBS) $(EXR_LIBS) $(OPENCV_LIBS) # $(XSHM_LIBS) # $(MAGICK_LIBS)
+GMIC_CLI_CFLAGS += $(OPENMP_CFLAGS) $(X11_CFLAGS) $(OPENEXR_CFLAGS) $(OPENCV_CFLAGS) # $(XSHM_CFLAGS) $(MAGICK_CFLAGS)
+GMIC_CLI_LIBS += $(OPENMP_LIBS) $(X11_LIBS) $(OPENEXR_LIBS) $(OPENCV_LIBS) # $(XSHM_LIBS) # $(MAGICK_LIBS)
 else
 ifeq ($(OS),Darwin) # MacOSX.
-GMIC_CLI_CFLAGS += $(X11_CFLAGS) $(EXR_CFLAGS)
-GMIC_CLI_LIBS += $(X11_LIBS) $(EXR_LIBS) $(OPT_LIBS)
+GMIC_CLI_CFLAGS += $(X11_CFLAGS) $(OPENEXR_CFLAGS)
+GMIC_CLI_LIBS += $(X11_LIBS) $(OPENEXR_LIBS) $(OPT_LIBS)
 else # Windows.
 GMIC_CLI_CFLAGS += $(OPENMP_CFLAGS) $(GDI32_CFLAGS) $(OPENCV_CFLAGS)
 GMIC_CLI_LIBS += $(OPENMP_LIBS) $(GDI32_LIBS) $(OPENCV_LIBS)
