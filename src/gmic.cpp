@@ -12689,26 +12689,28 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
                       // Substitute ${subset} -> values of the selected subset of arguments,
                       // separated by ','.
+                      bool is_valid_subset = false;
                       if (is_braces) {
-                        if ((*inbraces>='a' && *inbraces<='z') ||
-                            (*inbraces>='A' && *inbraces<='Z') ||
-                            *inbraces=='_' || !*inbraces ||
-                            std::strchr(inbraces,' ')) {
-                          CImg<char>(nsource++,1).move_to(substituted_items);
-                        } else {
+                        const char c = *inbraces, nc = c?inbraces[1]:0;
+                        if (c=='^' || c==':' || c=='.' || (c>='0' && c<='9') ||
+                            (c=='-' && !((nc>='a' && nc<='z') ||
+                                         (nc>='A' && nc<='Z') ||
+                                         nc=='_'))) {
+
                           CImg<unsigned int> inds;
+                          CImg<char> _status;
                           const int _verbosity = verbosity;
                           const bool _is_debug = is_debug;
-                          bool is_valid_subset = true;
                           verbosity = -16384; is_debug = false;
-                          CImg<char> _status;
                           status.move_to(_status); // Save status because 'selection2cimg' can change it.
                           try {
                             inds = selection2cimg(inbraces,nb_arguments + 1,
                                                   CImgList<char>::empty(),"",false);
+                            is_valid_subset = true;
                           } catch (...) { inds.assign(); is_valid_subset = false; }
                           _status.move_to(status);
                           verbosity = _verbosity; is_debug = _is_debug;
+
                           if (is_valid_subset) {
                             nsource+=l_inbraces + 3;
                             if (inds) {
@@ -12728,9 +12730,10 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                               else substituted_items.remove();
                               has_arguments = true;
                             }
-                          } else CImg<char>(nsource++,1).move_to(substituted_items);
+                          }
                         }
-                      } else CImg<char>(nsource++,1).move_to(substituted_items);
+                      }
+                      if (!is_valid_subset) CImg<char>(nsource++,1).move_to(substituted_items);
                     }
                   }
                 CImg<char>::vector(0).move_to(substituted_items);
