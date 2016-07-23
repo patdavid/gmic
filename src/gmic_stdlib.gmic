@@ -2651,12 +2651,13 @@ input_clut : -check "isval(${2=64}) && $2>0"
     -endif
   -endl -v +
 
-#@gmic input_cube : "filename"
+#@gmic input_cube : "filename",_convert_1d_cluts_to_3d={ 0 | 1 }.
 #@gmic : Insert CLUT data from a .cube filename (Adobe CLUT format).
-input_cube :
+#@gmic : Default value: 'convert_1d_cluts_to_3d=0'.
+input_cube : -skip ${2=1}
   -e[^-1] "Input CLUT from file '$1'."
   -v - -l[]
-    -i raw:"$1",uchar -discard 13 -s -,10
+    -i raw:"$1",uchar -f "i<32 && i!=10?32:i" -s -,10
     -repeat $! -if {$<,i==_'#'} -rm[$<] -endif -done # Discard lines of comments.
     -apply_parallel "-autocrop 32"
 
@@ -2680,7 +2681,10 @@ input_cube :
 
     # Get CLUT data
     -apply_parallel "-split -,32 ({{0,t}}^{{1,t}}^{{2,t}}) -k." -a y
-    -if {$dim==1} -s c -y... x -y. z -r $size,$size,$size -a c
+    -if {$dim==1}
+      -if $2 -s c -y... x -y. z -r $size,$size,$size -a c
+      -else -transpose
+      -endif
     -else -r $size,$size,$size,3,-1
     -endif
 
