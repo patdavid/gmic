@@ -21050,6 +21050,7 @@ _gimp_download_all_data :
 #@gimp : note = note{"\n<span foreground="purple" underline="single">Supporters:</span>"}
 #@gimp : note = note{" <b>-</b> A big hug goes to these friends who supported the project:"}
 #@gimp : note = note{"<i>
+#@gimp : Devin Sorell,
 #@gimp : <a href="http://www.quesepuedehacerenlinux.net">Pepe Baeza</a>,
 #@gimp : <a href=" http://www.lesnoy-tanets.com">Andrey Pivovarova</a>,
 #@gimp : <a href="http://doliver.co.uk/">David Oliver</a>,
