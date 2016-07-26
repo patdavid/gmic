@@ -4020,6 +4020,11 @@ bool create_dialog_gui() {
   GdkPixbuf *const pixbuf = gdk_pixbuf_new_from_data(gmic_logo,GDK_COLORSPACE_RGB,
                                                      false,8,logo_width,logo_height,3*logo_width,0,0);
   GtkWidget *const image = gtk_image_new_from_pixbuf(pixbuf);
+  gtk_widget_set_tooltip_text(image,
+                              "GREYC (http://www.greyc.fr)\n"
+                              "CNRS (http://www.cnrs.fr)\n"
+                              "Normandy University (http://www.normandie-univ.fr)\n"
+                              "ENSICAEN (http://www.ensicaen.fr)");
   gtk_widget_show(image);
   gtk_container_add(GTK_CONTAINER(image_align),image);
 
