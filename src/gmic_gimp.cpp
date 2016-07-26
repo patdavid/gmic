@@ -4007,9 +4007,13 @@ bool create_dialog_gui() {
   gtk_widget_show(left_pane);
   gtk_paned_pack1(GTK_PANED(dialog_hpaned),left_pane,true,false);
 
-  GtkWidget *const image_align = gtk_alignment_new(0.1,0,0,0);
+  GtkWidget *const left_hbox = gtk_hbox_new(false,4);
+  gtk_widget_show(left_hbox);
+  gtk_box_pack_end(GTK_BOX(left_pane),left_hbox,false,false,0);
+
+  GtkWidget *const image_align = gtk_alignment_new(0.5,0.5,0,0);
   gtk_widget_show(image_align);
-  gtk_box_pack_end(GTK_BOX(left_pane),image_align,false,false,0);
+  gtk_box_pack_start(GTK_BOX(left_hbox),image_align,true,true,0);
   const CImg<unsigned char> gmic_logo =
     CImgList<unsigned char>::get_unserialize(CImg<unsigned char>(data_gmic_logo,1,size_data_gmic_logo,1,1,true))[0];
   const unsigned int logo_width = gmic_logo._height, logo_height = gmic_logo._depth;
@@ -4019,14 +4023,14 @@ bool create_dialog_gui() {
   gtk_widget_show(image);
   gtk_container_add(GTK_CONTAINER(image_align),image);
 
-  GtkWidget *const left_align = gtk_alignment_new(0,0,0,0);
-  gtk_widget_show(left_align);
-  gtk_box_pack_end(GTK_BOX(left_pane),left_align,false,false,0);
+  GtkWidget *const right_align = gtk_alignment_new(1,0,0,0);
+  gtk_widget_show(right_align);
+  gtk_box_pack_start(GTK_BOX(left_hbox),right_align,true,true,0);
 
   GtkWidget *const left_frame = gtk_frame_new(NULL);
   gtk_widget_show(left_frame);
   gtk_container_set_border_width(GTK_CONTAINER(left_frame),4);
-  gtk_container_add(GTK_CONTAINER(left_align),left_frame);
+  gtk_container_add(GTK_CONTAINER(right_align),left_frame);
 
   GtkWidget *const frame_title = gtk_label_new(NULL);
   gtk_widget_show(frame_title);

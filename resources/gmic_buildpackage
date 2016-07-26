@@ -50,10 +50,11 @@ if [ "$OSTYPE" == "msys" ]; then
         cd &&
 
         # Input sources.
-        rm -rf gmic-src &&
-        cp -rf /e/work/src/gmic/src gmic-src
-        cp -rf /e/work/src/gmic/resources/gmic_film_cluts.gmz gmic-build
-        cp -rf /e/work/src/gmic/resources/gmic_film_cluts.gmz gmic-gimp-build
+        rm -rf gmic-src
+    cp -rf /e/work/src/gmic/src gmic-src
+    cp -rf /e/work/src/gmic-community/libcgmic/*gmic* gmic-src
+    cp -rf /e/work/src/gmic/resources/gmic_film_cluts.gmz gmic-build
+    cp -rf /e/work/src/gmic/resources/gmic_film_cluts.gmz gmic-gimp-build
 
     # Get version number.
     cd gmic-src &&
@@ -85,7 +86,7 @@ if [ "$OSTYPE" == "msys" ]; then
             rm -rf ${OUTDIR1} ${OUTDIR2} ${OUTZIP1} ${OUTZIP2} ${OUTINST} &&
             sed s\/XXX\/${VERSION}${SUFFIX}\/g /e/work/src/gmic/resources/gmic_gimp64.iss > tmp.iss
             cd gmic-src && make clean && rm -f gmic gmic_gimp *.o && \
-            make OPT_CFLAGS="-O3 -m64 -mtune=generic" cli gimp
+            make OPT_CFLAGS="-O3 -m64 -mtune=generic" cli gimp libc
     else
         if [ -f is_64bits ]; then
 
@@ -102,7 +103,7 @@ if [ "$OSTYPE" == "msys" ]; then
                 make CC="g++ -I/mingw/include -I/env/gcc492/mingw32/include -I/env/gcc492/mingw32/i686-w64-mingw32/include -I/opencv/include -I/opencv/include/opencv -I/opencv/include/opencv2" \
                      MANDATORY_LIBS+="-L/env/gcc492/mingw32/lib -L/env/gcc492/mingw32/i686-w64-mingw32/lib -L/mingw/lib -lz" \
                      OPT_CFLAGS="-O3 -m64 -mtune=generic" \
-                     OPENCV_LIBS+="/opencv/x64/mingw/lib/libopencv_calib3d2410.dll.a /opencv/x64/mingw/lib/libopencv_contrib2410.dll.a /opencv/x64/mingw/lib/libopencv_core2410.dll.a /opencv/x64/mingw/lib/libopencv_features2d2410.dll.a /opencv/x64/mingw/lib/libopencv_flann2410.dll.a /opencv/x64/mingw/lib/libopencv_gpu2410.dll.a /opencv/x64/mingw/lib/libopencv_highgui2410.dll.a /opencv/x64/mingw/lib/libopencv_imgproc2410.dll.a /opencv/x64/mingw/lib/libopencv_legacy2410.dll.a /opencv/x64/mingw/lib/libopencv_ml2410.dll.a /opencv/x64/mingw/lib/libopencv_nonfree2410.dll.a /opencv/x64/mingw/lib/libopencv_objdetect2410.dll.a /opencv/x64/mingw/lib/libopencv_ocl2410.dll.a /opencv/x64/mingw/lib/libopencv_photo2410.dll.a /opencv/x64/mingw/lib/libopencv_stitching2410.dll.a /opencv/x64/mingw/lib/libopencv_superres2410.dll.a /opencv/x64/mingw/lib/libopencv_video2410.dll.a /opencv/x64/mingw/lib/libopencv_videostab2410.dll.a" cli gimp
+                     OPENCV_LIBS+="/opencv/x64/mingw/lib/libopencv_calib3d2410.dll.a /opencv/x64/mingw/lib/libopencv_contrib2410.dll.a /opencv/x64/mingw/lib/libopencv_core2410.dll.a /opencv/x64/mingw/lib/libopencv_features2d2410.dll.a /opencv/x64/mingw/lib/libopencv_flann2410.dll.a /opencv/x64/mingw/lib/libopencv_gpu2410.dll.a /opencv/x64/mingw/lib/libopencv_highgui2410.dll.a /opencv/x64/mingw/lib/libopencv_imgproc2410.dll.a /opencv/x64/mingw/lib/libopencv_legacy2410.dll.a /opencv/x64/mingw/lib/libopencv_ml2410.dll.a /opencv/x64/mingw/lib/libopencv_nonfree2410.dll.a /opencv/x64/mingw/lib/libopencv_objdetect2410.dll.a /opencv/x64/mingw/lib/libopencv_ocl2410.dll.a /opencv/x64/mingw/lib/libopencv_photo2410.dll.a /opencv/x64/mingw/lib/libopencv_stitching2410.dll.a /opencv/x64/mingw/lib/libopencv_superres2410.dll.a /opencv/x64/mingw/lib/libopencv_video2410.dll.a /opencv/x64/mingw/lib/libopencv_videostab2410.dll.a" cli gimp libc
 
         else
 
@@ -119,12 +120,12 @@ if [ "$OSTYPE" == "msys" ]; then
                 make CC="g++ -I/mingw/include -I/env/gcc492/mingw32/include -I/env/gcc492/mingw32/i686-w64-mingw32/include -I/opencv/include -I/opencv/include/opencv -I/opencv/include/opencv2" \
                      MANDATORY_LIBS+="-L/env/gcc492/mingw32/lib -L/env/gcc492/mingw32/i686-w64-mingw32/lib -L/mingw/lib -lz" \
                      OPT_CFLAGS="-O3 -march=i686 -mtune=generic" \
-                     OPENCV_LIBS+="/opencv/lib/opencv_calib3d2410.lib /opencv/lib/opencv_contrib2410.lib /opencv/lib/opencv_core2410.lib /opencv/lib/opencv_features2d2410.lib /opencv/lib/opencv_flann2410.lib /opencv/lib/opencv_gpu2410.lib /opencv/lib/opencv_highgui2410.lib /opencv/lib/opencv_imgproc2410.lib /opencv/lib/opencv_legacy2410.lib /opencv/lib/opencv_ml2410.lib /opencv/lib/opencv_nonfree2410.lib /opencv/lib/opencv_objdetect2410.lib /opencv/lib/opencv_ocl2410.lib /opencv/lib/opencv_photo2410.lib /opencv/lib/opencv_stitching2410.lib /opencv/lib/opencv_superres2410.lib /opencv/lib/opencv_video2410.lib /opencv/lib/opencv_videostab2410.lib" cli gimp
+                     OPENCV_LIBS+="/opencv/lib/opencv_calib3d2410.lib /opencv/lib/opencv_contrib2410.lib /opencv/lib/opencv_core2410.lib /opencv/lib/opencv_features2d2410.lib /opencv/lib/opencv_flann2410.lib /opencv/lib/opencv_gpu2410.lib /opencv/lib/opencv_highgui2410.lib /opencv/lib/opencv_imgproc2410.lib /opencv/lib/opencv_legacy2410.lib /opencv/lib/opencv_ml2410.lib /opencv/lib/opencv_nonfree2410.lib /opencv/lib/opencv_objdetect2410.lib /opencv/lib/opencv_ocl2410.lib /opencv/lib/opencv_photo2410.lib /opencv/lib/opencv_stitching2410.lib /opencv/lib/opencv_superres2410.lib /opencv/lib/opencv_video2410.lib /opencv/lib/opencv_videostab2410.lib" cli gimp libc
 
         fi
     fi
     cp -f gmic_gimp.exe ../gmic-gimp-build/ &&
-        cp -f gmic_gimp.exe gmic.exe ../gmic-build/ &&
+        cp -f gmic_gimp.exe gmic.exe libcgmic.dll libcgmic.def ../gmic-build/ &&
         cd .. &&
 
         # Construct full G'MIC binary archive.
