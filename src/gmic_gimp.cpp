@@ -4014,11 +4014,13 @@ bool create_dialog_gui() {
   GtkWidget *const image_align = gtk_alignment_new(0.5,0.5,0,0);
   gtk_widget_show(image_align);
   gtk_box_pack_start(GTK_BOX(left_hbox),image_align,true,true,0);
-  const CImg<unsigned char> gmic_logo =
+  CImg<unsigned char> gmic_logo =
     CImgList<unsigned char>::get_unserialize(CImg<unsigned char>(data_gmic_logo,1,size_data_gmic_logo,1,1,true))[0];
-  const unsigned int logo_width = gmic_logo._height, logo_height = gmic_logo._depth;
+  const unsigned int logo_width = gmic_logo._width, logo_height = gmic_logo._height;
+  gmic_logo.permute_axes("cxyz");
   GdkPixbuf *const pixbuf = gdk_pixbuf_new_from_data(gmic_logo,GDK_COLORSPACE_RGB,
-                                                     false,8,logo_width,logo_height,3*logo_width,0,0);
+                                                     true,8,logo_width,logo_height,4*logo_width,0,0);
+
   GtkWidget *const image = gtk_image_new_from_pixbuf(pixbuf);
   gtk_widget_set_tooltip_text(image,
                               "GREYC (http://www.greyc.fr)\n"
