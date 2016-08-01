@@ -5056,18 +5056,21 @@ compress_clut : -check "isint(${1=2048}) && $1>=1 && ${2=17.5}>=0 && ${3=1.75}>=
   -e[^-1] "Compress color LUT$? as a set of colored keypoints, with $1 max points, maximum error $2 and average error $3."
   -v -
   -repeat $! -l[$>]
-    ({'{b}'}) -replace_str. "film_","" nm={t} -rm.
-    w={w} h={h} d={d}
-    w_size=${-fitscreen" "$w,$h,$d,256,50%}
+    w={w} h={h} d={d} w_size=${-fitscreen" "$w,$h,$d,256,50%}
     -v + -e[] "  > Process clut '"$nm"' ("${w}"x"${h}"x"${d}")." -v -
-    -nm clut
+    ({'{b}'}) nm={t} -rm. -nm clut
     100%,100%,100% -nm. keypoints
     --laplacian[0] -norm. -^. 0.5 -nm. potential
 
     # Insert initialization keypoints.
     0 -nm. keycoords
-    -m "add_keypoint : rgb={clut,I($""1,$""2,$""3)} -=[keypoints] 1,$""1,$""2,$""3 ({$""1*255/$_w1},{$""2*255/$_h1},{$""3*255/$_d1},$rgb) -a[keycoords,-1] y"
     _w1={max(1,$w-1)} _h1={max(1,$h-1)} _d1={max(1,$d-1)}
+    -m "add_keypoint : \
+          x={round($""1)} y={round($""2)} z={round($""3)} \
+          X={round($x*255/$_w1)} Y={round($y*255/$_h1)} Z={round($z*255/$_h1)} \
+          rgb={clut,I($x,$y,$z)} \
+          -=[keypoints] 1,$x,$y,$z \
+          ($X,$Y,$Z,$rgb) -a[keycoords,-1] y"
     -add_keypoint {potential,xM},{potential,yM},{potential,zM}
 
     0 -nm. error
