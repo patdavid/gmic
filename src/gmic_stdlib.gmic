@@ -14599,7 +14599,7 @@ watermark_visible : -skip "${1=\251\ G\47MIC}" -check "${2=0.3}>0 && $2<1 && ${3
 #@gmic : $ -m "ex : $""=arg -repeat $""# --blend[0,1] ${arg{$>+1}} -text_outline[-1] Mode:\" \"${arg{$>+1}},2,2,23,2,1,255 -done" image.jpg -testimage2d {w},{h} -ex softdodge,softlight,stamp,subtract,value,vividlight,xor
 blend : -skip ${1=alpha},${2=1},${3=1},${4=0}
   -v -
-  -if {arg(1,{'$1'})==_'['}
+  -if ${"-is_image_arg $1"}
     n={narg($*)} mode=${-arg\ 1+($n>=2),alpha,$2}
     -v + -e[^-1] "Blend image$? with "${-arg\ 1+$4,base,top}" layer $1, using '"$mode"' mode and opacity $3." -v -
     -repeat $! -pass$1 -l[$>,-1] -if $4 -rv -endif -blend $mode,$3 -endl -done -v + -return
@@ -17233,7 +17233,7 @@ _x_colorize :
     -else -sh. 0
     -endif
     -n 0,255
-  -else # Regular image.
+    -else # Regular image.
     -if {s==1} -sh. 0
     -else --luminance.
     -endif
@@ -17467,7 +17467,8 @@ _x_colorize :
 # Compute potential function.
 __x_colorize :
   -if $1 # Potential for lineart.
-    -b. 0.05% -n. 0,1 --b. 0.5% -^.. 10 -n.. 0,1 -n. 0.3,1 -min[-2,-1]
+    # -b. 0.05% -n. 0,1 --b. 0.5% -^.. 10 -n.. 0,1 -n. 0.3,1 -min[-2,-1]
+    -n. 0,1 -^. 5 -repeat 4 --b. 0.5% -min -done
   -else  # Potential for generic grayscale image.
     -gradient_norm. -n. 0,255 -normalize_local. 3,3 -*. -1 -n. 0,255
     -b. 0.05% -n. 0,1 -sqr. --b. 0.5% -n[-2,-1] 0,1 -min[-2,-1]
