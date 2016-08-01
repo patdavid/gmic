@@ -17464,7 +17464,8 @@ _x_colorize :
 # Compute potential function.
 __x_colorize :
   -if $1 # Potential for lineart.
-    -b. 0.05% -n. 0,1 --b. 0.5% -^.. 10 -n.. 0,1 -n. 0.3,1 -min[-2,-1]
+    # -b. 0.05% -n. 0,1 --b. 0.5% -^.. 10 -n.. 0,1 -n. 0.3,1 -min[-2,-1]
+    -n. 0,1 -^. 5 -repeat 4 --b. 0.5% -min -done
   -else  # Potential for generic grayscale image.
     -gradient_norm. -n. 0,255 -normalize_local. 3,3 -*. -1 -n. 0,255
     -b. 0.05% -n. 0,1 -sqr. --b. 0.5% -n[-2,-1] 0,1 -min[-2,-1]
