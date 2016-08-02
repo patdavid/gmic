@@ -20952,6 +20952,7 @@ gimp_logo_ca :
 #@gimp : <b> -</b> <i>James Prichard</i> <small>(testing &amp; filters)</small>
 #@gimp : <b> -</b> <i>Guilherme Razgriz</i> <small>(translation)</small>
 #@gimp : <b> -</b> <i>Karsten Rodenacker</i> <small>(packaging &amp; code)</small>
+#@gimp : <b> -</b> <i>Marc Roovers</i> <small>(clut data)</small>
 #@gimp : <b> -</b> <i>Dani Sard&#224;</i> <small>(translation)</small>
 #@gimp : <b> -</b> <i>Yuri Shemanin</i> <small>(debugging)</small>
 #@gimp : <b> -</b> <i>Silvio Grosso</i> <small>(debugging)</small>
