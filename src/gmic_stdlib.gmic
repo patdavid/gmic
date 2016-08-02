@@ -26461,6 +26461,20 @@ gimp_emulate_film_collage_negative_old :
   -k[0] -to_rgb -if {max(w,h)>$1} -if {w>h} -r2dx $1 -else -r2dy $1 -endif -endif
   _nbc=$2 _label_size=$3 _output_type=$4 -_gimp_emulate_film_collage ${-_gimp_emulate_film_negative_old}
 
+#@gimp PictureFX - collage : gimp_emulate_film_collage_picturefx, gimp_no_preview
+#@gimp : Image size = float(512,16,1024)
+#@gimp : Columns for collage = int(4,1,8)
+#@gimp : Label size = int(16,10,100)
+#@gimp : Output as = choice("Table","Multiple layers")
+#@gimp : note = note{"<small><b>Note:</b> This filter will create a collage of all available <i>Others</i> film emulation presets
+#@gimp : to show you how those presets modify the look of your image. It will also download all corresponding color profiles
+#@gimp : (this may take some time at the first run).
+#@gimp : </small>"}
+#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>04/15/2014</i>.</small>")
+gimp_emulate_film_collage_picturefx :
+  -k[0] -to_rgb -if {max(w,h)>$1} -if {w>h} -r2dx $1 -else -r2dy $1 -endif -endif
+  _nbc=$2 _label_size=$3 _output_type=$4 -_gimp_emulate_film_collage ${-_gimp_emulate_film_picturefx}
+
 #@gimp Print films - collage : gimp_emulate_film_collage_print, gimp_no_preview
 #@gimp : Image size = float(512,16,1024)
 #@gimp : Columns for collage = int(4,1,8)
@@ -31034,6 +31048,8 @@ gmicol_rotate :
 #@gmicol clone("Negative [color]")
 #@gmicol clone("Negative [new]")
 #@gmicol clone("Negative [old]")
+#@gmicol clone("PictureFX")
+#@gmicol clone("Print films")
 #@gmicol clone("Slide [color]")
 #@gmicol clone("Various")
 
