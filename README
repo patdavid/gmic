@@ -78,13 +78,16 @@
 
  Team web page: https://www.greyc.fr/image
 
-# Licenses
-#----------
+# License
+#---------
 
  The C++ source code of G'MIC is distributed under the CECILL v.2.0 license
- (file 'CeCILL.rtf'). This License is a Free-Software license, compatible with
- the GPL (using those files in a distributed closed-source project is then
- forbidden).
+ (file 'CeCILL.rtf'). This License is a Free-Software copyleft license,
+ compatible with the GPL (using those files in a distributed closed-source
+ project is then forbidden).
+
+ Purchasing proprietary licenses for using G'MIC in closed-source applications
+ is possible. Contact us if you are interested in getting one.
 
  The CeCiLL v.2.0 license ( http://www.cecill.info/index.en.html ) have been
  created under the supervision of the three biggest research institutions on
