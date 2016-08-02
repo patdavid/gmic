@@ -106,7 +106,7 @@
               <li><b><a href="http://aferrero2707.github.io/PhotoFlow/">Photoflow</a></b>, a fully non-destructive photo retouching program.</li>
               <li><b><a href="http://veejayhq.net/">Veejay</a></b>, a visual instrument and realtime video sampler.</li>
             </ul>
-            <p>Purchasing <b>commercial licenses</b> for using <b><font color="#000066">G'MIC</font></b> in closed-source
+            <p>Purchasing <b>proprietary licenses</b> for using <b><font color="#000066">G'MIC</font></b> in closed-source
             applications is possible. <a href="http://tschumperle.users.greyc.fr">Contact us</a> if you are interested in getting one.</p>
 
 
@@ -253,6 +253,7 @@
                 <li><a href="http://www.valdyas.org/fading"><b>Boudewijn Rempt</b></a> (code, testing).</li>
                 <li><a href="http://www.davidrevoy.com/"><b>David Revoy</b></a> (mascot design, testing).</li>
                 <li><a href="http://karo03.bplaced.net/"><b>Karsten Rodenacker</b></a> (testing, packaging).</li>
+                <li><a href="http://www.digicrea.be/haldclut-set-style-a-la-nik-software/"><b>Marc Roovers</b></a> (clut data).</li>
                 <li><a href="http://www.flickr.com/photos/danisarda/"><b>Dani Sarda&agrave;</b></a> (translation).</li>
                 <li><b>Yuri Shemanin</b> (debugging).</li>
                 <li><b>Silvio Grosso</b> (debugging).</li>
