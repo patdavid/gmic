@@ -3218,8 +3218,8 @@ update_film_emulation_html :
   jpeg_quality=70   # Set JPEG quality of output images.
   thumb_width=180   # Set thumbnail width.
   thumb_height=90   # Set mini thumbnail height.
-  categories=bw,instant_consumer,instant_pro,negative_color,negative_new,negative_old,print,colorslide,various
-  category_names="Black and White","Instant [consumer]","Instant [pro]","Negative [color]","Negative [new]","Negative [old]","Print films","Slide [color]","Various"
+  categories=bw,instant_consumer,instant_pro,negative_color,negative_new,negative_old,picturefx,print,colorslide,various
+  category_names="Black and White","Instant [consumer]","Instant [pro]","Negative [color]","Negative [new]","Negative [old]","PictureFX","Print films","Slide [color]","Various"
   -m "_thumb : -frame 3%,3%,255 -to_rgba -drop_shadow 2,2,3 -repeat $! -l[$>] -i[0] 100%,100%,1,3,245 -blend alpha -endl -done"
   -m "_title : ({'\"$""*\"'}) -replace. {'_'},32 -f. if((x==0||j(-1)==32)&&i>=_'a'&&i<=_'z',i+_'A'-_'a',i) -u {t} -rm."
 
@@ -3777,6 +3777,7 @@ update_server :
      "-replace_str clut,CLUT "\
      "-replace_str roddy,Roddy "\
      "-replace_str crt,CRT "\
+     "-replace_str fx,FX "\
      "-replace_str g\47mic,G\47MIC "\
      "-f 'if(y==0&&i>=97&&i<=122,i-32,i)' "
 
@@ -25953,7 +25954,7 @@ gimp_map_tones_fast_preview :
 #@gimp : Saturation (%) = float(0,-100,100)
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : Preview grain alone = bool()
-#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>04/10/2014</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_grain :
   -__gimp_emulate_grain ${-arg\ {1+$1},${-_gimp_emulate_grain}},${2-10},0,0
 
@@ -25994,13 +25995,13 @@ __gimp_emulate_grain :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator()
 #@gimp : Pseudo-gray dithering = int(0,0,5)
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small><b>Note:</b> The color LUTs used in this section have been designed by <b>Patrick David</b>. More info at:</small>")
 #@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>01/16/2015</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_bw :
   -_gimp_emulate_film $1,${-arg\ {max(1,$1)},${-_$0}},${2--1}
   -if {$1" && "$9} -to_pseudogray $9,1 -endif
@@ -26032,11 +26033,11 @@ gimp_emulate_film_bw_preview :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small><b>Note:</b> The color LUTs used in this section have been designed by <b>Patrick David</b>. More info at:</small>")
 #@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/29/2013</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_instant_consumer :
   -_gimp_emulate_film $1,${-arg\ {max(1,$1)},${-_$0}},${2--1}
 
@@ -26079,11 +26080,11 @@ gimp_emulate_film_instant_consumer_preview :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small><b>Note:</b> The color LUTs used in this section have been designed by <b>Patrick David</b>. More info at:</small>")
 #@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/29/2013</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_instant_pro :
   -_gimp_emulate_film $1,${-arg\ {max(1,$1)},${-_$0}},${2--1}
 
@@ -26115,11 +26116,11 @@ gimp_emulate_film_instant_pro_preview :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small><b>Note:</b> The color LUTs used in this section have been designed by <b>Patrick David</b>. More info at:</small>")
 #@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/29/2013</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_negative_color :
   -_gimp_emulate_film $1,${-arg\ {max(1,$1)},${-_$0}},${2--1}
 
@@ -26140,11 +26141,11 @@ gimp_emulate_film_negative_color_preview :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small><b>Note:</b> The color LUTs used in this section have been designed by <b>Patrick David</b>. More info at:</small>")
 #@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/29/2013</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_negative_new :
   -_gimp_emulate_film $1,${-arg\ {max(1,4*$1+$2-3)},${-_$0}},${3--1}
 
@@ -26173,11 +26174,11 @@ gimp_emulate_film_negative_new_preview :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small><b>Note:</b> The color LUTs used in this section have been designed by <b>Patrick David</b>. More info at:</small>")
 #@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/29/2013</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_negative_old :
   -_gimp_emulate_film $1,${-arg\ {max(1,4*$1+$2-3)},${-_$0}},${3--1}
 
@@ -26197,6 +26198,34 @@ _gimp_emulate_film_negative_old :
 gimp_emulate_film_negative_old_preview :
   -gimp_split_preview "-gimp_emulate_film_negative_old $*",$-1
 
+#@gimp PictureFX : gimp_emulate_film_picturefx, gimp_emulate_film_picturefx_preview(1)+
+#@gimp : Preset = choice{"None","AnalogFX - Anno 1870 Color","AnalogFX - Sepia Color","GoldFX - Bright spring breeze","GoldFX - Bright spring breeze",
+#@gimp : "GoldFX - Summer heat","GoldFX - Bright summer heat","GoldFX - Hot summer heat",
+#@gimp : "ZilverFX - Infrared","ZilverFX - Vintage B&amp;W"}
+#@gimp : sep = separator()
+#@gimp : Strength (%) = float(100,0,100)
+#@gimp : Brightness (%) = float(0,-100,100)
+#@gimp : Contrast (%) = float(0,-100,100)
+#@gimp : Gamma (%) = float(0,-100,100)
+#@gimp : Hue (%) = float(0,-100,100)
+#@gimp : Saturation (%) = float(0,-100,100)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
+#@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
+#@gimp : sep = separator(), note = note("<small><b>Note:</b> The color LUTs used in this section have been provided by <b>Marc Roovers</b>, and are freely available at:</small>")
+#@gimp : link = link("PictureFX - a free HaldCLUT set","http://www.digicrea.be/haldclut-set-style-a-la-nik-software")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>Marc Roovers</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
+gimp_emulate_film_picturefx :
+  -_gimp_emulate_film $1,${-arg\ {max(1,$1)},${-_$0}},${2--1}
+
+_gimp_emulate_film_picturefx :
+  -u analogfx_anno_1870_color,analogfx_sepia_color,\
+     goldfx_spring_breeze,goldfx_bright_spring_breeze,\
+     goldfx_summer_heat,goldfx_bright_summer_heat,goldfx_hot_summer_heat,\
+     zilverfx_infrared,zilverfx_vintage_b_w
+
+gimp_emulate_film_picturefx_preview :
+  -gimp_split_preview "-gimp_emulate_film_picturefx $*",$-1
+
 #@gimp Print films : gimp_emulate_film_print, gimp_emulate_film_print_preview(1)+
 #@gimp : Preset = choice{"None","Fuji 3510 (Constlclip)","Fuji 3510 (Constlmap)","Fuji 3510 (Cuspclip)",
 #@gimp : "Fuji 3513 (Constlclip)","Fuji 3513 (Constlmap)","Fuji 3513 (Cuspclip)",
@@ -26209,13 +26238,11 @@ gimp_emulate_film_negative_old_preview :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small><b>Note:</b> The color LUTs used in this section have been provided by <b>Juan Melara</b>, and are freely available at:</small>")
 #@gimp : link = link("Print Film Emulation LUTs For Download","http://juanmelara.com.au/print-film-emulation-luts-for-download/")
-#@gimp : note = note("<small>More info at:</small>")
-#@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Authors: <i>Juan Melara</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>04/15/2014</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>Juan Melara</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_print :
   -_gimp_emulate_film $1,${-arg\ {max(1,$1)},${-_$0}},${2--1}
 
@@ -26242,11 +26269,11 @@ gimp_emulate_film_print_preview :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small><b>Note:</b> The color LUTs used in this section have been designed by <b>Patrick David</b>. More info at:</small>")
 #@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/29/2013</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>Patrick David</i> and <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_colorslide :
   -_gimp_emulate_film $1,${-arg\ {max(1,$1)},${-_$0}},${2--1}
 
@@ -26271,11 +26298,11 @@ gimp_emulate_film_colorslide_preview :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small>More info at:</small>")
 #@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>06/11/2016</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Author: <i>David Tschumperl&#233;</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_userdefined :
   -if {$1<2}
     -if {$!<2} -gimp_warning_preview "Input layer with HaldCLUT is missing" -return -endif
@@ -26311,11 +26338,11 @@ gimp_emulate_film_userdefined_preview :
 #@gimp : Gamma (%) = float(0,-100,100)
 #@gimp : Hue (%) = float(0,-100,100)
 #@gimp : Saturation (%) = float(0,-100,100)
-#@gimp : Post-normalize = bool(0)
+#@gimp : Normalize colors = choice("None","Pre-process","Post-process","Both")
 #@gimp : sep = separator(), Preview type = choice("Full","Forward horizontal","Forward vertical","Backward horizontal","Backward vertical","Duplicate horizontal","Duplicate vertical")
 #@gimp : sep = separator(), note = note("<small>More info at:</small>")
 #@gimp : link = link{"Film Emulation Presets in G'MIC","http://gmic.eu/film_emulation/index.shtml"}
-#@gimp : sep = separator(), note = note("<small>Authors: <i>David Tschumperl&#233;</i> and <i>Patrick David</i>.      Latest update: <i>07/29/2014</i>.</small>")
+#@gimp : sep = separator(), note = note("<small>Authors: <i>David Tschumperl&#233;</i> and <i>Patrick David</i>.      Latest update: <i>08/02/2016</i>.</small>")
 gimp_emulate_film_various :
   -_gimp_emulate_film $1,${-arg\ {max(1,$1)},${-_$0}},${2--1}
 
@@ -26335,6 +26362,7 @@ _gimp_emulate_film :
   -if $1
     -input_clut "$2"
     -repeat {$!-1}
+      -if {$9%2} -balance_gamma[$>] , -endif
       -if {$3<100} --map_clut[$>] . -j[$>] .,0,0,0,0,{$3%} -rm.
       -else -map_clut[$>] .
       -endif
@@ -26342,7 +26370,7 @@ _gimp_emulate_film :
     -rm.
   -endif
   -adjust_colors ${4-8},0,255
-  -if $9 -repeat $! -l[$>] -split_opacity -n[0] 0,255 -a c -endl -done -endif
+  -if {$9>1} -repeat $! -l[$>] -split_opacity -n[0] 0,255 -a c -endl -done -endif
 
 #@gimp <i>[Collages]</i>
 #-----------------------
