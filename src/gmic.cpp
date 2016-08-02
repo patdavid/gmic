@@ -14154,6 +14154,7 @@ int main(int argc, char **argv) {
 #else
 
 // Explicitely instanciate constructors and destructor when building the library.
+#ifdef gmic_pixel_type
 template gmic::gmic(const char *const commands_line,
                     gmic_list<gmic_pixel_type>& images, gmic_list<char>& images_names,
                     const char *const custom_commands, const bool include_stdlib,
@@ -14163,7 +14164,22 @@ template gmic& gmic::run(const char *const commands_line,
                          gmic_list<gmic_pixel_type> &images, gmic_list<char> &images_names,
                          float *const p_progress=0, bool *const p_is_abort=0);
 
-template CImgList<float>::~CImgList();
+template CImgList<gmic_pixel_type>::~CImgList();
+#endif
+
+#ifdef gmic_pixel_type2
+template gmic::gmic(const char *const commands_line,
+                    gmic_list<gmic_pixel_type2>& images, gmic_list<char>& images_names,
+                    const char *const custom_commands, const bool include_stdlib,
+                    float *const p_progress, bool *const p_is_abort);
+
+template gmic& gmic::run(const char *const commands_line,
+                         gmic_list<gmic_pixel_type2> &images, gmic_list<char> &images_names,
+                         float *const p_progress=0, bool *const p_is_abort=0);
+
+template CImgList<gmic_pixel_type2>::~CImgList();
+#endif
+
 template CImgList<char>::~CImgList();
 
 #endif // #ifdef gmic_main
