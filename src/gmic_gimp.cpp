@@ -2742,14 +2742,18 @@ void process_image(const char *const command_line, const bool is_apply) {
       if (!(i%3)) {
         const cimg_ulong t = (cimg::time() - time0)/1000;
         if (used_memory)
-          gimp_progress_set_text_printf(" G'MIC: %s... [%lu second%s, %u Mb]",
+          gimp_progress_set_text_printf(spt.progress<0?
+                                        " G'MIC: %s... [%lu second%s, %u Mb]":
+                                        " G'MIC: %s... [%lu second%s, %u Mb, %d%%]",
                                         progress_label.data(),
                                         t,t!=1?"s":"",
-                                        used_memory);
+                                        used_memory,(int)spt.progress);
         else
-          gimp_progress_set_text_printf(" G'MIC: %s... [%lu second%s]",
+          gimp_progress_set_text_printf(spt.progress<0?
+                                        " G'MIC: %s... [%lu second%s]":
+                                        " G'MIC: %s... [%lu second%s, %d%%]",
                                         progress_label.data(),
-                                        t,t!=1?"s":"");
+                                        t,t!=1?"s":"",(int)spt.progress);
       }
       ++i;
 #endif // #if !defined(__MACOSX__) && !defined(__APPLE__)
