@@ -2655,6 +2655,7 @@ input_cube : -skip ${2=1}
     -i raw:"$1",uchar -f "i<32 && i!=10?32:i" -s -,10
     -repeat $! -if {$<,i==_'#'} -rm[$<] -endif -done # Discard lines of comments.
     -apply_parallel "-autocrop 32"
+    -remove_empty
 
     # Parse header to retrieve CLUT info.
     min=0,0,0 max=1,1,1 dim= size=
