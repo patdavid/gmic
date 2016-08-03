@@ -2042,18 +2042,13 @@ _document_gmic_footer_bash : -skip $1
   -e[] "\n\tcoms=\"\\" -repeat $_nbcoms -e[] "\t      "${_coms$>}\\ -done -e[] "\t     \""
   -e[] "\n\tcase \"${prev}\" in"
   -repeat $_argcommand  # Regular commands with arguments.
-    -e[] "\t\t\"-"${_command$>}"\" | \"--"${_command$>}"\")"
-    -if {'${_command$>}'=='i'" || "'${_command$>}'=='o'" || "same('${_command$>}','input',5)" || "same('${_command$>}','output',6)}
-      -e[] "\t\tCOMPREPLY=( $(compgen -f) )\n\t\treturn 0\n\t\t;;"
-    -else
+    -if {'${_command$>}'!='i'" && "'${_command$>}'!='o'" && "!same('${_command$>}','input',5)" && "!same('${_command$>}','output',6)}
+      -e[] "\t\t\"-"${_command$>}"\" | \"--"${_command$>}"\")"
       -e[] "\t\tCOMPREPLY=( $(compgen -W \""${_argument$>}"\") )\n\t\treturn 0\n\t\t;;"
     -endif
   -done
   -repeat $_shortcut # Shortcut commands (with arguments).
-    -if {['${_shortcut$>}']=='i'" || "['${_shortcut$>}']=='o'}
-      -e[] "\t\t\"-"${_shortcut$>}"\" | \"--"${_shortcut$>}"\")"
-      -e[] "\t\tCOMPREPLY=( $(compgen -f) )\n\t\treturn 0\n\t\t;;"
-    -elif {narg(${_argumentlink${_shortcutlink$>}})}
+    -if {['${_shortcut$>}']!='i'" && "['${_shortcut$>}']!='o'" && "narg(${_argumentlink${_shortcutlink$>}})}
       -e[] "\t\t\"-"${_shortcut$>}"\" | \"--"${_shortcut$>}"\")"
       -e[] "\t\tCOMPREPLY=( $(compgen -W \""${_argumentlink${_shortcutlink$>}}"\") )\n\t\treturn 0\n\t\t;;"
     -endif
