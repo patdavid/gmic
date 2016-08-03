@@ -2744,14 +2744,14 @@ void process_image(const char *const command_line, const bool is_apply) {
         if (used_memory)
           gimp_progress_set_text_printf(spt.progress<0?
                                         " G'MIC: %s... [%lu second%s, %u Mb]":
-                                        " G'MIC: %s... [%lu second%s, %u Mb] %d%%",
+                                        " G'MIC: %s... [%lu second%s, %u Mb, %d%%]",
                                         progress_label.data(),
                                         t,t!=1?"s":"",
                                         used_memory,(int)spt.progress);
         else
           gimp_progress_set_text_printf(spt.progress<0?
                                         " G'MIC: %s... [%lu second%s]":
-                                        " G'MIC: %s... [%lu second%s] %d%%",
+                                        " G'MIC: %s... [%lu second%s, %d%%]",
                                         progress_label.data(),
                                         t,t!=1?"s":"",(int)spt.progress);
       }
