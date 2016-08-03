@@ -3214,7 +3214,16 @@ update_film_emulation_html :
   thumb_width=180   # Set thumbnail width.
   thumb_height=90   # Set mini thumbnail height.
   categories=bw,instant_consumer,instant_pro,negative_color,negative_new,negative_old,picturefx,print,colorslide,various
-  category_names="Black and White","Instant [consumer]","Instant [pro]","Negative [color]","Negative [new]","Negative [old]","PictureFX","Print films","Slide [color]","Various"
+  category_names="Black and White (<font size=\"1\">by <a href=\"http://blog.patdavid.net/2013/08/film-emulation-presets-in-gmic-gimp.html\">Pat David</a></font>)",\
+                 "Instant [consumer] (<font size=\"1\">by <a href=\"http://blog.patdavid.net/2013/08/film-emulation-presets-in-gmic-gimp.html\">Pat David</a></font>)",\
+                 "Instant [pro] (<font size=\"1\">by <a href=\"http://blog.patdavid.net/2013/08/film-emulation-presets-in-gmic-gimp.html\">Pat David</a></font>)",\
+                 "Negative [color] (<font size=\"1\">by <a href=\"http://blog.patdavid.net/2013/08/film-emulation-presets-in-gmic-gimp.html\">Pat David</a></font>)",\
+                 "Negative [new] (<font size=\"1\">by <a href=\"http://blog.patdavid.net/2013/08/film-emulation-presets-in-gmic-gimp.html\">Pat David</a></font>)",\
+                 "Negative [old] (<font size=\"1\">by <a href=\"http://blog.patdavid.net/2013/08/film-emulation-presets-in-gmic-gimp.html\">Pat David</a></font>)",\
+                 "PictureFX (<font size=\"1\">by <a href=\"http://www.digicrea.be/haldclut-set-style-a-la-nik-software\">Marc Roovers</a></font>)",\
+                 "Print films (<font size=\"1\">by <a href=\"http://juanmelara.com.au/print-film-emulation-luts-for-download\">Juan Melara</a></font>)",\
+                 "Slide [color] (<font size=\"1\">by <a href=\"http://blog.patdavid.net/2013/08/film-emulation-presets-in-gmic-gimp.html\">Pat David</a></font>)",\
+                 "Various"
   -m "_thumb : -frame 3%,3%,255 -to_rgba -drop_shadow 2,2,3 -repeat $! -l[$>] -i[0] 100%,100%,1,3,245 -blend alpha -endl -done"
   -m "_title : ({'\"$""*\"'}) -replace. {'_'},32 -f. if((x==0||j(-1)==32)&&i>=_'a'&&i<=_'z',i+_'A'-_'a',i) -u {t} -rm."
 
