@@ -3743,8 +3743,6 @@ update_server :
 
   # Define useful sub-commands.
   -m "parent : -l[] ({'$""1'}) -s -,{'/'} -if $! -rm. -endif -i[0--1] (47) -a y -u {0,t} -rm -endl" # Command to return parent of a path
-  -m "_max : ({'\"$""1\"'}) ({'\"$""2\"'}) -f[-2,-1] 'if(i>=97&&i<=122,i-32,i)' -r[-2,-1] {max(w,{-2,w})},1,1,1,0 --[-2,-1] -autocrop. 0 "\
-     "-u {i>0} -rm." # Command to compare two strings (eq. to strcasecmp)
   -m "varname : ({'\"$""1\"'}) -f. if((i>=48&&i<=57)||(i>=65&&i<=90)||(i>=97&&i<=122),i,95) -u {t} -rm." # Convert string to a valid variable name
   -m "load_gmic : "\
      "_nb_sources+=1 filename=${\"-basename $""1\"} "\
@@ -3916,7 +3914,7 @@ update_server :
 
   # Sort filter code by lexicographical order.
   -v + -e[] "\n> Sort filters by lexicographic order." -v -
-  -_update_server_sort 0,{$!-1}
+  -sort_list +,n
 
   # Rebuild folder structure.
   -v + -e[] "\n> Rebuild folder structure." -v -
@@ -4050,7 +4048,7 @@ update_server :
     -nm[$>] $name"~(in~'"$path"')"
   -done
 
-  -_update_server_sort 0,{$!-1}
+  -sort_list +,n
   -repeat $! -l[$>]
     ({'{0,n}'}) -if {i!=_'!'}
       -replace_str. "&amp;","&"
@@ -4063,24 +4061,6 @@ update_server :
 
   # All done, exiting.
   -rm -v + -e[] "> All done !\n"
-
-# String sorting algorithm (quicksort).
-_update_server_sort :
-  mid={int(($1+$2)/2)}
-  -if ${"-_max[] "{$1,n},{$mid,n}} -rv[$1,$mid] -endif
-  -if ${"-_max[] "{$mid,n},{$2,n}} -rv[$2,$mid] -endif
-  -if ${"-_max[] "{$1,n},{$mid,n}} -rv[$1,$mid] -endif
-  -if {$2-$1>=3}
-    pivot={$mid,n}
-    i=$1 j=$2
-    -do
-      -if ${"-_max[] "$pivot,{$i,n}} -do i+=1 -while ${"-_max[] "$pivot,{$i,n}} -endif
-      -if ${"-_max[] "{$j,n},$pivot} -do j-=1 -while ${"-_max[] "{$j,n},$pivot} -endif
-      -if {$i<=$j} -rv[$i,$j] i+=1 j-=1 -endif
-    -while {$i<=$j}
-    -if {$1<$j} -_update_server_sort $1,$j -endif
-    -if {$i<$2} -_update_server_sort $i,$2 -endif
-  -endif
 
 _update_server_move :
   -if {!narg($_nbm)} _nbm=0 -endif
@@ -4644,16 +4624,49 @@ remove_empty :
 #@gmic sort_list : _ordering={ + | - },_criterion
 #@gmic : Sort list of selected images according to the specified image criterion.
 #@gmic : Default values: 'ordering=+', 'criterion=i'.
-#@gmic : $ (1;4;7;3;9;2;4;7;6;3;9;1;0;3;3;2) -split y -sort_list + -append y
+#@gmic : $ (1;4;7;3;9;2;4;7;6;3;9;1;0;3;3;2) -split y -sort_list +,i -append y
 sort_list : -skip ${1=+},${2=i}
   -v - s0="descending" s1="ascending" -v +
   -e[^-1] "Sort list of image$? in "${s{_'+'=='$1'}" order, according to the image criterion '$2'."
   -v - -if $!
-    i=$! -repeat $! ({$>,$2}) -done -a[$i--1] y --f. 'y' -a[-2,-1] x -sort. $1,y -z. 1,1
-    -repeat {h} nm$>={$>,n} -nm[$>] sortlist$> -done
-    -repeat {h} -mv[sortlist{i(0,$>)}] -1 -done
-    -repeat {h} -nm[$>] ${nm{i(0,$>)}} -done
-  -rm. -endif -v +
+    -if {;'$2'=='n'} # Special case : lexicographic order from image names
+      (0,{$!-1})
+      -do
+        lo0={i(0,h-1)} hi0={i(1,h-1)}
+        lo=$lo0 hi=$hi0
+        -if {h>1} -r. 2,{h-1},1,1,0 -else -rm. 0 -endif
+        pivot={int(($lo+$hi)/2)}
+        -do -if {$lo<$hi}
+          -do -if ${-_sort_list_lexi\ $lo,$pivot} lo+=1 -else -break -endif -while 1
+          -do -if ${-_sort_list_lexi\ $pivot,$hi} hi-=1 -else -break -endif -while 1
+          -if {$lo<=$hi} -rv[$lo,$hi] lo+=1 hi-=1 -endif
+        -else -break -endif -while 1
+        -if {$lo0<$hi} ($lo0,$hi) -a[-2,-1] y -endif
+        -if {$lo<$hi0} ($lo,$hi0) -a[-2,-1] y -endif
+      -while {h}
+      -rm.
+    -else # Generic case
+      i=$! -repeat $! ({$>,$2}) -done -a[$i--1] y --f. 'y' -a[-2,-1] x -sort. $1,y -z. 1,1
+      -repeat {h} nm$>={$>,n} -nm[$>] sortlist$> -done
+      -repeat {h} -mv[sortlist{i(0,$>)}] -1 -done
+      -repeat {h} -nm[$>] ${nm{i(0,$>)}} -done
+      -rm.
+    -endif
+  -endif -v +
+
+_sort_list_lexi :
+  -u {"
+        str1 = ['"{$1,n}"'];
+        str2 = ['"{$2,n}"'];
+        siz = min(size(str1),size(str2));
+        lex = -1;
+        for (i = 0, i<siz && lex<0, ++i,
+          s1 = lowercase(str1[i]);
+          s2 = lowercase(str2[i]);
+          lex = s1<s2?1:s1>s2?0:-1;
+        );
+        lex<0?size(str1)<size(str2):lex;
+      "}
 
 #@gmic sort_str
 #@gmic : Sort selected images (viewed as a list of strings) in lexicographic order.
