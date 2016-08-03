@@ -4636,10 +4636,10 @@ sort_list : -skip ${1=+},${2=i}
         lo0={i(0,h-1)} hi0={i(1,h-1)}
         lo=$lo0 hi=$hi0
         -if {h>1} -r. 2,{h-1},1,1,0 -else -rm. 0 -endif
-        pivot={int(($lo+$hi)/2)}
-        -do -if {$lo<$hi}
-          -do -if ${-_sort_list_lexi\ $lo,$pivot,$op} lo+=1 -else -break -endif -while 1
-          -do -if ${-_sort_list_lexi\ $pivot,$hi,$op} hi-=1 -else -break -endif -while 1
+        pivot={{int(($lo+$hi)/2)},n}
+        -do -if {$lo<=$hi}
+          -do -if ${-_sort_list_lexi\ \"{$lo,n}\",\"$pivot\",$op} lo+=1 -else -break -endif -while 1
+          -do -if ${-_sort_list_lexi\ \"$pivot\",\"{$hi,n}\",$op} hi-=1 -else -break -endif -while 1
           -if {$lo<=$hi} -rv[$lo,$hi] lo+=1 hi-=1 -endif
         -else -break -endif -while 1
         -if {$lo0<$hi} ($lo0,$hi) -a[-2,-1] y -endif
@@ -4657,8 +4657,8 @@ sort_list : -skip ${1=+},${2=i}
 
 _sort_list_lexi :
   -u {"
-        str1 = ['"{$1,n}"'];
-        str2 = ['"{$2,n}"'];
+        str1 = ['$1'];
+        str2 = ['$2'];
         siz = min(size(str1),size(str2));
         lex = -1;
         for (i = 0, i<siz && lex<0, ++i,
