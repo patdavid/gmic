@@ -2720,6 +2720,18 @@ input_gpl :
     -rm ($colors) -rows 1,100% -nm "$1" -permute yzcx
   -endl -v +
 
+#@gmic is : eq. to '-input_string'.
+is :
+  -input_string $"*"
+
+#@gmic input_string : "string"
+#@gmic : Insert new image containing the ascii codes of specified string.
+#@gmic : (eq. to '-is').
+#@gmic : $ -input_string "foo bar"
+input_string :
+  -e[^-1] "Input new image from string \"$1\"."
+  -v - ({'"$1"'}) -v +
+
 #@gmic o : eq. to '-output'. : (+)
 
 #@gmic output : [type:]filename,_format_options : (+)
