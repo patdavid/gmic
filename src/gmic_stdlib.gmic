@@ -2722,14 +2722,17 @@ input_gpl :
 
 #@gmic is : eq. to '-input_string'.
 is :
-  -input_string $"*"
+  -_input_string[] "$*"
 
 #@gmic input_string : "string"
 #@gmic : Insert new image containing the ascii codes of specified string.
 #@gmic : (eq. to '-is').
 #@gmic : $ -input_string "foo bar"
 input_string :
-  -e[^-1] "Input new image from string \"$1\"."
+  -_input_string[] "$*"
+
+_input_string :
+  -e[0--3] "Input new image from string '$1'."
   -v - ({'"$1"'}) -v +
 
 #@gmic o : eq. to '-output'. : (+)
@@ -3259,7 +3262,7 @@ update_film_emulation_html :
                        0
 
   -m "_thumb : -frame 3%,3%,255 -to_rgba -drop_shadow 2,2,3 -repeat $! -l[$>] -i[0] 100%,100%,1,3,245 -blend alpha -endl -done"
-  -m "_title : ({'\"$""*\"'}) -replace. {'_'},32 -f. if((x==0||j(-1)==32)&&i>=_'a'&&i<=_'z',i+_'A'-_'a',i) -u {t} -rm."
+  -m "_title : -is \"$""*\" -replace. {'_'},32 -f. if((x==0||j(-1)==32)&&i>=_'a'&&i<=_'z',i+_'A'-_'a',i) -u {t} -rm."
 
   nb_presets=0
   -repeat {narg($categories)}
@@ -3360,7 +3363,7 @@ update_film_emulation_html :
       basename={$>,b}
       -v + -e[] "    - "$category_name" / "$basename -v -
 
-      ({'"
+      -is "
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n
                       \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n\n
 <!--#include file=\"header.html\" -->\n
@@ -3387,7 +3390,7 @@ with or endorsed by the companies that own the trademarks.</i></font></p>\n\n
 <div id=\"center\"><div id=\"text_centre_intro\">\n
 <table><tr>\n
 <td valign=\"top\" width=\"300\">Select film category:\n
-<ul>\n"'})
+<ul>\n"
       -repeat {narg($categories)}
         _category=${-arg\ {1+$>},$categories}
         -arg {1+$>},$category_names
@@ -3408,40 +3411,23 @@ with or endorsed by the companies that own the trademarks.</i></font></p>\n\n
         -endif
 
         -if {['$_category']==['$category']}
-          ({'"
-<li><font color=\"#CC7700\"><b>"$_category_name"</b> "$_category_author"</font></li>\n
-"'})
+          -is "<li><font color=\"#CC7700\"><b>"$_category_name"</b> "$_category_author"</font></li>\n"
         -else
-          ({'"
-<li><a href=\""${_category}_$basename.shtml"#browse\">"$_category_name"</a> "$_category_author"</li>\n
-"'})
+          -is "<li><a href=\""${_category}_$basename.shtml"#browse\">"$_category_name"</a> "$_category_author"</li>\n"
         -endif
       -done
 
-      ({'"
-</ul>\n
-</td>\n
-<td valign=\"top\">Select sample image:<br/><br/>\n
-"'})
+      -is "</ul>\n</td>\n<td valign=\"top\">Select sample image:<br/><br/>\n"
       -repeat {$nb_samples}
         _basename=${basename$>}
         -if {['$_basename']==['$basename']}
-          ({'"
-<a href=\""${category}_$_basename.shtml"#browse\"><img alt=\"\" style=\"border-color:#CC7700;\" border=\"3\" src=\""original/minithumb_$_basename.jpg"\"/></a>\n
-"'})
+          -is "<a href=\""${category}_$_basename.shtml"#browse\"><img alt=\"\" style=\"border-color:#CC7700;\" border=\"3\" src=\""original/minithumb_$_basename.jpg"\"/></a>\n"
         -else
-          ({'"
-<a href=\""${category}_$_basename.shtml"#browse\"><img alt=\"\" border=\"0\" src=\""original/minithumb_$_basename.jpg"\"/></a>\n
-"'})
+          -is "<a href=\""${category}_$_basename.shtml"#browse\"><img alt=\"\" border=\"0\" src=\""original/minithumb_$_basename.jpg"\"/></a>\n"
         -endif
       -done
-({'"
-</td>\n
-</tr></table>\n
-</div></div><div id=\"footer\"><img alt=\"\" src=\"images/footer.jpg\" /></div></div>\n
-"'})
-
-      ({'"\n
+      -is "</td>\n</tr></table>\n</div></div><div id=\"footer\"><img alt=\"\" src=\"images/footer.jpg\" /></div></div>\n"
+      -is "\n
 <div id=\"bloc_option\"><div id=\"top_bleu\"><div id=\"text_top\">Presets ("{narg({/$presets})}")</div></div>\n
 <div id=\"center\"><div id=\"text_centre_intro\">\n
 <center><table>\n
@@ -3450,16 +3436,16 @@ with or endorsed by the companies that own the trademarks.</i></font></p>\n\n
 <div class=\"highslide-caption\"><b>Reference Image</b></div></div>\n
 </td></tr>\n
 <tr><td align=\"center\"><b>Refence Image</b></td></tr>\n\n
-"'})
+"
       -repeat {narg({/$presets})}
         preset=${-arg\ {1+$>},$presets}
 
         ({'$preset'}) -replace_seq. 39,"92,92,39" preset_esc={t} -rm.
 
         title=${-_title\ $preset}
-        -if {$>%4==0} -if $> ({'"</tr>\n"'}) -endif ({'"<tr>"'}) -endif
+        -if {$>%4==0} -if $> -is "</tr>\n" -endif -is "<tr>" -endif
 
-        ({'"
+        -is "
 <td><table>\n
 <tr><td>\n
 <div><a href=\"#\" onclick=\"return hs.htmlExpand(this, { width: "$width", height: "$height" })\">\n
@@ -3471,16 +3457,16 @@ with or endorsed by the companies that own the trademarks.</i></font></p>\n\n
 <div class=\"highslide-caption\"><b>Preset:</b> <i>"$title"</i> [<a href=\""$category/clut/$preset.png"\">Download HaldCLUT</a>]</div></div>\n
 </td></tr>\n
 <tr><td align=\"center\"><font size=\"-1\">"$title"</font></td></tr>\n
-</table></td>\n\n"'})
+</table></td>\n\n"
       -done
-      ({'"
+      -is "
 </tr></table></center>\n
 </div></div><div id=\"footer\"><img alt=\"\" src=\"images/footer.jpg\" /></div></div>\n
-"'})
+"
 
-      ({'"<!--#include file=\"copyright.html\" -->\n
+      -is "<!--#include file=\"copyright.html\" -->\n
 <!--#include file=\"footer.html\" -->\n
-"'})
+"
       -a[$nb_samples--1] x -o. raw:${category}_$basename.shtml,char -rm.
 
     -done
@@ -3661,7 +3647,7 @@ update_gallery_html :
   _nb_coms+=1
 
   # Generate gallery HTML header.
-  ({'"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n\
+  -is "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n\
       \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n\
 <!--#include file=\"header.html\" -->\n
 <div id=\"bloc_option\"><div id=\"top_bleu\"><div id=\"text_top\">Image Gallery</div></div>\n
@@ -3680,10 +3666,10 @@ update_gallery_html :
   <li>See also the <a href=\"http://www.flickr.com/groups/gmic/pool/\">Flickr slideshow</a>, showing uses of the <a href=\"gimp.shtml\">G\47MIC plug-in</a>\n
   by various artists.</li>\n
   </ul>\n
-  <b>Copyrights : </b> All pictures have been shot by <a href=\"http://tschumperle.users.greyc.fr/\">David Tschumperl&eacute;</a>.<br/><br/>\n"'})
+  <b>Copyrights : </b> All pictures have been shot by <a href=\"http://tschumperle.users.greyc.fr/\">David Tschumperl&eacute;</a>.<br/><br/>\n"
 
   # Generate main gallery table.
-  ({'"<center><table cellpadding=\"1\" border=\"0\" cellspacing=\"2\">"\n'})
+  -is "<center><table cellpadding=\"1\" border=\"0\" cellspacing=\"2\">\n"
   row=0
   -repeat $_nb_coms
 
@@ -3692,7 +3678,7 @@ update_gallery_html :
     out_thumb=${"-filename "img/gallery_thumb.png,$>}
 
     # Start new row.
-    -if {!$ind} ({'"<tr>\n"'}) -endif
+    -if {!$ind} -is "<tr>\n" -endif
 
     com=${_com$>}
 
@@ -3710,28 +3696,28 @@ update_gallery_html :
     -l. -frame 3%,3%,255 -to_rgba -drop_shadow 2,2,3 -endl
     -o. $out_thumb -rm.
 
-    ({'"<td width=\""${width$>}"\"><center><div>\
-        <a href=\""$out_img"\" class=\"highslide\" onclick=\"return hs.expand(this)\">\
-	<img alt=\"\" border=\"0\" src=\""$out_thumb"\"/></a>\
-        <div class=\"highslide-caption\">gmic "{$ind,b}.{$ind,x}" "${displayed_com$ind}"</div>\
-        </div></center></td>\n"'})
+    -is "<td width=\""${width$>}"\"><center><div>\
+         <a href=\""$out_img"\" class=\"highslide\" onclick=\"return hs.expand(this)\">\
+	 <img alt=\"\" border=\"0\" src=\""$out_thumb"\"/></a>\
+         <div class=\"highslide-caption\">gmic "{$ind,b}.{$ind,x}" "${displayed_com$ind}"</div>\
+         </div></center></td>\n"
 
     -if {$ind==$nb_imgs-1" || "$>==$_nb_coms-1} # End row.
-      ({'"</tr>\n<tr bgcolor=\""$bgcolor"\">"\n'})
+      -is "</tr>\n<tr bgcolor=\""$bgcolor"\">\n"
       -repeat {$ind+1}
-        ({'"<td width=\""${width$>}"\"><center><font size=\"1\">gmic "{$>,b}.{$>,x}" "${displayed_com$>}"</font></center></td>\n"'})
+        -is "<td width=\""${width$>}"\"><center><font size=\"1\">gmic "{$>,b}.{$>,x}" "${displayed_com$>}"</font></center></td>\n"
       -done
-      ({'"</tr>\n"'})
+      -is "</tr>\n"
       row+=1
     -endif
 
   -done
-  ({'"</table></center>\n"'})
+  -is "</table></center>\n"
 
   # Generate gallery footer.
-  ({'"</div></div><div id=\"footer\"><img alt=\"\" src=\"images/footer.jpg\" /></div></div>\n\
-      <!--#include file=\"copyright.html\" -->\n\
-      <!--#include file=\"footer.html\" -->\n"'})
+  -is "</div></div><div id=\"footer\"><img alt=\"\" src=\"images/footer.jpg\" /></div></div>\n\
+       <!--#include file=\"copyright.html\" -->\n\
+       <!--#include file=\"footer.html\" -->\n"
 
   # Save html page and exit properly.
   -rm[0-{$nb_imgs-1}] -a x
