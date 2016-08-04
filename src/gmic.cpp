@@ -12742,10 +12742,12 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                 *ptr_sub = 0;
 
                 // Substitute special character codes appearing outside strings.
-                bool is_dquoted = false;
+                bool is_dquoted = false, is_escaped = false;
                 for (char *s = substituted_command.data(); *s; ++s) {
                   const char c = *s;
-                  if (c=='\"') is_dquoted = !is_dquoted;
+                  if (is_escaped) is_escaped = false;
+                  else if (c=='\\') is_escaped = true;
+                  else if (c=='\"') is_dquoted = !is_dquoted;
                   if (!is_dquoted) *s = c<' '?(c==gmic_dollar?'$':c==gmic_lbrace?'{':c==gmic_rbrace?'}':
                                                c==gmic_comma?',':c==gmic_dquote?'\"':c):c;
                 }
