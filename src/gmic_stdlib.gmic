@@ -2733,7 +2733,7 @@ input_string :
 
 _input_string :
   -e[0--3] "Input new image from string '$1'."
-  -v - ({'"$1"'}) -v +
+  -v - ({'"$1"'}) -nm. "$1" -v +
 
 #@gmic o : eq. to '-output'. : (+)
 
