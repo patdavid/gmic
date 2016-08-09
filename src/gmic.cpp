@@ -13707,8 +13707,8 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                     }
                   if (misspelled)
                     error(images,0,0,
-                          "Unknown command or filename '%s' (did you mean '-%s' ?).",
-                          gmic_argument_text(),misspelled);
+                          "Unknown command or filename '%s' (did you mean '-%s%s' ?).",
+                          gmic_argument_text(),foff>1?"-":"",misspelled);
                   else error(images,0,0,
                              "Unknown command or filename '%s'.",
                              gmic_argument_text());
