@@ -4034,7 +4034,7 @@ bool create_dialog_gui() {
                               "ENSICAEN (http://www.ensicaen.fr)");
   // GtkWidget *const image_but = gtk_link_button_new_with_label("http://gmic.eu","");
   // gtk_widget_show(image_but);
-  // gtk_button_set_image(GTK_BUTTON(image_but),image);
+  // gtk_button_set_image(GTK_BUTTON(image_but),image); // Doesn't display image on Windows...
   gtk_widget_show(image);
   gtk_container_add(GTK_CONTAINER(image_align),image);
 
