@@ -273,7 +273,7 @@ _help_usage :
   -_help_section "Overall context"
 
   -_help_paragraph "  - At any time, "${-GMIC}" manages one list of numbered (and optionally named) pixel-based
-\n     images, entirely stored in computer memory.
+\n     images, entirely stored uncompressed in computer memory.
 \n
 \n  - The first image of the list has indice '"${g}"0"$n"' and is denoted by '"$c"[0]"$n"'. The second image of
 \n     the list is denoted by '"$c"[1]"$n"', the third by '"$c"[2]"$n"' and so on.
@@ -282,7 +282,7 @@ _help_usage :
 \n     list, '"$c"[-2]"$n"' to the penultimate one, etc. Thus, if the list has 4 images, '"$c"[1]"$n"' and '"$c"[-3]"$n"'
 \n     both designate the second image of the list.
 \n
-\n  - A named image may be indicated by '"$c"[name]"$n"', if '"${g}"name"$n"' uses the character set "$g"[a-zA-Z0-9_]"$n"
+\n  - A named image may be also indicated by '"$c"[name]"$n"', if '"${g}"name"$n"' uses the character set "$g"[a-zA-Z0-9_]"$n"
 \n     and does not start with a number. Image names can be set or reassigned at any moment
 \n     during the processing pipeline (see commands '"$c"-name"$n"' and '"$c"-input"$n"' for this purpose).
 \n
@@ -304,12 +304,12 @@ _help_usage :
 \n    . '"${g}"width"$n"', the number of image columns (size along the "$g"'x'-axis"$n").
 \n    . '"${g}"height"$n"', the number of image rows (size along the "$g"'y'-axis"$n").
 \n    . '"${g}"depth"$n"', the number of image slices (size along the "$g"'z'-axis"$n").
-\n        The depth is equal to 1 for usual color or grayscale 2d images.
+\n        (the depth is equal to 1 for usual color or grayscale 2d images).
 \n    . '"${g}"spectrum"$n"', the number of image channels (size along the "$g"'c'-axis"$n").
-\n        The spectrum is respectively equal to 3 and 4 for usual RGB and RGBA color images.
+\n        (the spectrum is respectively equal to "${g}"3"$n" and "${g}"4"$n" for usual "${g}"RGB"$n" and "${g}"RGBA"$n" color images).
 \n
-\n  - There are no limitations on the size of each image dimension. For instance, the number of
-\n     image slices or channels can be of arbitrary size within the limits of available memory.
+\n  - There are no hard limitations on the size the image along each dimension. For instance, the number of
+\n     image slices or channels can be of arbitrary size within the limits of available memory
 \n
 \n  - The "${g}"width, height"$n" and "${g}"depth"$n" of an image are considered as spatial dimensions, while the
 \n     "${g}"spectrum"$n" has a multi-spectral meaning. Thus, a 4d image in "${-GMIC}" should be most often
@@ -15112,14 +15112,16 @@ average_video : -check "isint(${2=0}) && $2>=0 && isint(${3=-1}) && ($3>=0 || $3
 _average_stream : -skip "${5=}"
   -is_ext "$5",avi is_outavi=${}
   frame=$2 i=0 go_on=1 N=0
+  imM=inf,-inf
   -do
     -l[] $1 -onfail go_on=0 -endl
+    imM={v=[$imM];[min(im,v[0]),max(iM,v[1])]}
     -if $go_on
       -v + -e[] "\r  > Frame ""#"$frame$_N"        " -v -
       frame+=$4 N+=1
       -if {$!>1} -+ -endif
       -if {narg("$5")}
-        --/. $N -c. 0,255
+        --/. $N -c. $imM
         -if $is_outavi -z. 0,{w-(w%8)-1} -o. "$5",25,mp4v,1 -else -o. ${-filename\ "$5",$i} i+=1 -endif
         -rm.
       -endif
@@ -15136,7 +15138,7 @@ _average_stream : -skip "${5=}"
       -endif
     -endif
   -while {$go_on" && "($3==-1" || "$frame<=$3)}
-  -/ $N -c 0,255
+  -/ $N -c $imM
   -if $is_outavi -o[] "$5",25,mp4v,0 -endif
 
 #@gmic fade_files : "filename_pattern",_nb_inner_frames>0,_first_frame>=0,_last_frame={ >=0 | -1=last },_frame_step>=1,_output_filename
