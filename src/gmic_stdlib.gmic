@@ -15115,9 +15115,9 @@ _average_stream : -skip "${5=}"
   imM=inf,-inf
   -do
     -l[] $1 -onfail go_on=0 -endl
-    imM={v=[$imM];[min(im,v[0]),max(iM,v[1])]}
     -if $go_on
       -v + -e[] "\r  > Frame ""#"$frame$_N"        " -v -
+      imM={v=[$imM];[min(im,v[0]),max(iM,v[1])]}
       frame+=$4 N+=1
       -if {$!>1} -+ -endif
       -if {narg("$5")}
@@ -15253,9 +15253,9 @@ _median_stream :
       -i[hist] {w},$drows,256,{s}
       -do
         -l[] $1 -nm. img -onfail go_on=0 -endl
-        -if {$is_16bits" || "iM>255} is_16bits=1 -/. 257 -endif
         -if $img
           -v + -e[] "\r    > Frame ""#"$frame$_N"        " -v -
+          -if {$is_16bits" || "iM>255} is_16bits=1 -/[img] 257 -endif
           -if {{*}" && "!$>}
             title="[G'MIC] Frame ""#"$frame
             -if {!narg($wh)} wh=${-fitscreen[]\ {img,w},{img,h}} -w[img] $wh,0,$title
