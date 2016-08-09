@@ -15288,7 +15288,7 @@ _median_stream :
             -else -w[img] -1,-1,1,$title
             -endif
           -endif
-          -rows[img] $row0,$row1 -f[img] ":++i(#-2,x,y,i*"$fact",c)"
+          -rows[img] $row0,$row1 -f[img] ":++i(#-2,x,y,round(i*"$fact"),c)"
           -rm[img]
           frame+=$4 N+=1
         -endif
