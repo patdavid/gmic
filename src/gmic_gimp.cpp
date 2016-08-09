@@ -4027,12 +4027,15 @@ bool create_dialog_gui() {
 
   GtkWidget *const image = gtk_image_new_from_pixbuf(pixbuf);
   gtk_widget_set_tooltip_text(image,
+                              "G'MIC (http://gmic.eu)\n"
                               "GREYC (http://www.greyc.fr)\n"
                               "CNRS (http://www.cnrs.fr)\n"
                               "Normandy University (http://www.normandie-univ.fr)\n"
                               "ENSICAEN (http://www.ensicaen.fr)");
-  gtk_widget_show(image);
-  gtk_container_add(GTK_CONTAINER(image_align),image);
+  GtkWidget *const image_but = gtk_link_button_new_with_label("http://gmic.eu","");
+  gtk_widget_show(image_but);
+  gtk_button_set_image(GTK_BUTTON(image_but),image);
+  gtk_container_add(GTK_CONTAINER(image_align),image_but);
 
   GtkWidget *const right_align = gtk_alignment_new(1,0,0,0);
   gtk_widget_show(right_align);
