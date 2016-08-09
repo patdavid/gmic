@@ -15118,7 +15118,7 @@ _average_stream : -skip "${5=}"
     -if $go_on
       -v + -e[] "\r  > Frame ""#"$frame$_N"        " -v -
       imM={v=[$imM];[min(im,v[0]),max(iM,v[1])]}
-      frame+=$4 N+=1
+      N+=1
       -if {$!>1} -+ -endif
       -if {narg("$5")}
         --/. $N -c. $imM
@@ -15136,6 +15136,7 @@ _average_stream : -skip "${5=}"
         -if {({*,CTRLLEFT}" || "{*,CTRLRIGHT})" && "{*,R}} -w[] {0,w},{0,h} -wait -1 -endif             # Reset window size.
         -rm.
       -endif
+      frame+=$4
     -endif
   -while {$go_on" && "($3==-1" || "$frame<=$3)}
   -/ $N -c $imM
@@ -15240,8 +15241,34 @@ median_video : -check "isint(${2=0}) && $2>=0 && isint(${3=-1}) && ($3>=0 || $3=
   -endl -v +
 
 _median_stream :
+
+  # Retrieve min/max values of all frames when fast method is used.
+  -if $6
+    -v + -e[] "- Retrieve min/max values of all frames.\n" -v -
+    frame=$2 go_on=1
+    imM=inf,-inf
+    -do
+      -l[] $1 -onfail go_on=0 -endl
+      -if $go_on
+        -v + -e[] "\r    > Frame ""#"$frame$_N"        " -v -
+        imM={v=[$imM];[min(im,v[0]),max(iM,v[1])]}
+        -if {*}
+          title="[G'MIC] Frame ""#"$frame
+          -if {!narg($wh)} wh=${-fitscreen[]\ {w},{h}} -w. $wh,1,$title
+          -else -w. -1,-1,1,$title
+          -endif
+        -endif
+        -rm.
+        frame+=$4
+      -endif
+    -while {$go_on" && "($3==-1" || "$frame<=$3)}
+    _N=/{$frame-$4}
+    fact={v=[$imM];dv=v[1]-v[0];dv<=0?0:255/dv}
+  -endif
+
+  # Start median computation.
   h1={h-1} drows={round(${-is_percent\ $5}?$5*h:$5)}
-  nb_iter={round(h/$drows,1,1)} is_16bits=0
+  nb_iter={round(h/$drows,1,1)}
   -repeat $nb_iter
     row0={$drows*$>} row1={0,min(h,$row0+$drows-1)}
     -v + -e[] "- Iteration \#"{$>+1}/$nb_iter": Load rows "$row0-$row1/$h1".\n" -v -
@@ -15255,14 +15282,13 @@ _median_stream :
         -l[] $1 -nm. img -onfail go_on=0 -endl
         -if $img
           -v + -e[] "\r    > Frame ""#"$frame$_N"        " -v -
-          -if {$is_16bits" || "iM>255} is_16bits=1 -/[img] 257 -endif
           -if {{*}" && "!$>}
             title="[G'MIC] Frame ""#"$frame
-            -if {!narg($wh)} wh=${-fitscreen[]\ {img,w},{img,h}} -w[img] $wh,0,$title
-            -else -w[img] -1,-1,0,$title
+            -if {!narg($wh)} wh=${-fitscreen[]\ {img,w},{img,h}} -w[img] $wh,1,$title
+            -else -w[img] -1,-1,1,$title
             -endif
           -endif
-          -rows[img] $row0,$row1 -f[img] ":++i(#-2,x,y,i,c)"
+          -rows[img] $row0,$row1 -f[img] ":++i(#-2,x,y,i*"$fact",c)"
           -rm[img]
           frame+=$4 N+=1
         -endif
@@ -15280,6 +15306,7 @@ _median_stream :
               0.5*(zn + zp);"
       -endif
       -rm..
+      -/. $fact -c. $imM
 
     -else
       # Slow method : compute median frame using temporal quicksort.
