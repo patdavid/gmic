@@ -445,14 +445,6 @@ CImg<T> get_copymark() const {
   return res;
 }
 
-CImg<T>& div(const char *const expression) {
-  return operator/=(expression);
-}
-
-CImg<T> get_div(const char *const expression) const {
-  return (+*this).div(expression);
-}
-
 template<typename tc>
 CImg<T> get_draw_axes(const float x0, const float x1, const float y0, const float y1,
                       const tc *const color, const float opacity=1,
@@ -1573,12 +1565,28 @@ CImg<T> get_inpaint_patch(const CImg<t>& mask, const unsigned int patch_size=11,
                                 blend_size,blend_threshold,blend_decay,blend_scales,is_blend_outer);
 }
 
-CImg<T>& mul(const char *const expression) {
-  return operator*=(expression);
+CImg<T>& max(const char *const expression, CImgList<T> &images) {
+  return max((+*this)._fill(expression,true,true,&images,&images,"max",this));
 }
 
-CImg<T> get_mul(const char *const expression) const {
-  return (+*this).mul(expression);
+CImg<T>& min(const char *const expression, CImgList<T> &images) {
+  return min((+*this)._fill(expression,true,true,&images,&images,"min",this));
+}
+
+CImg<T>& operator_andeq(const char *const expression, CImgList<T> &images) {
+  return operator&=((+*this)._fill(expression,true,true,&images,&images,"operator&=",this));
+}
+
+CImg<T>& operator_brseq(const char *const expression, CImgList<T> &images) {
+  return operator<<=((+*this)._fill(expression,true,true,&images,&images,"operator<<=",this));
+}
+
+CImg<T>& operator_blseq(const char *const expression, CImgList<T> &images) {
+  return operator>>=((+*this)._fill(expression,true,true,&images,&images,"operator>>=",this));
+}
+
+CImg<T>& operator_diveq(const char *const expression, CImgList<T> &images) {
+  return div((+*this)._fill(expression,true,true,&images,&images,"operator/=",this));
 }
 
 template<typename t>
@@ -1590,8 +1598,8 @@ CImg<T>& operator_eq(const t val) {
   return *this;
 }
 
-CImg<T>& operator_eq(const char *const expression) {
-  return operator_eq((+*this)._fill(expression,true,true,0,0,"operator_eq",this));
+CImg<T>& operator_eq(const char *const expression, CImgList<T> &images) {
+  return operator_eq((+*this)._fill(expression,true,true,&images,&images,"operator_eq",this));
 }
 
 template<typename t>
@@ -1618,8 +1626,8 @@ CImg<T>& operator_ge(const t val) {
   return *this;
 }
 
-CImg<T>& operator_ge(const char *const expression) {
-  return operator_ge((+*this)._fill(expression,true,true,0,0,"operator_ge",this));
+CImg<T>& operator_ge(const char *const expression, CImgList<T> &images) {
+  return operator_ge((+*this)._fill(expression,true,true,&images,&images,"operator_ge",this));
 }
 
 template<typename t>
@@ -1646,8 +1654,8 @@ CImg<T>& operator_gt(const t val) {
   return *this;
 }
 
-CImg<T>& operator_gt(const char *const expression) {
-  return operator_gt((+*this)._fill(expression,true,true,0,0,"operator_gt",this));
+CImg<T>& operator_gt(const char *const expression, CImgList<T> &images) {
+  return operator_gt((+*this)._fill(expression,true,true,&images,&images,"operator_gt",this));
 }
 
 template<typename t>
@@ -1674,8 +1682,8 @@ CImg<T>& operator_le(const t val) {
   return *this;
 }
 
-CImg<T>& operator_le(const char *const expression) {
-  return operator_le((+*this)._fill(expression,true,true,0,0,"operator_le",this));
+CImg<T>& operator_le(const char *const expression, CImgList<T> &images) {
+  return operator_le((+*this)._fill(expression,true,true,&images,&images,"operator_le",this));
 }
 
 template<typename t>
@@ -1702,8 +1710,8 @@ CImg<T>& operator_lt(const t val) {
   return *this;
 }
 
-CImg<T>& operator_lt(const char *const expression) {
-  return operator_lt((+*this)._fill(expression,true,true,0,0,"operator_lt",this));
+CImg<T>& operator_lt(const char *const expression, CImgList<T> &images) {
+  return operator_lt((+*this)._fill(expression,true,true,&images,&images,"operator_lt",this));
 }
 
 template<typename t>
@@ -1721,6 +1729,18 @@ CImg<T>& operator_lt(const CImg<t>& img) {
   return *this;
 }
 
+CImg<T>& operator_minuseq(const char *const expression, CImgList<T> &images) {
+  return operator-=((+*this)._fill(expression,true,true,&images,&images,"operator-=",this));
+}
+
+CImg<T>& operator_modeq(const char *const expression, CImgList<T> &images) {
+  return operator%=((+*this)._fill(expression,true,true,&images,&images,"operator%=",this));
+}
+
+CImg<T>& operator_muleq(const char *const expression, CImgList<T> &images) {
+  return mul((+*this)._fill(expression,true,true,&images,&images,"operator*=",this));
+}
+
 template<typename t>
 CImg<T>& operator_neq(const t val) {
 #ifdef cimg_use_openmp
@@ -1730,8 +1750,8 @@ CImg<T>& operator_neq(const t val) {
   return *this;
 }
 
-CImg<T>& operator_neq(const char *const expression) {
-  return operator_neq((+*this)._fill(expression,true,true,0,0,"operator_neq",this));
+CImg<T>& operator_neq(const char *const expression, CImgList<T> &images) {
+  return operator_neq((+*this)._fill(expression,true,true,&images,&images,"operator_neq",this));
 }
 
 template<typename t>
@@ -1747,6 +1767,22 @@ CImg<T>& operator_neq(const CImg<t>& img) {
     for (const t *ptrs = img._data; ptrd<ptre; ++ptrd) *ptrd = (T)(*ptrd != (T)*(ptrs++));
   }
   return *this;
+}
+
+CImg<T>& operator_oreq(const char *const expression, CImgList<T> &images) {
+  return operator|=((+*this)._fill(expression,true,true,&images,&images,"operator|=",this));
+}
+
+CImg<T>& operator_pluseq(const char *const expression, CImgList<T> &images) {
+  return operator+=((+*this)._fill(expression,true,true,&images,&images,"operator+=",this));
+}
+
+CImg<T>& operator_xoreq(const char *const expression, CImgList<T> &images) {
+  return operator^=((+*this)._fill(expression,true,true,&images,&images,"operator^=",this));
+}
+
+CImg<T>& pow(const char *const expression, CImgList<T> &images) {
+  return pow((+*this)._fill(expression,true,true,&images,&images,"pow",this));
 }
 
 template<typename t>
@@ -1786,6 +1822,14 @@ CImg<T>& reverse_CImg3d() {
 
 CImg<T> get_reverse_CImg3d() const {
   return (+*this).reverse_CImg3d();
+}
+
+CImg<T>& rol(const char *const expression, CImgList<T> &images) {
+  return rol((+*this)._fill(expression,true,true,&images,&images,"rol",this));
+}
+
+CImg<T>& ror(const char *const expression, CImgList<T> &images) {
+  return ror((+*this)._fill(expression,true,true,&images,&images,"ror",this));
 }
 
 template<typename t>
@@ -1990,17 +2034,16 @@ inline char *_gmic_argument_text(const char *const argument, CImg<char>& argumen
 #define gmic_arithmetic_command(command_name,\
                                 function1,description1,arg1_1,arg1_2,arg1_3,value_type1, \
                                 function2,description2,arg2_1,arg2_2, \
-                                description3,arg3_1,arg3_2, \
+                                function3,description3,arg3_1,arg3_2, \
                                 description4) \
  if (!std::strcmp(command_name,command)) { \
    gmic_substitute_args(true); \
-   sep = *indices = *formula = 0; \
-   value = 0; \
+   sep = *indices = *formula = 0; value = 0; \
    if (cimg_sscanf(argument,"%lf%c",&value,&end)==1 || \
        (cimg_sscanf(argument,"%lf%c%c",&value,&sep,&end)==2 && sep=='%')) { \
-      const char *const ssep = sep=='%'?"%":""; \
-      print(images,0,description1 ".",arg1_1,arg1_2,arg1_3); \
-      cimg_forY(selection,l) { \
+     const char *const ssep = sep=='%'?"%":""; \
+     print(images,0,description1 ".",arg1_1,arg1_2,arg1_3); \
+     cimg_forY(selection,l) { \
        CImg<T>& img = gmic_check(images[selection[l]]); \
        nvalue = value; \
        if (sep=='%' && img) { \
@@ -2008,14 +2051,11 @@ inline char *_gmic_argument_text(const char *const argument, CImg<char>& argumen
          nvalue = vmin + (vmax - vmin)*value/100; \
        } \
        if (is_double_hyphen) { \
-         int back = 0; \
+         g_img.assign(img,false).function1((value_type1)nvalue).move_to(images); \
          images_names.insert(images_names[selection[l]].get_copymark()); \
-         images.insert(img); \
-         back = (int)images.size() - 1; \
-         images[back].function1((value_type1)nvalue); \
        } else img.function1((value_type1)nvalue); \
-      } \
-      ++position; \
+     } \
+     ++position; \
    } else if (cimg_sscanf(argument,"[%255[a-zA-Z0-9_.%+-]%c%c",indices,&sep,&end)==2 && sep==']' && \
               (ind=selection2cimg(indices,images.size(),images_names,command_name)).height()==1) { \
      print(images,0,description2 ".",arg2_1,arg2_2); \
@@ -2023,11 +2063,8 @@ inline char *_gmic_argument_text(const char *const argument, CImg<char>& argumen
      cimg_forY(selection,l) { \
        CImg<T>& img = gmic_check(images[selection[l]]); \
        if (is_double_hyphen) { \
-         int back = 0; \
+         g_img.assign(img,false).function2(img0).move_to(images); \
          images_names.insert(images_names[selection[l]].get_copymark()); \
-         images.insert(img); \
-         back = (int)images.size() - 1; \
-         images[back].function2(img0); \
        } else img.function2(img0); \
      } \
      ++position; \
@@ -2036,28 +2073,25 @@ inline char *_gmic_argument_text(const char *const argument, CImg<char>& argumen
      cimg_forY(selection,l) { \
        CImg<T>& img = gmic_check(images[selection[l]]); \
        if (is_double_hyphen) { \
-         int back = 0; \
+         g_img.assign(img,false).function3((const char*)formula,images).move_to(images); \
          images_names.insert(images_names[selection[l]].get_copymark()); \
-         images.insert(img); \
-         back = (int)images.size() - 1; \
-         images[back].function2((const char*)formula); \
-       } else img.function2((const char*)formula); \
+       } else img.function3((const char*)formula,images); \
      } \
      ++position; \
    } else { \
      print(images,0,description4 ".",gmic_selection.data()); \
      if (images && selection) { \
        if (is_double_hyphen) { \
-         CImg<T> img0 = CImg<T>(gmic_check(images[selection[0]]),false); \
+         CImg<T> img = CImg<T>(gmic_check(images[selection[0]]),false); \
          for (unsigned int l = 1; l<(unsigned int)selection.height(); ++l) \
-           img0.function2(gmic_check(images[selection[l]])); \
+           img.function2(gmic_check(images[selection[l]])); \
          images_names.insert(images_names[selection[0]].get_copymark()); \
-         img0.move_to(images); \
+         img.move_to(images); \
        } else if (selection.height()>=2) { \
        const unsigned int ind0 = selection[0]; \
-       CImg<T>& img0 = gmic_check(images[ind0]); \
+       CImg<T>& img = gmic_check(images[ind0]); \
        for (unsigned int l = 1; l<(unsigned int)selection.height(); ++l) \
-         img0.function2(gmic_check(images[selection[l]])); \
+         img.function2(gmic_check(images[selection[l]])); \
        remove_images(images,images_names,selection,1,selection.height() - 1); \
        }}} is_released = false; continue; \
    }
@@ -4756,6 +4790,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator+=,
                                   "Add image [%d] to image%s",
                                   ind[0],gmic_selection.data(),
+                                  operator_pluseq,
                                   "Add expression %s to image%s",
                                   gmic_argument_text_printed(),gmic_selection.data(),
                                   "Add image%s");
@@ -4864,6 +4899,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator&=,
                                   "Compute bitwise AND of image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_andeq,
                                   "Compute bitwise AND of image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute sequential bitwise AND of image%s");
@@ -5001,6 +5037,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator>>=,
                                   "Compute bitwise right shift of image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_brseq,
                                   "Compute bitwise right shift of image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute sequential bitwise right shift of image%s");
@@ -5013,6 +5050,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator<<=,
                                   "Compute bitwise left shift of image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_blseq,
                                   "Compute bitwise left shift of image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute sequential bitwise left shift of image%s");
@@ -5981,6 +6019,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   div,
                                   "Divide image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_diveq,
                                   "Divide image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Divide image%s");
@@ -6451,6 +6490,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator_eq,
                                   "Compute boolean equality between image%s and image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_eq,
                                   "Compute boolean equality between image%s and expression %s'",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute boolean equality between image%s");
@@ -6872,6 +6912,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   "Compute boolean 'greater or equal than' between image%s "
                                   "and image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_ge,
                                   "Compute boolean 'greater or equal than' between image%s "
                                   "and expression %s'",
                                   gmic_selection.data(),gmic_argument_text_printed(),
@@ -6885,6 +6926,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator_gt,
                                   "Compute boolean 'greater than' between image%s and image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_gt,
                                   "Compute boolean 'greater than' between image%s and expression %s'",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute boolean 'greater than' between image%s");
@@ -7777,12 +7819,13 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
 
           // Less or equal.
           gmic_arithmetic_command("-le",
-                                  operator_le,"Compute boolean 'less or equal than' between image%s "
-                                  "and %g%s",
+                                  operator_le,
+                                  "Compute boolean 'less or equal than' between image%s and %g%s",
                                   gmic_selection.data(),value,ssep,T,
-                                  operator_le,"Compute boolean 'less or equal than' between image%s "
-                                  "and image [%d]",
+                                  operator_le,
+                                  "Compute boolean 'less or equal than' between image%s and image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_le,
                                   "Compute boolean 'less or equal than' between image%s and "
                                   "expression %s'",
                                   gmic_selection.data(),gmic_argument_text_printed(),
@@ -7796,6 +7839,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator_lt,
                                   "Compute boolean 'less than' between image%s and image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_lt,
                                   "Compute boolean 'less than' between image%s and expression %s'",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute boolean 'less than' between image%s");
@@ -8015,6 +8059,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   mul,
                                   "Multiply image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_muleq,
                                   "Multiply image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Multiply image%s");
@@ -8026,6 +8071,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator%=,
                                   "Compute pointwise modulo of image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_modeq,
                                   "Compute pointwise modulo of image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute sequential pointwise modulo of image%s");
@@ -8038,6 +8084,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   max,
                                   "Compute pointwise maximum between image%s and image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  max,
                                   "Compute pointwise maximum between image%s and expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute pointwise maximum of all image%s together");
@@ -8049,6 +8096,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   min,
                                   "Compute pointwise minimum between image%s and image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  min,
                                   "Compute pointwise minimum between image%s and expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute pointwise minimum of image%s");
@@ -8061,6 +8109,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator*=,
                                   "Multiply matrix/vector%s by matrix/vector image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_muleq,
                                   "Multiply matrix/vector%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Multiply matrix/vector%s");
@@ -8163,6 +8212,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator/=,
                                   "Divide matrix/vector%s by matrix/vector image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_diveq,
                                   "Divide matrix/vector%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Divide matrix/vector%s");
@@ -8300,6 +8350,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator_neq,
                                   "Compute boolean inequality between image%s and image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_neq,
                                   "Compute boolean inequality between image%s and expression %s'",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute boolean inequality between image%s");
@@ -8500,6 +8551,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator|=,
                                   "Compute bitwise OR of image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_oreq,
                                   "Compute bitwise OR of image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute sequential bitwise OR of image%s");
@@ -9351,6 +9403,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   pow,
                                   "Compute image%s to the power of image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  pow,
                                   "Compute image%s to the power of expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute sequential power of image%s");
@@ -10239,6 +10292,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   rol,
                                   "Compute bitwise left rotation of image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  rol,
                                   "Compute bitwise left rotation of image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute sequential bitwise left rotation of image%s");
@@ -10251,6 +10305,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   ror,
                                   "Compute bitwise right rotation of image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  ror,
                                   "Compute bitwise left rotation of image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute sequential bitwise left rotation of image%s");
@@ -10773,6 +10828,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator-=,
                                   "Subtract image [%d] to image%s",
                                   ind[0],gmic_selection.data(),
+                                  operator_minuseq,
                                   "Subtract expression %s to image%s",
                                   gmic_argument_text_printed(),gmic_selection.data(),
                                   "Subtract image%s");
@@ -12208,6 +12264,7 @@ gmic& gmic::_run(const CImgList<char>& commands_line, unsigned int& position,
                                   operator^=,
                                   "Compute bitwise XOR of image%s by image [%d]",
                                   gmic_selection.data(),ind[0],
+                                  operator_xoreq,
                                   "Compute bitwise XOR of image%s by expression %s",
                                   gmic_selection.data(),gmic_argument_text_printed(),
                                   "Compute sequential bitwise XOR of image%s");

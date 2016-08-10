@@ -9732,9 +9732,26 @@ pointcloud : -check "${1=0}<=2" -skip ${2=0},${3=0},${4=0}
 #@gmic : Compute PSNR (Peak Signal-to-Noise Ratio) matrix between selected images.
 #@gmic : Default value: 'max_value=255'.
 #@gmic : $ image.jpg --noise 30 --noise[0] 35 --noise[0] 38 -cut[-1] 0,255 -psnr 255 -replace_inf 0
-psnr : -skip ${1=255}
-  -e[^-1] "Compute the "$!x$!" matrix of PSNR values, from image$? with maximum value $1."
-  -v - -mse -log10 -- {log10($1*$1)} -* -10 -nm. [PSNR] -v +
+psnr : -skip "${1=}"
+  -if {isval("$1")}
+    -e[0--3] "Compute the "$!x$!" matrix of PSNR values, from image$? with maximum value $1."
+    -v - max_value=$1
+  -else
+    -e[0--3] "Compute the "$!x$!" matrix of PSNR values, from image$?."
+    -v - -noarg max_value=
+  -endif
+  -if {narg($max_value)}
+    -mse -log10 -- {log10(($max_value)^2)}
+  -else
+    $! -repeat {$!-1} -=. {$>,iM},$> -done
+    -mse[^-1] -sqr. -log10
+
+    --.. 'v0=i[#-1,x];v1=i[#-1,y];print([x,y,v0,v1,max(v0,v1)]);max(v0,v1)'
+    -d
+
+    -rm.
+  -endif
+  -* -10 -nm. [PSNR] -v +
 
 #@gmic segment_watershed : _threshold>=0
 #@gmic : Apply watershed segmentation on selected images.
