@@ -9738,7 +9738,7 @@ pointcloud : -check "${1=0}<=2" -skip ${2=0},${3=0},${4=0}
 psnr : -skip "${1=}"
   -if {isval("$1")}
     -e[0--3] "Compute the "$!x$!" matrix of PSNR values, from image$? with maximum value $1."
-    -v - -mse -log10 -- {log10(($max_value)^2)}
+    -v - -mse -log10 -- {log10(($1)^2)}
   -else
     -e[0--3] "Compute the "$!x$!" matrix of PSNR values, from image$?."
     -v - -noarg
