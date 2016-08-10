@@ -9745,10 +9745,7 @@ psnr : -skip "${1=}"
   -else
     $! -repeat {$!-1} -=. {$>,iM},$> -done
     -mse[^-1] -sqr. -log10
-
     --.. 'v0=i[#-1,x];v1=i[#-1,y];print([x,y,v0,v1,max(v0,v1)]);max(v0,v1)'
-    -d
-
     -rm.
   -endif
   -* -10 -nm. [PSNR] -v +
