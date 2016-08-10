@@ -2691,12 +2691,15 @@ input_cube : -skip ${2=1}
 
 #@gmic ig : eq. to '-input_glob'.
 ig :
-  -input_glob $*
+  -_input_glob "$*"
 
 #@gmic input_glob : pattern
 #@gmic : Insert new images from several filenames that match the specified glob pattern.
 input_glob :
-  -e[^1] "Input all files that match glob pattern '$*'."
+  -_input_glob "$*"
+
+_input_glob :
+  -e[0--3] "Input all files that match glob pattern '$*'."
   -v -
   -files 3,"$*"
   N=$!
@@ -9745,7 +9748,7 @@ psnr : -skip "${1=}"
   -else
     $! -repeat {$!-1} -=. {$>,iM},$> -done
     -mse[^-1] -sqr. -log10
-    --.. 'v0=i[#-1,x];v1=i[#-1,y];print([x,y,v0,v1,max(v0,v1)]);max(v0,v1)'
+    --.. 'max(i[#-1,x],i[#-1,y])'
     -rm.
   -endif
   -* -10 -nm. [PSNR] -v +
