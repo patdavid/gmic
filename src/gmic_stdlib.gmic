@@ -9738,20 +9738,16 @@ pointcloud : -check "${1=0}<=2" -skip ${2=0},${3=0},${4=0}
 psnr : -skip "${1=}"
   -if {isval("$1")}
     -e[0--3] "Compute the "$!x$!" matrix of PSNR values, from image$? with maximum value $1."
-    -v - max_value=$1
+    -v - -mse -log10 -- {log10(($max_value)^2)}
   -else
     -e[0--3] "Compute the "$!x$!" matrix of PSNR values, from image$?."
-    -v - -noarg max_value=
+    -v - -noarg
+    -if {$!}
+      $! -repeat {$!-1} -=. {$>,iM},$> -done
+      -mse[^-1] -sqr. -log10 --.. 'max(i[#-1,x],i[#-1,y])' -rm.
+    -endif
   -endif
-  -if {narg($max_value)}
-    -mse -log10 -- {log10(($max_value)^2)}
-  -else
-    $! -repeat {$!-1} -=. {$>,iM},$> -done
-    -mse[^-1] -sqr. -log10
-    --.. 'max(i[#-1,x],i[#-1,y])'
-    -rm.
-  -endif
-  -* -10 -nm. [PSNR] -v +
+  -* -10 -nm [PSNR] -v +
 
 #@gmic segment_watershed : _threshold>=0
 #@gmic : Apply watershed segmentation on selected images.
