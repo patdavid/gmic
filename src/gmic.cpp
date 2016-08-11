@@ -2082,11 +2082,11 @@ inline char *_gmic_argument_text(const char *const argument, CImg<char>& argumen
      print(images,0,description4 ".",gmic_selection.data()); \
      if (images && selection) { \
        if (is_double_hyphen) { \
-         CImg<T> img = CImg<T>(gmic_check(images[selection[0]]),false); \
+         g_img.assign(gmic_check(images[selection[0]]),false); \
          for (unsigned int l = 1; l<(unsigned int)selection.height(); ++l) \
-           img.function2(gmic_check(images[selection[l]])); \
+           g_img.function2(gmic_check(images[selection[l]])); \
          images_names.insert(images_names[selection[0]].get_copymark()); \
-         img.move_to(images); \
+         g_img.move_to(images); \
        } else if (selection.height()>=2) { \
        const unsigned int ind0 = selection[0]; \
        CImg<T>& img = gmic_check(images[ind0]); \
