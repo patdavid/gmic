@@ -21428,12 +21428,13 @@ gimp_search_filters : -skip "${1=}"
       -i[^0,-1] ({'"- "'}) -y -a y
     -endif
     -replace_str. "&","&amp;"
-    -u "{\"$1\"}{$2}{$3}{"{t}"}"
+    res="{\"$1\"}{$2}{$3}{"{t}"}"
     -rm
   -endl
   -if {narg("$1")} -gimp_print_preview "Search filters",,"whose names contain:\n\n      $1"
   -else -gimp_print_preview "Search filters",,"(all filters)"
   -endif
+  -u $res
 
 #@gimp User satisfaction survey : gimp_survey, gimp_survey_preview
 #@gimp : note = note{"<small>Please help us by taking a few seconds to share your feelings about the G'MIC project. Thank you for giving us the opportunity to serve you better!</small>"}
