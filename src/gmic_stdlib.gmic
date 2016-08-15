@@ -1508,8 +1508,8 @@ __display_array :
   --luminance. -r.. {$1*24},{$2*24} -grid.. {100/$1}%,{100/$2}%,0,0,1,0
   xb={24*int($1/2)} yb={24*int($2/2)} xe={$xb+24} ye={$yb+24}
   -rectangle.. $xb,$yb,$xe,$ye,1,0xFFFFFFFF,$3,$4,$5
-  -repeat $2 yg=$>
-    -repeat $1 xg=$>
+  -repeat $2,yg
+    -repeat $1,xg
       -t.. {-3,i($xg,$yg)},{5+$xg*24},{5+$yg*24},13,0.8,{if(i($xg,$yg)>128,0,255)}
     -done
   -done
@@ -3949,7 +3949,7 @@ update_server :
 
   # Force filters to move if necessary.
   -v + -e[] "\n> Force filters to move, if necessary." -v -
-  -repeat $! ind=$> -repeat $_nbm -if {['{$ind,n}']==['${_to_move$>}']}
+  -repeat $!,ind -repeat $_nbm -if {['{$ind,n}']==['${_to_move$>}']}
     -v + -e[] "  "$ind". Move '"{$ind,n}"' to '"${_move_to$>}"'." -v -
     -nm[$ind] ${_move_to$>}/{$ind,b}
   -endif -done -done
@@ -4639,8 +4639,8 @@ _names :
 #@gmic : $ (1,2,3,4,2,4,3,1,3,4,2,1) -split x -remove_duplicates -append x
 remove_duplicates :
   -e[^-1] "Remove duplicates images in selected list of image$?."
-  -v - -repeat $!
-    base=$> off=0
+  -v - -repeat $!,base
+    off=0
     -repeat {$!-$>-1}
       comp={$base+1+$>-$off}
       -if {$comp>=$!} -break -endif
@@ -4950,8 +4950,8 @@ div_complex : -check ${3=1e-8}>=0
 #@gmic : $ image.jpg --mul_channels 1,0.5,0.8
 mul_channels :
   -e[^-1] "Multiply channels of image$? by value sequence ($*)."
-  -v - $=arg -repeat $#
-    i=$> fact=${arg{1+($>%$#)}}
+  -v - $=arg -repeat $#,i
+    fact=${arg{1+($>%$#)}}
     -repeat $! -if {$>,$i<s} -sh[$>] $i -*. $fact -rm. -endif -done
   -done -v +
 
@@ -5951,8 +5951,8 @@ colormap : -check "isint($1) && $1>=0" -skip ${2=1},${3=1}
 
 _colormap : # Implementation of the median-cut algorithm.
   -repeat {$1-1}
-    $!,{s} -repeat {$!-1} # Compute box variances along all axes and find highest one (without a single element).
-      n=$> -repeat {$n,s} -sh[$n] $> -=.. {if(w>1,iv,-1)},$n,$> -rm. -done
+    $!,{s} -repeat {$!-1},n # Compute box variances along all axes and find highest one (without a single element).
+      -repeat {$n,s} -sh[$n] $> -=.. {if(w>1,iv,-1)},$n,$> -rm. -done
     -done
     c={[xM,yM]}
     b=${-arg\ 1,$c}  # Indice of the box with highest variance.
@@ -6832,7 +6832,7 @@ append_tiles : -check "isint(${1=0}) && isint(${2=0}) && ${3=0.5}>=0 && $3<=1 &&
     # Resize to best match for each column and row.
     $MN,1,1,2 -repeat $MN -point. $>,0,0,1,{$>,w},{$>,h} -done -r. $M,$N,1,2,-1
     -s. c -l.. -s y -max -endl -l. -s x -max -endl
-    i=0 -repeat $N y=$> -repeat $M -r[$i] {-2,@$>},{@$y},100%,100%,0,0,$3,$4 i+=1 -done -done
+    i=0 -repeat $N,y -repeat $M -r[$i] {-2,@$>},{@$y},100%,100%,0,0,$3,$4 i+=1 -done -done
     -rm[-2,-1]
 
     # Append images together.
@@ -16265,9 +16265,9 @@ img2hex :
 img2str :
   -v -
   -u "("
-  -repeat {s} c=$>
-    -repeat {d} z=$>
-      -repeat {h} y=$>
+  -repeat {s},c
+    -repeat {d},z
+      -repeat {h},y
         --z. 0,$y,$z,$c,100%,$y,$z,$c
         -u ${}{^}
         -rm.
@@ -23825,7 +23825,6 @@ gimp_customize_clut :
   # Apply CLUT on input layers + global color corrections.
   -if {!$3} -map_clut[^-1] . # w/o spatial regularization
   -else -repeat {$!-1}       # w/ spatial regularization
-    ind=$>
     --luminance[$>] --map_clut[$>] .. --. [$>]
     -repeat $3 -guided. ..,2,50 -done -+[$>,-1] -rm.
   -done -endif
