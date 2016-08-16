@@ -3723,7 +3723,7 @@ CImg<char> gmic::substitute_item(const char *const source,
   CImgDisplay *const _display_window = (CImgDisplay*)display_window;
 #endif
   if (!source) return CImg<char>();
-  CImg<char> substituted_items(32), inbraces, substr(40), vs;
+  CImg<char> substituted_items(64), inbraces, substr(40), vs;
   char *ptr_sub = substituted_items.data();
   CImg<unsigned int> _ind;
   const char dot = is_image_expr?'.':0;
@@ -4284,8 +4284,7 @@ CImg<char> gmic::substitute_item(const char *const source,
       } else CImg<char>::append_string_to(*(nsource++),substituted_items,ptr_sub);
     }
   *ptr_sub = 0;
-  substituted_items.resize(ptr_sub - substituted_items.data() + 1,1,1,1,0);
-  return substituted_items;
+  return CImg<char>(substituted_items.data(),ptr_sub - substituted_items.data() + 1);
 }
 
 // Main parsing procedures.

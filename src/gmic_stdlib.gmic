@@ -16293,8 +16293,8 @@ img82hex :
   -e[^-1] "Convert 8bits-valued vector$? into hexadecimal representations (ascii-encoded)."
   -v - -% 256 -y
   -repeat $!
-    --f[$>] 'v=int(i)&15;v+if(v<10,48,87)'  # lower digit.
-    -f[$>] 'v=int(i)>>4;v+if(v<10,48,87)'   # higher digit.
+    --f[$>] 'v=int(i)&15;v+if(v<10,48,87)' # Lower digit
+    -f[$>] 'v=int(i)>>4;v+if(v<10,48,87)'  # Higher digit
     -a[$>,-1] x
   -done -v +
 
@@ -21365,11 +21365,10 @@ gimp_gmicky_preview :
 #@gimp : - <b>07/07/2011</b> : version <i>1.5.0</i>.\n
 #@gimp : - <b>08/20/2014</b> : version <i>1.6.0</i>.\n
 #@gimp : - <b>03/25/2016</b> : version <i>1.7.0</i>.\n
-#@gimp : - <span foreground="purple"><b>07/13/2016</b> : version <i>1.7.4</i> (Current stable).</span>\n
-#@gimp : - <b>07/19/2016</b> : version <i>1.7.5</i> (Current pre-release).\n
+#@gimp : - <span foreground="purple"><b>08/16/2016</b> : version <i>1.7.5</i> (Current stable).</span>\n
 #@gimp : "}
 #@gimp : sep = separator()
-#@gimp : link = link("View latest changelog","https://discuss.pixls.us/t/release-of-gmic-1-7-4")
+#@gimp : link = link("View latest changelog","https://discuss.pixls.us/t/release-of-gmic-1-7-5")
 
 #@gimp Search filters : _none_, gimp_search_filters
 #@gimp : note = note("<small><i>Type the filter name you want to search for...</i></small>")
