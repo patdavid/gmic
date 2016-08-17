@@ -29657,12 +29657,12 @@ gimp_lissajous :
     -+[-2,-1]
   -endl -done
 
-#@gimp Mandelbrot - Julia sets : gimp_mandelbrot, gimp_mandelbrot_preview
+#@gimp Mandelbrot - julia sets : gimp_mandelbrot, gimp_mandelbrot_preview
 #@gimp : X-center = float(0,-2,2)
 #@gimp : Y-center = float(0,-2,2)
 #@gimp : Zoom = float(0,0,100)
 #@gimp : Iterations = int(128,1,512)
-#@gimp : Fractal set = choice(Mandelbrot, Julia)
+#@gimp : Fractal set = choice("Mandelbrot","Julia")
 #@gimp : X-seed (Julia) = text("0.317")
 #@gimp : Y-seed (Julia) = text("0.03")
 #@gimp : Color 1 = color(0,0,255)
@@ -31259,7 +31259,7 @@ gmicol_light_leaks_preview :
 #@gmicol clone("Heart")
 #@gmicol clone("Lightning")
 #@gmicol clone("Lissajous")
-#@gmicol clone("Mandelbrot-julia sets")
+#@gmicol clone("Mandelbrot - julia sets")
 #@gmicol clone("Neon lightning")
 #@gmicol clone("Plasma")
 #@gmicol clone("Polka dots")
