@@ -3806,6 +3806,7 @@ update_server :
      "-f 'if(i>=65&&i<=90,i+32,i)' "\
      "-replace {'_'},32 -autocrop 32 "\
      "-replace_str Fft,FFT "\
+     "-replace_str Dcp,DCP "\
      "-replace_str rgb,RGB "\
      "-replace_str lab,Lab "\
      "-replace_str hsv,HSV "\
@@ -31112,6 +31113,7 @@ gmicol_rotate :
 #@gmicol _<b>Details</b>
 #-----------------------
 
+#@gmicol clone("Dcp dehaze")
 #@gmicol clone("Details equalizer")
 #@gmicol clone("Freaky details")
 #@gmicol clone("Local contrast enhancement")
@@ -31124,7 +31126,7 @@ gmicol_rotate :
 #@gmicol clone("Sharpen [inverse diffusion]")
 #@gmicol clone("Sharpen [octave sharpening]")
 #@gmicol clone("Sharpen [richardson-lucy]")
-#@gmicol clone("Sharpen [shock filters]"
+#@gmicol clone("Sharpen [shock filters]")
 #@gmicol clone("Sharpen [tones]")
 #@gmicol clone("Sharpen [unsharp mask]")
 #@gmicol clone("Simple local contrast")
