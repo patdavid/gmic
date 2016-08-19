@@ -380,6 +380,8 @@ GMICOL_LIBS = $(MANDATORY_LIBS) $(PARALLEL_LIBS) $(PNG_LIBS) $(JPEG_LIBS) $(ZLIB
 #--------------------------
 
 # Main default entries.
+print-%: ; @echo $*=$($*)
+
 all: CImg.h gmic_stdlib.h
 ifeq ($(OS),Unix)
 	@echo "**"
